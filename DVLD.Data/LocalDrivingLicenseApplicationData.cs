@@ -128,6 +128,27 @@ namespace DVLD.Data
             }
         }
 
+        public static bool Exists(int applicationId, int excludedId)
+        {
+            string query = @"SELECT 1 FROM LocalDrivingLicenseApplications WHERE ApplicationId = @ApplicationId AND LocalDrivingLicenseApplicationId != @ExcludedId;";
+            
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationId", applicationId);
+                    command.Parameters.AddWithValue("@ExcludedId", excludedId);
+                    connection.Open();
 
+                    return command.ExecuteScalar() != null; // If a record exists, it means the ApplicationId is used
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking if ApplicationId is used in LocalDrivingLicenseApplications table.", ex);
+                throw;
+            }
+        }
     }
 }

@@ -119,6 +119,30 @@ namespace DVLD.Data
             }
         }
 
+        public static int GetDriverIdByPersonId(int personId)
+        {
+            string query = "SELECT DriverId FROM Drivers WHERE PerosnId = @personId;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@personId", personId);
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int driverId))
+                        return driverId;
+                    else
+                        return -1; // Indicate not found
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Erorr while selecting form Drivers.", ex);
+                throw;
+            }
+        }
+
         public static bool IsPersonUsed(int personId, int excludedDriverId)
         {
             string query = "SELECT 1 FROM Drivers WHERE PerosnId = @personId AND DriverId != excludedDriverId;";
