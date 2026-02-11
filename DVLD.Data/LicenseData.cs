@@ -202,17 +202,17 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesPersonHasExpiredLicense(int pesonId)
+        public static bool DoesDriverHasExpiredLicense(int driverId)
         {
             string query  = @"SELECT 1 FROM Licenses L
                             JOIN Drivers D ON L.DriverID = D.DriverID
-                            WHERE D.PersonID = @PersonId AND L.ExpirationDate < @todayDate;";
+                            WHERE D.DriverID = @DriverId AND L.ExpirationDate < @todayDate;";
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@PersonId", pesonId);
+                    command.Parameters.AddWithValue("@DriverId", driverId);
                     command.Parameters.AddWithValue("@todayDate", DateTime.Now);
                     connection.Open();
                     return command.ExecuteScalar() != null;
@@ -221,27 +221,6 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking expired licenses for person with ID {pesonId}.", ex);
-                throw;
-            }
-        }
-
-        public static bool DoesDriverHasAllLicenseClasses(int driverID)
-        {
-            string query = @"SELECT COUNT(DISTINCT LicenseClass) = 7 FROM Licenses WHERE DriverID = @DriverId AND IsActive = 1;";
-            
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@DriverId", driverID);
-                    connection.Open();
-                    return command.ExecuteScalar() != null;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while checking all license classes for driver with ID {driverID}.", ex);
                 throw;
             }
         }
@@ -266,6 +245,32 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking if license with ID {licneseId} is active.", ex);
+                throw;
+            }
+        }
+
+        public static bool IsExpired(int applicantPersonId, LicenseClass licenseClass)
+        {
+            string query = @"SELECT 1 FROM Licenses L
+                            INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                            WHERE D.PersonID = @applicantPersonId AND L.LicenseClass = @licenseClass AND L.ExpirationDate < @todayDate;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@applicantPersonId", applicantPersonId);
+                    command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
+                    command.Parameters.AddWithValue("@todayDate", DateTime.Now);
+                    connection.Open();
+                    
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking if license is expired.", ex);
                 throw;
             }
         }

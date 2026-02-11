@@ -12,8 +12,8 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.LicenseValidator.Validate(license);
             
-            ApplicationStatus applicationStatus = ApplicationData.GetApplicationStatus(license.ApplicationId);
-            ApplicationType applicationType = ApplicationData.GetApplicationType(license.ApplicationId);
+            ApplicationStatus applicationStatus = ApplicationData.GetApplication(license.ApplicationId).ApplicationStatus;
+            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeId;
 
             if (!ApplicationData.Exists(license.ApplicationId))
                 throw new BusinessException("Application does not exist.");
@@ -33,7 +33,7 @@ namespace DVLD.Business.EntityValidators
             if (!DriverData.Exists(license.DriverId))
                 throw new BusinessException("Driver does not exist.");
 
-            if (LicenseData.DoesDriverHasActiveLicense(license.DriverId, license.LicenseClass, false))
+            if (LicenseData.DoesDriverHasLicense(license.DriverId, license.LicenseClass))
                 throw new BusinessException("Driver already has an license with the same type.");
         }
 

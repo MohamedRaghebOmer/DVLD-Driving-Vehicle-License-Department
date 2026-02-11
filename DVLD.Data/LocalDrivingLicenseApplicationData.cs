@@ -131,7 +131,7 @@ namespace DVLD.Data
         public static bool Exists(int applicationId, int excludedId)
         {
             string query = @"SELECT 1 FROM LocalDrivingLicenseApplications WHERE ApplicationId = @ApplicationId AND LocalDrivingLicenseApplicationId != @ExcludedId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -147,6 +147,55 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if ApplicationId is used in LocalDrivingLicenseApplications table.", ex);
+                throw;
+            }
+        }
+
+        public static bool DoesPersonHaveApplication(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
+        {
+            string query = @"SELECT 1 FROM LocalDrivingLicenseApplications ldl
+                            INNER JOIN Applications a ON ldl.ApplicationId = a.ApplicationId
+                            WHERE a.PersonId = @PersonId AND ldl.LicenseClassId = @LicenseClassId AND a.ApplicationStatus = @Status AND a.ApplicationTypeID = @applicationType;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonId", personId);
+                    command.Parameters.AddWithValue("@LicenseClassId", (int)licenseClass);
+                    command.Parameters.AddWithValue("@Status", status);
+                    command.Parameters.AddWithValue("@applicationType", (int)applicationType);
+                    connection.Open();
+                    return command.ExecuteScalar() != null; // If a record exists, it means the person has a new application for the specified license class
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking if a person has a new application for a specific license class in LocalDrivingLicenseApplications table.", ex);
+                throw;
+            }
+        }
+
+        public static bool Update(LocalDrivingLicenseApplication localDrivingLicenseApplication)
+        {
+            string query = @"UPDATE LocalDrivingLicenseApplications
+                            SET LicenseClassId = @LicenseClassId
+                            WHERE LocalDrivingLicenseApplicationId = @LocalDrivingLicenseApplicationId";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseClassId", (int)localDrivingLicenseApplication.LicenseClassId);
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationId", localDrivingLicenseApplication.LocalDrivingLicenseApplicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0; // Returns true if at least one record was updated
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating a record in LocalDrivingLicenseApplications table.", ex);
                 throw;
             }
         }

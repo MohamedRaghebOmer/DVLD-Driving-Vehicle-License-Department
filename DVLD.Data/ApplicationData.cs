@@ -132,51 +132,26 @@ namespace DVLD.Data
             }
         }
 
-        public static ApplicationStatus GetApplicationStatus(int applicationId)
+        public static bool DoesPersonHaveApplication(int personId, ApplicationType applicationType, ApplicationStatus applicationStatus)
         {
-            string query = @"SELECT ApplicationStatus FROM Applications WHERE ApplicationID = @id;";
-           
+            string query = @"SELECT 1 FROM Applications 
+                            WHERE ApplicantPersonId = @personId AND ApplicationTypeId = @applicationType AND ApplicationStatus = @applicationStatus";
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", applicationId);
+                    command.Parameters.AddWithValue("@personId", personId);
+                    command.Parameters.AddWithValue("@applicationType", (int)applicationType);
+                    command.Parameters.AddWithValue("@applicationStatus", (int)applicationStatus);
                     connection.Open();
-                    
-                    object result = command.ExecuteScalar();
-                    
-                    if (result != null && int.TryParse(result.ToString(), out int statusValue))
-                        return (ApplicationStatus)statusValue;
+                    return command.ExecuteScalar() != null;
                 }
-                return 0; // Default value if not found (Unreachable in normal flow since application should exist)
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Error while retrieving application status from Applications table.", ex);
-                throw;
-            }
-        }
-
-        public static ApplicationType GetApplicationType(int applicationId)
-        {
-            string query = @"SELECT ApplicationTypeId FROM Applications WHERE ApplicationID = @id;";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", applicationId);
-                    connection.Open();
-                    object result = command.ExecuteScalar();
-                    if (result != null && int.TryParse(result.ToString(), out int typeValue))
-                        return (ApplicationType)typeValue;
-                }
-                return 0; // Default value if not found (Unreachable in normal flow since application should exist)
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while retrieving application type from Applications table.", ex);
+                AppLogger.LogError("DAL: Error while checking if person has application of specific type in Applications table.", ex);
                 throw;
             }
         }
