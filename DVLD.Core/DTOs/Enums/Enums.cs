@@ -30,4 +30,11 @@
        ReleaseDetainedDrivingLicense = 5,
        NewInternationalLicense = 6
     }
+
+    public enum ApplicationStatus
+    {
+        New = 1,
+        Cancelled = 2,
+        Completed = 3,
+    }
 }

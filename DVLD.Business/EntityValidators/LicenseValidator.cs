@@ -2,6 +2,7 @@
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Data;
+using System;
 
 namespace DVLD.Business.EntityValidators
 {
@@ -10,30 +11,30 @@ namespace DVLD.Business.EntityValidators
         public static void AddNewValidator(License license)
         {
             Core.Validators.LicenseValidator.Validate(license);
+            
+            ApplicationStatus applicationStatus = ApplicationData.GetApplication(license.ApplicationId).ApplicationStatus;
+            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeId;
 
             if (!ApplicationData.Exists(license.ApplicationId))
                 throw new BusinessException("Application does not exist.");
 
-            if (!ApplicationData.IsActive(license.ApplicationId))
-                throw new BusinessException("Can't add license for inactive application.");
-
-            if (ApplicationData.GetApplicationStatus() == ApplicationStatus.Canceled)
+            if (applicationStatus == ApplicationStatus.Cancelled)
                 throw new BusinessException("Can't add license for a canceled application.");
 
-            if (ApplicationData.GetApplicationStatus() == ApplicationStatus.Completed)
+            if (applicationStatus == ApplicationStatus.Completed)
                 throw new BusinessException("Can't add license for a completed application.");
 
-            if (ApplicationData.GetApplicationType() == ApplicationType.ReleaseDetainedDrivingLicense)
+            if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new BusinessException("Invalid application type.");
 
-            if (ApplicationData.GetApplicationType() == ApplicationType.NewInternationalLicense)
+            if (applicationType == ApplicationType.NewInternationalLicense)
                 throw new BusinessException("Can't add license for an international application.");
 
             if (!DriverData.Exists(license.DriverId))
                 throw new BusinessException("Driver does not exist.");
 
-            if (LicenseData.DoesDriverHasActiveLicense(license.DriverId, license.LicenseClass))
-                throw new BusinessException("Driver already has an active license with the same type.");
+            if (LicenseData.DoesDriverHasLicense(license.DriverId, license.LicenseClass))
+                throw new BusinessException("Driver already has an license with the same type.");
         }
 
         public static void UpdateValidator(License license)

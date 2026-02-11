@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Entities\Application.cs" />
     <Compile Include="DTOs\Entities\Driver.cs" />
     <Compile Include="DTOs\Entities\License.cs" />
+    <Compile Include="DTOs\Entities\LocalDrivingLicenseApplication.cs" />
     <Compile Include="DTOs\Entities\TestType.cs" />
     <Compile Include="Logging\AppLogger.cs" />
     <Compile Include="DTOs\Entities\Country.cs" />
@@ -52,9 +54,11 @@
     <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\ApplicationValidator.cs" />
     <Compile Include="Validators\CountryValidator.cs" />
     <Compile Include="Validators\DriverValidator.cs" />
     <Compile Include="Validators\LicenseValidator.cs" />
+    <Compile Include="Validators\LocalDrivingLicenseApplicationValidator.cs" />
     <Compile Include="Validators\PersonValidator.cs" />
     <Compile Include="Validators\TestTypeValidator.cs" />
     <Compile Include="Validators\UserValidator.cs" />
