@@ -37,4 +37,11 @@
         Cancelled = 2,
         Completed = 3,
     }
+
+    public enum TestType
+    {
+        VisionTest = 1,
+        WrittenTheoryTest = 2,
+        PracticalStreetTest = 3
+    }
 }
