@@ -60,6 +60,7 @@
     <Compile Include="Validators\LicenseValidator.cs" />
     <Compile Include="Validators\LocalDrivingLicenseApplicationValidator.cs" />
     <Compile Include="Validators\PersonValidator.cs" />
+    <Compile Include="Validators\TestAppointmentValidator.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup />

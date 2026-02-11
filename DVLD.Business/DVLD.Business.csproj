@@ -49,6 +49,7 @@
     <Compile Include="EntityValidators\DriverValidator.cs" />
     <Compile Include="EntityValidators\LicenseValidator.cs" />
     <Compile Include="EntityValidators\LocalDrivingLicenseApplicationValidator.cs" />
+    <Compile Include="EntityValidators\TestAppointmentValidator.cs" />
     <Compile Include="EntityValidators\UserValidator.cs" />
     <Compile Include="LicenseBusiness.cs" />
     <Compile Include="LicenseClassBusiness.cs" />

@@ -5,6 +5,7 @@ using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
+using System.CodeDom;
 
 namespace DVLD.Data
 {
@@ -114,9 +115,31 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationExists(int localDrivingLicenseApplicationId)
+        public static bool IsLocked(int testAppointmentId)
         {
-            string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationId";
+            string query = "SELECT 1 FROM TestAppointments WHERE TestAppointmentID = @id AND IsLocked = 1;";
+
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testAppointmentId);
+                    connection.Open();
+
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while check TestAppointment with ID{testAppointmentId} is locked.", ex);
+                throw;
+            }
+        }
+
+        public static bool DoesApplicationExists(int localDrivingLicenseApplicationId, int excludedId = -1)
+        {
+            string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestAppointmentID != @excludedId;";
             
             try
             {
@@ -124,7 +147,8 @@ namespace DVLD.Data
                 {
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                        command.Parameters.AddWithValue("@localDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                        command.Parameters.AddWithValue("@excludedId", excludedId);
                         connection.Open();
                         return command.ExecuteScalar() != null; // Returns true if at least one record exists
                     }
