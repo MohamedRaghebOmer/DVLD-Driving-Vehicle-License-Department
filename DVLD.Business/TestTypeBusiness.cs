@@ -35,7 +35,7 @@ namespace DVLD.Business
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"BLL: Error while trying to get fees for test type with id = {testTypeId}.");
+                AppLogger.LogError($"BLL: Error while trying to get fees for test type with id = {(int)testType}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

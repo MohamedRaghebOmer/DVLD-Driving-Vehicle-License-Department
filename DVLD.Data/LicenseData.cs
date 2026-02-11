@@ -202,29 +202,6 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesDriverHasExpiredLicense(int driverId)
-        {
-            string query  = @"SELECT 1 FROM Licenses L
-                            JOIN Drivers D ON L.DriverID = D.DriverID
-                            WHERE D.DriverID = @DriverId AND L.ExpirationDate < @todayDate;";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@DriverId", driverId);
-                    command.Parameters.AddWithValue("@todayDate", DateTime.Now);
-                    connection.Open();
-                    return command.ExecuteScalar() != null;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while checking expired licenses for person with ID {pesonId}.", ex);
-                throw;
-            }
-        }
-
         public static bool IsActive(int licneseId)
         {
             string query = @"SELECT IsActive FROM Licenses WHERE LicenseID = @licenseId;";
