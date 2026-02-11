@@ -29,7 +29,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"DAL: Error while retrieving TestTypeFees for TestTypeId = {testType.TestTypeId}.", ex);
+                AppLogger.LogError($"DAL: Error while retrieving TestTypeFees for TestTypeId = {(int)testType}.", ex);
                 throw;
             }
         }
@@ -84,7 +84,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"DLL: Error while updating Drivers where driver id = {testType.TestTypeId}.", ex);
+                AppLogger.LogError($"DLL: Error while updating Drivers where driver id = {(int)testType}.", ex);
                 throw;
             }
 
