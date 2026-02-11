@@ -114,6 +114,26 @@ namespace DVLD.Data
             }
         }
 
+        public static bool Exists(int testAppointmentId)
+        {
+            string query = "SELECT 1 FROM TestAppointments WHERE TestAppointmentID = @id;";
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testAppointmentId);
+                    connection.Open();
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking existence of TestAppointment with ID {testAppointmentId}.", ex);
+                throw;
+            }
+        }
+
         public static bool IsLocked(int testAppointmentId)
         {
             string query = "SELECT 1 FROM TestAppointments WHERE TestAppointmentID = @id AND IsLocked = 1;";
