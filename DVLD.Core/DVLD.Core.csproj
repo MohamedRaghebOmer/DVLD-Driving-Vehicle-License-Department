@@ -45,7 +45,6 @@
     <Compile Include="DTOs\Entities\Driver.cs" />
     <Compile Include="DTOs\Entities\License.cs" />
     <Compile Include="DTOs\Entities\LocalDrivingLicenseApplication.cs" />
-    <Compile Include="DTOs\Entities\TestType.cs" />
     <Compile Include="Logging\AppLogger.cs" />
     <Compile Include="DTOs\Entities\Country.cs" />
     <Compile Include="DTOs\Entities\Person.cs" />
@@ -60,7 +59,6 @@
     <Compile Include="Validators\LicenseValidator.cs" />
     <Compile Include="Validators\LocalDrivingLicenseApplicationValidator.cs" />
     <Compile Include="Validators\PersonValidator.cs" />
-    <Compile Include="Validators\TestTypeValidator.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup />
