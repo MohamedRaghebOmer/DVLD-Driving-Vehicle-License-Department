@@ -45,6 +45,7 @@
     <Compile Include="DTOs\Entities\Driver.cs" />
     <Compile Include="DTOs\Entities\License.cs" />
     <Compile Include="DTOs\Entities\LocalDrivingLicenseApplication.cs" />
+    <Compile Include="DTOs\Entities\Test.cs" />
     <Compile Include="DTOs\Entities\TestAppointment.cs" />
     <Compile Include="Logging\AppLogger.cs" />
     <Compile Include="DTOs\Entities\Country.cs" />
