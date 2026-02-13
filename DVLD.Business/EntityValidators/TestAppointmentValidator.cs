@@ -13,7 +13,7 @@ namespace DVLD.Business.EntityValidators
             Core.Validators.TestAppointmentValidator.Validate(testAppointment);
 
             // Check if the local driving license application exists
-            if (!LocalDrivingLicenseApplicationData.Exists(testAppointment.LocalDrivingLicenseApplicationId))
+            if (!LocalDrivingLicenseApplicationData.DoesApplicationExist(testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("The specified local driving license application does not exist.");
 
             // Check if the user who created the test appointment exists

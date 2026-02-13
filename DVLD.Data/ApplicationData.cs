@@ -136,7 +136,7 @@ namespace DVLD.Data
         {
             string query = @"SELECT 1 FROM Applications 
                             WHERE ApplicantPersonId = @personId AND ApplicationTypeId = @applicationType AND ApplicationStatus = @applicationStatus";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -182,6 +182,30 @@ namespace DVLD.Data
                 throw;
             }
 
+        }
+
+        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus)
+        {
+            string query = @"UPDATE Applications SET ApplicationStatus = @newStatus, 
+                            LastStatusDate = @lastStatusDate
+                            WHERE ApplicationId = @applicationId";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@newStatus", (int)newStatus);
+                    command.Parameters.AddWithValue("@lastStatusDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@applicationId", applicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating application status in Applications table.", ex);
+                throw;
+            }
         }
     }
 }

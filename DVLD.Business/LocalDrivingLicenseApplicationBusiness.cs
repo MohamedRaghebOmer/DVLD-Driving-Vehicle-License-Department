@@ -54,7 +54,7 @@ namespace DVLD.Business
         {
             try
             {
-                return LocalDrivingLicenseApplicationData.Exists(localDrivingLicenseApplicationId, excludedId);
+                return LocalDrivingLicenseApplicationData.DoesApplicationExist(localDrivingLicenseApplicationId, excludedId);
             }
             catch (Exception ex)
             {

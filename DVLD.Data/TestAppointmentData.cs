@@ -204,6 +204,34 @@ namespace DVLD.Data
             }
         }
 
+        public static bool HaveAllTestsBeenDone(int localDrivingLicenseApplicationId)
+        {
+            const int numberOfTests = 3;
+            string query = @"SELECT 1
+                            FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localAppId 
+                            HAVING COUNT(IsLocked) = @numberOfTests;";
+
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@localAppId", localDrivingLicenseApplicationId);
+                        command.Parameters.AddWithValue("@numberOfTests", numberOfTests);
+                        connection.Open();
+                        
+                        return command.ExecuteScalar() != null; // Returns true if there are no unlocked test appointments
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking if all tests have been done for Application ID {localDrivingLicenseApplicationId}.", ex);
+                throw;
+            }
+        }
+
         public static bool UpdateTestAppointment(TestAppointment testAppointment)
         {
             string query = @"UPDATE TestAppointments SET TestTypeID = @TestTypeId, LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationId,

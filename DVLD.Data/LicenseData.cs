@@ -11,7 +11,7 @@ namespace DVLD.Data
 {
     public static class LicenseData
     {
-        public static int Add(License license)
+        public static int AddNewLicense(License license, int driverId, DateTime issueDate, DateTime expirationDate, IssueReason issueReason)
         {
             string query = @"INSERT INTO Licenses (ApplicationID, DriverID, LicenseClass, 
                             IssueDate, ExpirationDate, Notes, PaidFees, IsActive, IssueReason, 
@@ -20,21 +20,21 @@ namespace DVLD.Data
                             @expirationDate, @notes, @paidFees, @isActive, @issueReason, 
                             @createdByUserID);
                              SELECT SCOPE_IDENTITY();";
-
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@applicationID", license.ApplicationId);
-                    command.Parameters.AddWithValue("@driverID", license.DriverId);
+                    command.Parameters.AddWithValue("@driverID", driverId);
                     command.Parameters.AddWithValue("@licenseClass", (int)license.LicenseClass);
-                    command.Parameters.AddWithValue("@issueDate", license.IssueDate);
-                    command.Parameters.AddWithValue("@expirationDate", license.ExpirationDate);
+                    command.Parameters.AddWithValue("@issueDate", issueDate);
+                    command.Parameters.AddWithValue("@expirationDate", expirationDate);
                     command.Parameters.AddWithValue("@notes", license.Notes ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@paidFees", license.PaidFees);
                     command.Parameters.AddWithValue("@isActive", license.IsActive);
-                    command.Parameters.AddWithValue("@issueReason", (int)license.IssueReason);
+                    command.Parameters.AddWithValue("@issueReason", (int)issueReason);
                     command.Parameters.AddWithValue("@createdByUserID", license.CreatedByUserId);
 
                     connection.Open();
@@ -202,7 +202,27 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsActive(int licneseId)
+        public static bool DoesApplicationExist(int applicationId)
+        {
+            string query = @"SELECT 1 FROM Licenses WHERE ApplicationID = @applicationId;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@applicationId", applicationId);
+                    connection.Open();
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking if license for application ID {applicationId} exists.", ex);
+                throw;
+            }
+        }
+
+        public static bool IsActive(int licenseId)
         {
             string query = @"SELECT IsActive FROM Licenses WHERE LicenseID = @licenseId;";
 
@@ -211,7 +231,7 @@ namespace DVLD.Data
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@licenseId", licneseId);
+                    command.Parameters.AddWithValue("@licenseId", licenseId);
                     connection.Open();
                     object result = command.ExecuteScalar();
                     if (result != null && bool.TryParse(result.ToString(), out bool isActive))
@@ -221,7 +241,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"DAL: Error while checking if license with ID {licneseId} is active.", ex);
+                AppLogger.LogError($"DAL: Error while checking if license with ID {licenseId} is active.", ex);
                 throw;
             }
         }
@@ -248,6 +268,48 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if license is expired.", ex);
+                throw;
+            }
+        }
+
+        public static bool UpdateNotes(int licenseId, string notes)
+        {
+            string query = @"UPDATE Licenses SET Notes = @notes WHERE LicenseID = @licenseId;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@notes", notes ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@licenseId", licenseId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while updating notes for license with ID {licenseId}.", ex);
+                throw;
+            }
+        }
+
+        public static bool UpdatePaidFees(int licenseId, decimal paidFees)
+        {
+            string query = @"UPDATE Licenses SET PaidFees = @paidFees WHERE LicenseID = @licenseId;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@paidFees", paidFees);
+                    command.Parameters.AddWithValue("@licenseId", licenseId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while updating paid fees for license with ID {licenseId}.", ex);
                 throw;
             }
         }
