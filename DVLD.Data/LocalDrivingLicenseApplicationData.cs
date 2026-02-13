@@ -128,7 +128,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool Exists(int applicationId, int excludedId = -1)
+        public static bool DoesApplicationExist(int applicationId, int excludedId = -1)
         {
             string query = @"SELECT 1 FROM LocalDrivingLicenseApplications WHERE ApplicationId = @ApplicationId AND LocalDrivingLicenseApplicationId != @ExcludedId;";
 

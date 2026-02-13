@@ -2,7 +2,6 @@
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Data;
-using System;
 
 namespace DVLD.Business.EntityValidators
 {
@@ -12,17 +11,38 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.LicenseValidator.Validate(license);
             
-            ApplicationStatus applicationStatus = ApplicationData.GetApplication(license.ApplicationId).ApplicationStatus;
-            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeId;
 
+            // Check if application exists.
             if (!ApplicationData.Exists(license.ApplicationId))
                 throw new BusinessException("Application does not exist.");
+            
+            // Check if driver exists.
+            if (!DriverData.Exists(license.DriverId))
+                throw new BusinessException("Driver does not exist.");
+
+
+
+            // Check if driver already has license with the same type.
+            if (LicenseData.DoesDriverHasLicense(license.DriverId, license.LicenseClass))
+                throw new BusinessException("Driver already has an license with the same type.");
+
+            // Check if the application already associated with another license.
+            if (LicenseData.DoesApplicationExist(license.ApplicationId))
+                throw new BusinessException("License for the application already exists.");
+
+
+
+            ApplicationStatus applicationStatus = ApplicationData.GetApplication(license.ApplicationId).ApplicationStatus;
+
+            if (applicationStatus == ApplicationStatus.Completed)
+                throw new BusinessException("License already exists for the completed application.");
 
             if (applicationStatus == ApplicationStatus.Cancelled)
                 throw new BusinessException("Can't add license for a canceled application.");
 
-            if (applicationStatus == ApplicationStatus.Completed)
-                throw new BusinessException("Can't add license for a completed application.");
+
+
+            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeId;
 
             if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new BusinessException("Invalid application type.");
@@ -30,22 +50,21 @@ namespace DVLD.Business.EntityValidators
             if (applicationType == ApplicationType.NewInternationalLicense)
                 throw new BusinessException("Can't add license for an international application.");
 
-            if (!DriverData.Exists(license.DriverId))
-                throw new BusinessException("Driver does not exist.");
 
-            if (LicenseData.DoesDriverHasLicense(license.DriverId, license.LicenseClass))
-                throw new BusinessException("Driver already has an license with the same type.");
+
+            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetByApplicationId(license.ApplicationId);
+            _ = localDrivingLicenseApplication
+                ?? throw new BusinessException("Local driving license application does not exist.");
+            
+            if (!TestData.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId))
+                throw new BusinessException("Driver has not passed all three tests.");
         }
 
         public static void UpdateValidator(License license)
         {
-            License storedInfo = LicenseData.GetLicenseById(license.LicenseId);
-
             Core.Validators.LicenseValidator.Validate(license);
+            License storedInfo = LicenseData.GetLicenseById(license.LicenseId);
             
-            if (!LicenseData.Exists(license.LicenseId))
-                throw new BusinessException("License does not exist.");
-
             if (storedInfo.ApplicationId != license.ApplicationId)
                 throw new BusinessException("Can't change the application associated with the license.");
 

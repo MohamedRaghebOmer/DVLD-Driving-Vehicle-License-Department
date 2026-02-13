@@ -106,6 +106,57 @@ namespace DVLD.Data
             }
         }
 
+        public static bool HasPassedThreeTests(int localDrivingLicenseApplicationId)
+        {
+            string query = @"SELECT CAST(CASE 
+                            -- Condition 1: Check if the application exists
+                            WHEN EXISTS (
+                                SELECT 1 
+                                FROM dbo.LocalDrivingLicenseApplications 
+                                WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
+                            )
+                            -- Condition 2: Check if there are exactly 3 locked TestAppointments
+                            AND (
+                                SELECT COUNT(*) 
+                                FROM dbo.TestAppointments 
+                                WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
+                                AND IsLocked = 1
+                            ) = 3
+                            -- Condition 3: Check if all 3 corresponding tests were passed (TestResult = 1)
+                            -- We do this by ensuring the count of Passed Tests associated with Locked Appointments is also 3
+                            AND (
+                                SELECT COUNT(*) 
+                                FROM dbo.Tests T
+                                INNER JOIN dbo.TestAppointments TA ON T.TestAppointmentID = TA.TestAppointmentID
+                                WHERE TA.LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
+                                AND TA.IsLocked = 1 
+                                AND T.TestResult = 1
+                            ) = 3
+                            THEN 1 
+                            ELSE 0 
+                        END AS BIT) AS HasPassed;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@localDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && bool.TryParse(result.ToString(), out bool hasPassed))
+                        return hasPassed;
+                    return false; // Return false if the application does not exist or if the value is invalid
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking if license for local driving license application ID {localDrivingLicenseApplicationId} has passed three tests.", ex);
+                throw;
+            }
+        }
+
         public static bool DoesTestAppointmentExists(int testAppointmentId)
         {
             string query = "SELECT 1 FROM Tests WHERE TestAppointmentID = @appointmentId;";

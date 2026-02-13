@@ -20,14 +20,7 @@ namespace DVLD.Core.Validators
             
             if (!Enum.IsDefined(typeof(LicenseClass), license.LicenseClass))
                 throw new ValidationException("Invalid LicenseClass value.");
-          
-            if (license.IssueDate > DateTime.Now)
-             
-                throw new ValidationException("IssueDate cannot be in the future.");
-      
-            if (license.ExpirationDate <= license.IssueDate)
-                throw new ValidationException("ExpirationDate must be after IssueDate.");
-           
+                     
             if (license.PaidFees < 0)
                 throw new ValidationException("PaidFees cannot be negative.");
         }

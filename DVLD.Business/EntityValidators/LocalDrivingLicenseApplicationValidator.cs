@@ -14,7 +14,7 @@ namespace DVLD.Business.EntityValidators
             if (!ApplicationData.Exists(localDrivingLicenseApplication.ApplicationId))
                 throw new BusinessException("Associated application does not exist.");
             
-            if (LocalDrivingLicenseApplicationData.Exists(localDrivingLicenseApplication.ApplicationId, -1))
+            if (LocalDrivingLicenseApplicationData.DoesApplicationExist(localDrivingLicenseApplication.ApplicationId, -1))
                 throw new BusinessException("The Application is already in use.");
         }
 

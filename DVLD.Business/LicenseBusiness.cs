@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data;
+using DVLD.Data;
 using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
-using DVLD.Data;
 
 namespace DVLD.Business
 {
@@ -11,18 +12,54 @@ namespace DVLD.Business
     {
         public static License Save(License license)
         {
-            // Add new license
+            // Issue new license
             if (license.LicenseId == -1)
             {
                 EntityValidators.LicenseValidator.AddNewValidator(license);
-                license.IssueDate = DateTime.Now;
-                license.IsActive = true;
-                license.ExpirationDate = license.IssueDate.AddYears(LicenseClassData.GetDefaultValidityLength(license.LicenseClass));
-
+                
                 try
                 {
-                    int newLicenseId = LicenseData.Add(license);
-                    return LicenseData.GetLicenseById(newLicenseId);
+                    Application application = ApplicationData.GetApplication(license.ApplicationId);
+                    ApplicationType applicationType = application.ApplicationTypeId;
+                    IssueReason issueReason;
+                    int driverId = -1;
+                    int newLicenseId = -1;
+
+                    // Determine the issue reason based on the application type
+                    switch (applicationType)
+                    {
+                        case ApplicationType.NewLocalDrivingLicenseService:
+                            issueReason = IssueReason.FirstTime;
+                            break;
+                        case ApplicationType.RenewDrivingLicenseService:
+                            issueReason = IssueReason.Renew;
+                            break;
+                        case ApplicationType.ReplacementForLostDrivingLicense:
+                            issueReason = IssueReason.ReplacementLost;
+                            break;
+                        case ApplicationType.ReplacementForDamagedDrivingLicense:
+                            issueReason = IssueReason.ReplacementDamaged;
+                            break;
+                        default:
+                            throw new ValidationException("Invalid application type for issuing a license.");
+                    }
+
+                    // Check if the applicant person is already associated with a driver, if not create a new driver record                    
+                    driverId = DriverData.IsPersonUsed(application.ApplicantPersonId, -1) ? 
+                        DriverData.GetDriverIdByPersonId(application.ApplicantPersonId) : 
+                        DriverData.Add(new Driver(application.ApplicantPersonId, license.CreatedByUserId));
+
+                    // Create the new license and add it to the database
+                    if (driverId != -1)
+                        newLicenseId = LicenseData.AddNewLicense(license, driverId, DateTime.Now, DateTime.Now.AddYears(LicenseClassData.GetDefaultValidityLength(license.LicenseClass)), issueReason);
+
+                    // Update the application status to Completed.
+                    bool isUpdated = ApplicationData.UpdateApplicationStatus(license.ApplicationId, ApplicationStatus.Completed);
+
+
+                    if (newLicenseId != -1 && driverId != -1 && isUpdated)
+                        return LicenseData.GetLicenseById(newLicenseId);
+                    return null;
                 }
                 catch (Exception ex)
                 {
@@ -36,12 +73,11 @@ namespace DVLD.Business
 
                 try
                 {
-                    bool isUpdated = LicenseData.UpdateLicense(license);
-                    return isUpdated ? LicenseData.GetLicenseById(license.LicenseId) : null;
+                    return LicenseData.UpdateLicense(license) ? LicenseData.GetLicenseById(license.LicenseId) : null;
                 }
                 catch (Exception ex)
                 {
-                    AppLogger.LogError("BLL: Error updating license.");
+                    AppLogger.LogError($"BLL: Error updating license with ID {license.LicenseId}.", ex);
                     throw new Exception("An error occurred while updating the license. Please try again later.", ex);
                 }
             }
@@ -132,6 +168,48 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while checking if license with ID {licenseId} is active.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static bool UpdateNotes(int licenseId, string newNotes)
+        {
+            if (licenseId <= 0)
+                return false; // Invalid license ID, cannot update notes
+
+            try
+            {
+                return LicenseData.UpdateNotes(licenseId, newNotes);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while updating notes for license with ID {licenseId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static bool UpdatePaidFees(int licenseId, decimal newPaidFees)
+        {
+            if (licenseId <= 0)
+                return false; // Invalid license ID, cannot update paid fees
+
+            if (newPaidFees < 0)
+                throw new ValidationException("Paid fees cannot be negative.");
+
+            if (LicenseData.GetLicenseById(licenseId).PaidFees == newPaidFees)
+                return true; // No update needed, already has the same paid fees
+
+            // Prevent reducing paid fees, as it may lead to inconsistencies in the system
+            if (newPaidFees < LicenseData.GetLicenseById(licenseId).PaidFees)
+                throw new ValidationException("New paid fees cannot be less than the current paid fees.");
+
+            try
+            {
+                return LicenseData.UpdatePaidFees(licenseId, newPaidFees);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while updating paid fees for license with ID {licenseId}.", ex);
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
         }
