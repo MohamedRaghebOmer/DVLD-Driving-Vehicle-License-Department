@@ -128,7 +128,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool UpdateTestNotes(int testId, string newNotes)
+        public static bool UpdateNotes(int testId, string newNotes)
         {
             string query = @"UPDATE Tests SET Notes = @newNotes WHERE TestID = @testId;";
 

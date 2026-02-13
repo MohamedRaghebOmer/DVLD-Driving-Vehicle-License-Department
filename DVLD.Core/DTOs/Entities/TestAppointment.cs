@@ -84,7 +84,7 @@ namespace DVLD.Core.DTOs.Entities
         public bool IsLocked
         {
             get => _isLocked;
-            set => _isLocked = value;
+            private set => _isLocked = value;
         }
 
 

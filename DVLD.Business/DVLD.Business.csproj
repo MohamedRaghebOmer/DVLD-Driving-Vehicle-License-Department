@@ -60,6 +60,7 @@
     <Compile Include="EntityValidators\CountryValidator.cs" />
     <Compile Include="EntityValidators\PersonValidator.cs" />
     <Compile Include="TestAppointmentBusiness.cs" />
+    <Compile Include="TestBusiness.cs" />
     <Compile Include="TestTypeBusiness.cs" />
     <Compile Include="UserBusiness.cs" />
   </ItemGroup>
