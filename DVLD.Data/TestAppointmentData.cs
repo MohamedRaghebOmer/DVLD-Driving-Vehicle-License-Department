@@ -114,6 +114,26 @@ namespace DVLD.Data
             }
         }
 
+        public static bool Exists(int testAppointmentId)
+        {
+            string query = "SELECT 1 FROM TestAppointments WHERE TestAppointmentID = @id;";
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testAppointmentId);
+                    connection.Open();
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking existence of TestAppointment with ID {testAppointmentId}.", ex);
+                throw;
+            }
+        }
+
         public static bool IsLocked(int testAppointmentId)
         {
             string query = "SELECT 1 FROM TestAppointments WHERE TestAppointmentID = @id AND IsLocked = 1;";
@@ -136,7 +156,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationExists(int localDrivingLicenseApplicationId, int excludedId = -1)
+        public static bool DoesApplicationExist(int localDrivingLicenseApplicationId, int excludedId = -1)
         {
             string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestAppointmentID != @excludedId;";
             
@@ -156,6 +176,30 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking existence of TestAppointment for Application ID {localDrivingLicenseApplicationId}.", ex);
+                throw;
+            }
+        }
+
+        public static bool DoesApplicationExist(TestType testType, int localDrivingLicenseApplicationId)
+        {
+            string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestTypeID = @testTypeId;";
+            
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@localDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                        command.Parameters.AddWithValue("@testTypeId", (int)testType);
+                        connection.Open();
+                        return command.ExecuteScalar() != null; // Returns true if at least one record exists
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking existence of TestAppointment for Application ID {localDrivingLicenseApplicationId} and Test Type {testType}.", ex);
                 throw;
             }
         }
@@ -188,6 +232,29 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while updating TestAppointment with ID {testAppointment.TestAppointmentId}.", ex);
+                throw;
+            }
+        }
+
+        public static bool LockTestAppointment(int testAppointmentId)
+        {
+            string query = @"UPDATE TestAppointments SET IsLocked = 1 WHERE TestAppointmentId = @TestAppointmentId";
+            
+            try
+            {
+                using (var connection = new SqlConnection(DataSettings.connectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@TestAppointmentId", testAppointmentId);
+                        connection.Open();
+                        return command.ExecuteNonQuery() > 0; // Returns true if at least one row was updated
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while locking TestAppointment with ID {testAppointmentId}.", ex);
                 throw;
             }
         }

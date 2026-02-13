@@ -50,6 +50,7 @@
     <Compile Include="EntityValidators\LicenseValidator.cs" />
     <Compile Include="EntityValidators\LocalDrivingLicenseApplicationValidator.cs" />
     <Compile Include="EntityValidators\TestAppointmentValidator.cs" />
+    <Compile Include="EntityValidators\TestValidator.cs" />
     <Compile Include="EntityValidators\UserValidator.cs" />
     <Compile Include="LicenseBusiness.cs" />
     <Compile Include="LicenseClassBusiness.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EntityValidators\CountryValidator.cs" />
     <Compile Include="EntityValidators\PersonValidator.cs" />
     <Compile Include="TestAppointmentBusiness.cs" />
+    <Compile Include="TestBusiness.cs" />
     <Compile Include="TestTypeBusiness.cs" />
     <Compile Include="UserBusiness.cs" />
   </ItemGroup>

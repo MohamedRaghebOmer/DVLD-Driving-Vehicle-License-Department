@@ -12,6 +12,9 @@ namespace DVLD.Business
     {
         public static TestAppointment Save(TestAppointment testAppointment)
         {
+            if (testAppointment == null)
+                throw new ValidationException("Test Appointment cannot be empty.");
+
             // Add New TestAppointment
             if (testAppointment.TestAppointmentId == -1)
             {
