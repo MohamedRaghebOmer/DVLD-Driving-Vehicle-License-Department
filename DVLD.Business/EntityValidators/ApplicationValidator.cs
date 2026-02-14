@@ -129,7 +129,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Cannot release an expired license.");
 
             int licenseId = LicenseData.GetLicenseIdByPersonId(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
-            if (!DetainedLicenseData.Exists(licenseId))
+            if (!DetainedLicenseData.DoesLicenseExist(licenseId))
                 throw new BusinessException("The license is not detained.");
 
             if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.ReleaseDetainedDrivingLicense, ApplicationStatus.New))
@@ -157,7 +157,7 @@ namespace DVLD.Business.EntityValidators
             if (driverId == -1)
                 throw new BusinessException("The applicant does not have a driving license, so cannot apply for an international license.");
 
-            if (InternationalLicenseData.DoesDriverHaveInternationalLicense(driverId))
+            if (InternationalLicenseData.DoesDriverHaveActiveInternationalLicense(driverId))
                 throw new BusinessException("The applicant already has an international license.");
 
             if (!LicenseData.DoesDriverHasLicense(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
