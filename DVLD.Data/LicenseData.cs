@@ -399,14 +399,14 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@notes", license.Notes ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@paidFees", license.PaidFees);
                     command.Parameters.AddWithValue("@isActive", license.IsActive);
-                    command.Parameters.AddWithValue("@licenseId", license.LicenseId);
+                    command.Parameters.AddWithValue("@licenseId", license.LicenseID);
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;
                 }
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"DAL: Error while updating license with ID {license.LicenseId}.", ex);
+                AppLogger.LogError($"DAL: Error while updating license with ID {license.LicenseID}.", ex);
                 throw;
             }
         }

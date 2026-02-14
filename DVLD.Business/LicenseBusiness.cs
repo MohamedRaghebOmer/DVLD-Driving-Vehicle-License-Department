@@ -13,7 +13,7 @@ namespace DVLD.Business
         public static License Save(License license)
         {
             // Issue new license
-            if (license.LicenseId == -1)
+            if (license.LicenseID == -1)
             {
                 EntityValidators.LicenseValidator.AddNewValidator(license);
                 
@@ -73,11 +73,11 @@ namespace DVLD.Business
 
                 try
                 {
-                    return LicenseData.UpdateLicense(license) ? LicenseData.GetLicenseById(license.LicenseId) : null;
+                    return LicenseData.UpdateLicense(license) ? LicenseData.GetLicenseById(license.LicenseID) : null;
                 }
                 catch (Exception ex)
                 {
-                    AppLogger.LogError($"BLL: Error updating license with ID {license.LicenseId}.", ex);
+                    AppLogger.LogError($"BLL: Error updating license with ID {license.LicenseID}.", ex);
                     throw new Exception("An error occurred while updating the license. Please try again later.", ex);
                 }
             }

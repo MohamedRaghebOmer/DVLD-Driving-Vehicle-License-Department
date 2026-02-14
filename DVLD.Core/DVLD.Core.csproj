@@ -61,6 +61,7 @@
     <Compile Include="Validators\CountryValidator.cs" />
     <Compile Include="Validators\DetainedLicenseValidator.cs" />
     <Compile Include="Validators\DriverValidator.cs" />
+    <Compile Include="Validators\InternationalLicenseValidator.cs" />
     <Compile Include="Validators\LicenseValidator.cs" />
     <Compile Include="Validators\LocalDrivingLicenseApplicationValidator.cs" />
     <Compile Include="Validators\PersonValidator.cs" />

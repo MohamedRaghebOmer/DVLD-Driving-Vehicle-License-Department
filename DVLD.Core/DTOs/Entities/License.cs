@@ -19,7 +19,7 @@ namespace DVLD.Core.DTOs.Entities
         private int _createdByUserId;
 
 
-        public int LicenseId
+        public int LicenseID
         {
             get => _licenseId;
             private set
@@ -143,7 +143,7 @@ namespace DVLD.Core.DTOs.Entities
         // Constructor for receiving data from DAL when retrieving a license (LicenseId is included).
         internal License(int licenseId, int applicationId, int driverId, LicenseClass licenseClass, DateTime issueDate, DateTime expirationDate, string notes, decimal paidFees, bool isActive, IssueReason issueReason, int createdByUserId)
         {
-            LicenseId = licenseId;
+            LicenseID = licenseId;
             ApplicationId = applicationId;
             DriverId = driverId;
             LicenseClass = licenseClass;
