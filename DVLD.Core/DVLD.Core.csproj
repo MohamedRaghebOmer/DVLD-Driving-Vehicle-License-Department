@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\Entities\Application.cs" />
+    <Compile Include="DTOs\Entities\DetainedLicense.cs" />
     <Compile Include="DTOs\Entities\Driver.cs" />
     <Compile Include="DTOs\Entities\License.cs" />
     <Compile Include="DTOs\Entities\LocalDrivingLicenseApplication.cs" />
