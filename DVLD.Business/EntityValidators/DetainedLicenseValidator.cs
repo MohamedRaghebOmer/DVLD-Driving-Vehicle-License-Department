@@ -6,40 +6,39 @@ using DVLD.Core.DTOs.Enums;
 namespace DVLD.Business.EntityValidators
 {
     internal class DetainedLicenseValidator
-    {
-        public static void DetainNewLicenseValidator(DetainedLicense detainedLicense)
-        {
-            Core.Validators.DetainedLicenseValidator.Validate(detainedLicense);
-            
-            if (!LicenseData.Exists(detainedLicense.LicenseID))
+    {                     // International licenses cannot be detained
+        public static void DetainNewLicenseValidator(int licenseId, decimal fineFees)
+        {          
+            if (fineFees <= 0)
+                throw new BusinessException("Fine fees must be greater than 0.");
+
+            if (licenseId <= 0 || !LicenseData.Exists(licenseId))
                 throw new BusinessException("Associated license does not exist.");
 
-            if (DetainedLicenseData.Exists(detainedLicense.LicenseID))
+            if (DetainedLicenseData.DoesLicenseExist(licenseId))
                 throw new BusinessException("License is already detained.");
-
-            if (!UserData.Exists(detainedLicense.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
         }
-
-        public static void ReleaseDetainedLicenseValidator(Application application, int licenseID)
+        
+        public static void ReleaseDetainedLicenseValidator(int licenseID, Application application)
         {
             if (application == null || application.ApplicationID <= 0)
-                throw new BusinessException("Invalid application.");
+                throw new BusinessException("Associated application does not exist.");
 
-            Application storedApplication = ApplicationData.GetApplication(application.ApplicationID);
-            if (storedApplication == null || storedApplication != application || 
-                storedApplication.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense || 
-                storedApplication.ApplicationStatus != ApplicationStatus.New)
+            if (licenseID <= 0 || !LicenseData.Exists(licenseID))
+                throw new BusinessException("Associated license does not exist.");
+
+            if (LicenseData.GetPersonIdByLicenseId(licenseID) != application.ApplicantPersonID)
+                throw new BusinessException("Associated license does not belong to the applicant.");
+
+            if (application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense ||
+                application.ApplicationStatus != ApplicationStatus.New)
             throw new BusinessException("Invalid application.");
 
             decimal applicationTypeFees = ApplicationTypeData.GetFees(ApplicationType.ReleaseDetainedDrivingLicense);
-            if (storedApplication.PaidFees < applicationTypeFees)
+            if (application.PaidFees < applicationTypeFees)
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
-            if (!LicenseData.Exists(licenseID))
-                throw new BusinessException("License does not exist.");
-
-            if (!DetainedLicenseData.Exists(licenseID))
+            if (!DetainedLicenseData.DoesLicenseExist(licenseID))
                 throw new BusinessException("License is not detained.");
 
             if (LicenseData.IsExpired(licenseID))

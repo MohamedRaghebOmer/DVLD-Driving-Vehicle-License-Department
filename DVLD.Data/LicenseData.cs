@@ -138,6 +138,34 @@ namespace DVLD.Data
             }
         }
 
+        public static int GetPersonIdByLicenseId(int licenseId)
+        {
+            string query = @"SELECT D.PersonID
+                            FROM Licenses L
+                            INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                            WHERE L.LicenseID = @LicenseID;";   
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseID", licenseId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int personId))
+                        return personId;
+                }
+                return -1; // Return -1 if the insert operation fails
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching PersonID for LicenseID {licenseId}.", ex);
+                throw;
+            }
+        }
+
         public static License GetLicenseById(int licenseId)
         {
             string query = "SELECT * FROM Licenses WHERE LicenseID = @LicenseID;";

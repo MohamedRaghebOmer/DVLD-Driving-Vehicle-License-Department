@@ -204,6 +204,9 @@ namespace DVLD.Business
 
         public static Application GetApplicationById(int applicationId)
         {
+            if (applicationId <= 0)
+                return null;
+
             try
             {
                 return ApplicationData.GetApplication(applicationId);

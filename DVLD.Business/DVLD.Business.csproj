@@ -44,6 +44,7 @@
     <Compile Include="ApplicationBusiness.cs" />
     <Compile Include="ApplicationTypeBusiness.cs" />
     <Compile Include="CountryBusiness.cs" />
+    <Compile Include="DetainedLicenseBusiness.cs" />
     <Compile Include="DriverBusiness.cs" />
     <Compile Include="EntityValidators\ApplicationValidator.cs" />
     <Compile Include="EntityValidators\DetainedLicenseValidator.cs" />
