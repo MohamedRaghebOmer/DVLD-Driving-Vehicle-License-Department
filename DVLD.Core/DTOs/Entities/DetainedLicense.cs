@@ -11,9 +11,9 @@ namespace DVLD.Core.DTOs.Entities
         private decimal _fineFees;
         private int _createdByUserId;
         private bool _isReleased;
-        private DateTime _releaseDate;
-        private int _releasedByUserId;
-        private int _releaseApplicationId;
+        private DateTime? _releaseDate;
+        private int? _releasedByUserId;
+        private int?_releaseApplicationId;
 
 
         public int DetainID
@@ -81,37 +81,44 @@ namespace DVLD.Core.DTOs.Entities
             internal set => _isReleased = value;
         }
 
-        public DateTime ReleaseDate
+        public DateTime? ReleaseDate
         {
             get => _releaseDate;
             
             internal set
             {
-                if (value > DateTime.Now)
+                if (value == null)
+                    _releaseDate = null;
+                else if (value > DateTime.Now)
                     throw new ValidationException("Release date cannot be in the future.");
+                
                 _releaseDate = value;
             }
         }
 
-        public int ReleasedByUserID
+        public int? ReleasedByUserID
         {
             get => _releasedByUserId;
             
             set
             {
-                if (value < 0)
+                if (value == null)
+                    _releaseApplicationId = null;
+                else if (value < 0)
                     throw new ValidationException("Released by user ID cannot be negative.");
                 _releasedByUserId = value;
             }
         }
 
-        public int ReleaseApplicationID
+        public int? ReleaseApplicationID
         {
             get => _releaseApplicationId;
             
             set
             {
-                if (value < 0)
+                if (value == null)
+                    _releaseApplicationId = null;
+                else if (value < 0)
                     throw new ValidationException("Release application ID cannot be negative.");
                 _releaseApplicationId = value;
             }
@@ -126,12 +133,12 @@ namespace DVLD.Core.DTOs.Entities
             this._fineFees = 0; // Default value indicating not set
             this._createdByUserId = -1; // Default value indicating not set
             this._isReleased = false; // Default value indicating not set
-            this._releaseDate = new DateTime(1, 1, 1); // Default value indicating not set
-            this._releasedByUserId = -1; // Default value indicating not set
-            this._releaseApplicationId = -1; // Default value indicating not set
+            this._releaseDate = null; // Default value indicating not set
+            this._releasedByUserId = null; // Default value indicating not set
+            this._releaseApplicationId = null; // Default value indicating not set
         }
 
-        public DetainedLicense(int licenseId, decimal fineFees, int createdByUserId, int releaseByUserId , int releaseApplicationId) : this()
+        public DetainedLicense(int licenseId, decimal fineFees, int createdByUserId, int? releaseByUserId , int? releaseApplicationId) : this()
         {
             LicenseID = licenseId;
             FineFees = fineFees;
@@ -140,7 +147,7 @@ namespace DVLD.Core.DTOs.Entities
             ReleaseApplicationID = releaseApplicationId;
         }
 
-        internal DetainedLicense(int detainId, int licenseId, DateTime detainDate, decimal fineFees, int createdByUserId, bool isReleased, DateTime releaseDate, int releasedByUserId, int releaseApplicationId) : this()
+        internal DetainedLicense(int detainId, int licenseId, DateTime detainDate, decimal fineFees, int createdByUserId, bool isReleased, DateTime? releaseDate, int? releasedByUserId, int? releaseApplicationId) : this()
         {
             DetainID = detainId;
             LicenseID = licenseId;
