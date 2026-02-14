@@ -16,7 +16,7 @@ namespace DVLD.Core.DTOs.Entities
         private int _createdByUserId;
 
 
-        public int ApplicationId
+        public int ApplicationID
         {
             get => _applicationId;
             private set
@@ -27,7 +27,7 @@ namespace DVLD.Core.DTOs.Entities
             }
         }
 
-        public int ApplicantPersonId
+        public int ApplicantPersonID
         {
             get => _applicantPersonId;
             set
@@ -49,7 +49,7 @@ namespace DVLD.Core.DTOs.Entities
             }
         }
 
-        public ApplicationType ApplicationTypeId
+        public ApplicationType ApplicationTypeID
         {
             get => _applicationTypeId;
             set
@@ -93,7 +93,7 @@ namespace DVLD.Core.DTOs.Entities
             }
         }
 
-        public int CreatedByUserId
+        public int CreatedByUserID
         {
             get => _createdByUserId;
             set
@@ -119,25 +119,25 @@ namespace DVLD.Core.DTOs.Entities
 
         public Application(int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees, int createdByUserId) : this()
         {
-            ApplicantPersonId = applicantPersonId;
+            ApplicantPersonID = applicantPersonId;
             ApplicationDate = applicationDate;
-            ApplicationTypeId = applicationTypeId;
+            ApplicationTypeID = applicationTypeId;
             ApplicationStatus = applicationStatus;
             LastStatusDate = lastStatusDate;
             PaidFees = paidFees;
-            CreatedByUserId = createdByUserId;
+            CreatedByUserID = createdByUserId;
         }
 
         internal Application(int applicationId, int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees, int createdByUserId) : this()
         {
-            ApplicationId = applicationId;
-            ApplicantPersonId = applicantPersonId;
+            ApplicationID = applicationId;
+            ApplicantPersonID = applicantPersonId;
             ApplicationDate = applicationDate;
-            ApplicationTypeId = applicationTypeId;
+            ApplicationTypeID = applicationTypeId;
             ApplicationStatus = applicationStatus;
             LastStatusDate = lastStatusDate;
             PaidFees = paidFees;
-            CreatedByUserId = createdByUserId;
+            CreatedByUserID = createdByUserId;
         }
     }
 }

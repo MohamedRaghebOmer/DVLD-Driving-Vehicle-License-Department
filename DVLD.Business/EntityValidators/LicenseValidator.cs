@@ -42,7 +42,7 @@ namespace DVLD.Business.EntityValidators
 
 
 
-            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeId;
+            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeID;
 
             if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new BusinessException("Invalid application type.");

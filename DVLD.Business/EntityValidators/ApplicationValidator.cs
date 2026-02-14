@@ -12,10 +12,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
 
             /* 
@@ -24,7 +24,7 @@ namespace DVLD.Business.EntityValidators
                 * 3. Check if the applicant doesnot have uncompleted application from the same type.
             */
 
-            int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonId);
+            int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonID);
 
             // 1. Check if the driver already has the required license class.
             if (LicenseData.DoesDriverHasLicense(driverId, licenseClass))
@@ -32,7 +32,7 @@ namespace DVLD.Business.EntityValidators
 
 
             // Minimum age check.
-            DateTime dateOfBirth = PersonData.Get(application.ApplicationId).DateOfBirth;
+            DateTime dateOfBirth = PersonData.Get(application.ApplicationID).DateOfBirth;
             int personAge = DateTime.Now.Year - dateOfBirth.Year;
             if (DateTime.Now < dateOfBirth.AddYears(personAge))
             {
@@ -45,10 +45,10 @@ namespace DVLD.Business.EntityValidators
 
 
             // Check if the applicant doesnot have uncompleted application from the same type.
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.Completed))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.Completed))
                 throw new BusinessException("There is already a completed application of the same type.");
         }
         
@@ -56,19 +56,19 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
 
-            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonId), licenseClass, true))
+            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("Applicant does not have the required license class.");
 
-            if (!LicenseData.IsExpired(application.ApplicantPersonId, licenseClass))
+            if (!LicenseData.IsExpired(application.ApplicantPersonID, licenseClass))
                 throw new BusinessException("Only expired licenses can be renewed.");
 
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.RenewDrivingLicenseService, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.RenewDrivingLicenseService, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
         }
 
@@ -76,19 +76,19 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
 
-            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonId), licenseClass, true))
+            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to replace does not exist.");
 
-            if (LicenseData.IsExpired(application.ApplicantPersonId, licenseClass))
+            if (LicenseData.IsExpired(application.ApplicantPersonID, licenseClass))
                 throw new BusinessException("Cannot replace an expired license.");
 
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.ReplacementForLostDrivingLicense, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.ReplacementForLostDrivingLicense, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
         }
 
@@ -96,19 +96,19 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
 
-            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonId), licenseClass, true))
+            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to replace does not exist.");
 
-            if (LicenseData.IsExpired(application.ApplicantPersonId, licenseClass))
+            if (LicenseData.IsExpired(application.ApplicantPersonID, licenseClass))
                 throw new BusinessException("Cannot replace an expired license.");
 
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.ReplacementForDamagedDrivingLicense, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.ReplacementForDamagedDrivingLicense, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
         }
 
@@ -116,22 +116,23 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
 
-            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonId), licenseClass, true))
+            if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to release does not exist.");
 
-            if (LicenseData.IsExpired(application.ApplicantPersonId, licenseClass))
+            if (LicenseData.IsExpired(application.ApplicantPersonID, licenseClass))
                 throw new BusinessException("Cannot release an expired license.");
 
+            int licenseId = LicenseData.GetLicenseIdByPersonId(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (!DetainedLicenseData.Exists(licenseId))
                 throw new BusinessException("The license is not detained.");
 
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, licenseClass, ApplicationType.ReleaseDetainedDrivingLicense, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.ReleaseDetainedDrivingLicense, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
         }
 
@@ -139,10 +140,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
-            if (!PersonData.Exists(application.ApplicantPersonId))
+            if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserId))
+            if (!UserData.Exists(application.CreatedByUserID))
                 throw new BusinessException("User creating does not exist.");
             /* 
                * 1. Check if the driver already has an international license.
@@ -150,7 +151,7 @@ namespace DVLD.Business.EntityValidators
                * 3. Check if the applicant doesnot have uncompleted application from the same type.
            */
 
-            int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonId);
+            int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonID);
 
             // 1. Check if the driver already has an international license.
             if (driverId == -1)
@@ -162,10 +163,10 @@ namespace DVLD.Business.EntityValidators
             if (!LicenseData.DoesDriverHasLicense(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
                 throw new BusinessException("The applicant does not have an active class 3 driving license.");
 
-            if (ApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, ApplicationType.NewInternationalLicense, ApplicationStatus.New))
+            if (ApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, ApplicationType.NewInternationalLicense, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
-            if (ApplicationData.DoesPersonHaveApplication(application.ApplicantPersonId, ApplicationType.NewInternationalLicense, ApplicationStatus.Completed))
+            if (ApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, ApplicationType.NewInternationalLicense, ApplicationStatus.Completed))
                 throw new BusinessException("There is already a completed application of the same type.");
         }
 
@@ -173,21 +174,21 @@ namespace DVLD.Business.EntityValidators
         public static void UpdateValidator(Application updatedVersion)
         {
             Core.Validators.ApplicationValidator.Validate(updatedVersion);
-            Application storedInfo = ApplicationData.GetApplication(updatedVersion.ApplicationId);
+            Application storedInfo = ApplicationData.GetApplication(updatedVersion.ApplicationID);
 
-            if (updatedVersion.ApplicantPersonId != storedInfo.ApplicantPersonId)
+            if (updatedVersion.ApplicantPersonID != storedInfo.ApplicantPersonID)
                 throw new BusinessException("Applicant person cannot be changed.");
 
             if (updatedVersion.ApplicationDate != storedInfo.ApplicationDate)
                 throw new BusinessException("Application date is automatically set, you cannot change it.");
 
-            if (updatedVersion.ApplicationTypeId != storedInfo.ApplicationTypeId)
+            if (updatedVersion.ApplicationTypeID != storedInfo.ApplicationTypeID)
                 throw new BusinessException("Application type cannot be changed.");
 
             if (updatedVersion.LastStatusDate != storedInfo.LastStatusDate)
                 throw new BusinessException("Last status date is automatically set, you cannot change it.");
 
-            if (updatedVersion.CreatedByUserId != storedInfo.CreatedByUserId)
+            if (updatedVersion.CreatedByUserID != storedInfo.CreatedByUserID)
                 throw new BusinessException("User creating cannot be changed.");
 
             if (updatedVersion.PaidFees < 0)

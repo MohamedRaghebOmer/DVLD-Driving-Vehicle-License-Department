@@ -16,7 +16,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.NewLocalDrivingLicenseService)
+            if (application.ApplicationTypeID != ApplicationType.NewLocalDrivingLicenseService)
                 throw new ValidationException("Application type must be New Local Driving License.");
 
             try
@@ -46,7 +46,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.RenewDrivingLicenseService)
+            if (application.ApplicationTypeID != ApplicationType.RenewDrivingLicenseService)
                 throw new ValidationException("Application type must be Renew Driving License.");
 
             try
@@ -76,7 +76,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.ReplacementForLostDrivingLicense)
+            if (application.ApplicationTypeID != ApplicationType.ReplacementForLostDrivingLicense)
                 throw new ValidationException("Application type must be Replacement for Lost Driving License.");
 
             try
@@ -106,7 +106,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.ReplacementForDamagedDrivingLicense)
+            if (application.ApplicationTypeID != ApplicationType.ReplacementForDamagedDrivingLicense)
                 throw new ValidationException("Application type must be Replacement for Damaged Driving License.");
 
             try
@@ -136,7 +136,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.ReleaseDetainedDrivingLicense)
+            if (application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new ValidationException("Application type must be Release of Detained Driving License.");
 
             try
@@ -166,7 +166,7 @@ namespace DVLD.Business
             if (application == null)
                 throw new ValidationException("Application cannot be empty.");
 
-            if (application.ApplicationTypeId != ApplicationType.NewInternationalLicense)
+            if (application.ApplicationTypeID != ApplicationType.NewInternationalLicense)
                 throw new ValidationException("Application type must be New International Driving License.");
 
             try
@@ -204,6 +204,9 @@ namespace DVLD.Business
 
         public static Application GetApplicationById(int applicationId)
         {
+            if (applicationId <= 0)
+                return null;
+
             try
             {
                 return ApplicationData.GetApplication(applicationId);
@@ -237,7 +240,7 @@ namespace DVLD.Business
 
                 // Update the application in the database
                 if (ApplicationData.Update(application))
-                    return ApplicationData.GetApplication(application.ApplicationId);
+                    return ApplicationData.GetApplication(application.ApplicationID);
                 else
                     return null;
             }

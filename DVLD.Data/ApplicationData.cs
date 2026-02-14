@@ -21,13 +21,13 @@ namespace DVLD.Data
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicantPersonId", application.ApplicantPersonId);
+                    command.Parameters.AddWithValue("@ApplicantPersonId", application.ApplicantPersonID);
                     command.Parameters.AddWithValue("@ApplicationDate", application.ApplicationDate);
-                    command.Parameters.AddWithValue("@ApplicationTypeId", (int)application.ApplicationTypeId);
+                    command.Parameters.AddWithValue("@ApplicationTypeId", (int)application.ApplicationTypeID);
                     command.Parameters.AddWithValue("@ApplicationStatus", (int)application.ApplicationStatus);
                     command.Parameters.AddWithValue("@LastStatusDate", application.LastStatusDate);
                     command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
-                    command.Parameters.AddWithValue("@CreatedByUserId", application.CreatedByUserId);
+                    command.Parameters.AddWithValue("@CreatedByUserId", application.CreatedByUserID);
                     connection.Open();
 
                     object result = command.ExecuteScalar();
@@ -170,7 +170,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@ApplicationStatus", (int)application.ApplicationStatus);
                     command.Parameters.AddWithValue("@LastStatusDate", application.LastStatusDate);
                     command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
-                    command.Parameters.AddWithValue("@ApplicationId", application.ApplicationId);
+                    command.Parameters.AddWithValue("@ApplicationId", application.ApplicationID);
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;
                 }
