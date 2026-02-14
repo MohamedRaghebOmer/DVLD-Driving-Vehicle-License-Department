@@ -43,7 +43,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _detainDate;
             
-            internal set
+            private set
             {
                 if (value > DateTime.Now)
                     throw new ValidationException("Detain date cannot be in the future.");
@@ -78,14 +78,14 @@ namespace DVLD.Core.DTOs.Entities
         public bool IsReleased
         {
             get => _isReleased;
-            internal set => _isReleased = value;
+            private set => _isReleased = value;
         }
 
         public DateTime? ReleaseDate
         {
             get => _releaseDate;
             
-            internal set
+            private set
             {
                 if (value == null)
                     _releaseDate = null;
@@ -100,7 +100,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _releasedByUserId;
             
-            set
+            private set
             {
                 if (value == null)
                     _releaseApplicationId = null;
@@ -114,7 +114,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _releaseApplicationId;
             
-            set
+            private set
             {
                 if (value == null)
                     _releaseApplicationId = null;
@@ -125,11 +125,11 @@ namespace DVLD.Core.DTOs.Entities
         }
 
 
-        private DetainedLicense()
+        public DetainedLicense()
         {
             this._detainId = -1; // Default value indicating not set
             this._licenseId = -1; // Default value indicating not set
-            this._detainDate = new DateTime(1, 1, 1); // Default value indicating not set
+            this._detainDate =  DateTime.MinValue; // Default value indicating not set
             this._fineFees = 0; // Default value indicating not set
             this._createdByUserId = -1; // Default value indicating not set
             this._isReleased = false; // Default value indicating not set
@@ -138,13 +138,11 @@ namespace DVLD.Core.DTOs.Entities
             this._releaseApplicationId = null; // Default value indicating not set
         }
 
-        public DetainedLicense(int licenseId, decimal fineFees, int createdByUserId, int? releaseByUserId , int? releaseApplicationId) : this()
+        public DetainedLicense(int licenseId, decimal fineFees, int createdByUserId) : this()
         {
             LicenseID = licenseId;
             FineFees = fineFees;
             CreatedByUserID = createdByUserId;
-            ReleasedByUserID = releaseByUserId;
-            ReleaseApplicationID = releaseApplicationId;
         }
 
         internal DetainedLicense(int detainId, int licenseId, DateTime detainDate, decimal fineFees, int createdByUserId, bool isReleased, DateTime? releaseDate, int? releasedByUserId, int? releaseApplicationId) : this()

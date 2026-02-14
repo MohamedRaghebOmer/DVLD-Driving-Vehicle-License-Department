@@ -12,13 +12,13 @@ namespace DVLD.Core.Validators
             if (application == null)
                 throw new ValidationException("Application cannot be null.");
 
-            if (application.ApplicantPersonId <= 0)
+            if (application.ApplicantPersonID <= 0)
                 throw new ValidationException("ApplicantPersonId must be a positive integer.");
 
             if (application.ApplicationDate == new DateTime(1, 1, 1))
                 throw new ValidationException("ApplicationDate must be a valid date.");
 
-            if (!Enum.IsDefined(typeof(ApplicationType), application.ApplicationTypeId))
+            if (!Enum.IsDefined(typeof(ApplicationType), application.ApplicationTypeID))
                 throw new ValidationException("Invalid ApplicationTypeId.");
 
             if (!Enum.IsDefined(typeof(ApplicationStatus), application.ApplicationStatus))
@@ -30,7 +30,7 @@ namespace DVLD.Core.Validators
             if (application.PaidFees < 0)
                 throw new ValidationException("PaidFees cannot be negative.");
 
-            if (application.CreatedByUserId <= 0)
+            if (application.CreatedByUserID <= 0)
                 throw new ValidationException("CreatedByUserId must be a positive integer.");
         }
     }

@@ -112,6 +112,32 @@ namespace DVLD.Data
             }
         }
 
+        public static int GetLicenseIdByPersonId(int personId, LicenseClass licenseClass)
+        {
+            string query = "SELECT LicenseID FROM Licenses WHERE DriverID IN (SELECT DriverID FROM Drivers WHERE PersonID = @PersonID) AND LicenseClass = @LicenseClass;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personId);
+                    command.Parameters.AddWithValue("@LicenseClass", (int)licenseClass);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int licenseId))
+                        return licenseId;
+                }
+                return -1; // Return -1 if the insert operation fails
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license ID for PersonID {personId} and LicenseClass {licenseClass}.", ex);
+                throw;
+            }
+        }
+
         public static License GetLicenseById(int licenseId)
         {
             string query = "SELECT * FROM Licenses WHERE LicenseID = @LicenseID;";
@@ -246,20 +272,19 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsExpired(int applicantPersonId, LicenseClass licenseClass)
+        public static bool IsExpired(int personId, LicenseClass licenseClass)
         {
             string query = @"SELECT 1 FROM Licenses L
                             INNER JOIN Drivers D ON L.DriverID = D.DriverID
-                            WHERE D.PersonID = @applicantPersonId AND L.LicenseClass = @licenseClass AND L.ExpirationDate < @todayDate;";
+                            WHERE D.PersonID = @applicantPersonId AND L.LicenseClass = @licenseClass AND L.ExpirationDate < GETDATE();";
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@applicantPersonId", applicantPersonId);
+                    command.Parameters.AddWithValue("@applicantPersonId", personId);
                     command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
-                    command.Parameters.AddWithValue("@todayDate", DateTime.Now);
                     connection.Open();
                     
                     return command.ExecuteScalar() != null;
@@ -268,6 +293,26 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if license is expired.", ex);
+                throw;
+            }
+        }
+
+        public static bool IsExpired(int licenseId)
+        {
+            string query = @"SELECT 1 FROM Licenses WHERE LicenseID = @licenseId AND ExpirationDate < GETDATE();";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@licenseId", licenseId);
+                    connection.Open();
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking if license with ID {licenseId} is expired.", ex);
                 throw;
             }
         }
