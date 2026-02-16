@@ -56,6 +56,7 @@
     <Compile Include="DTOs\Enums\Enums.cs" />
     <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Logging\LoggedInUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ApplicationValidator.cs" />
     <Compile Include="Validators\CountryValidator.cs" />

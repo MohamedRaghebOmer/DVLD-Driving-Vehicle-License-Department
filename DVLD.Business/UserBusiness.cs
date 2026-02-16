@@ -10,6 +10,24 @@ namespace DVLD.Business
 {
     public class UserBusiness
     {
+        public static bool IsCorrectUsernameAndPassword(string username, string password, bool isLogin)
+        {
+            // Check username existance.
+            if (!UserData.Exists(username))
+                throw new BusinessException("Incorrect username or password.");
+
+            // Check if username is not active.
+            if (!UserData.IsActive(username))
+                throw new BusinessException("Your account was deactivated. Contact your admin to activate you.");
+
+            // Check if the password is not correct.
+            if (!UserData.IsCorrectUsernameAndPassword(username, password, isLogin))
+                throw new BusinessException("Incorrect username or password.");
+
+            // Existed username, Active, Correct password for the username
+            return true;
+        }
+
         public static User Save(User user)
         {
             // Add new 
