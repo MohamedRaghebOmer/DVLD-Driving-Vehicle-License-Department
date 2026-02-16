@@ -51,7 +51,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _createdByUserId;
 
-            set
+            private set
             {
                 if (value <= 0)
                     throw new ValidationException("User Id must be a positve intger.");
@@ -68,12 +68,11 @@ namespace DVLD.Core.DTOs.Entities
             this._createdByUserId = -1;
         }
 
-        public Test(int testAppointmentId, bool testResult, string notes, int createdByUserId) : this()
+        public Test(int testAppointmentId, bool testResult, string notes) : this()
         {
             TestAppointmentID = testAppointmentId;
             TestResult = testResult;
             Notes = notes;
-            CreatedByUserID = createdByUserId;
         }
 
         internal Test(int testId, int testAppointmentId, bool testResult, string notes, int createdByUserId) : this()

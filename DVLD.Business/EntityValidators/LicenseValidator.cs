@@ -82,9 +82,6 @@ namespace DVLD.Business.EntityValidators
 
             if (storedInfo.IssueReason != license.IssueReason)
                 throw new BusinessException("Can't change license issue reason.");
-
-            if (storedInfo.CreatedByUserId != license.CreatedByUserId)
-                throw new BusinessException("Can't change user created the license.");
         }
     }
 }

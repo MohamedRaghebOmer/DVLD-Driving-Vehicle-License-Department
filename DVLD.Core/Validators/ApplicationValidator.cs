@@ -29,9 +29,6 @@ namespace DVLD.Core.Validators
 
             if (application.PaidFees < 0)
                 throw new ValidationException("PaidFees cannot be negative.");
-
-            if (application.CreatedByUserID <= 0)
-                throw new ValidationException("CreatedByUserId must be a positive integer.");
         }
     }
 }

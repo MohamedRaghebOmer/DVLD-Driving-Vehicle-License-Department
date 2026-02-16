@@ -26,7 +26,7 @@ namespace DVLD.Data
                     DateTime smallDateTimeValue = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
 
                     command.Parameters.AddWithValue("@PersonId", driver.PersonId);
-                    command.Parameters.AddWithValue("@CreatedByUserId", driver.CreatedByUserId);
+                    command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
                     command.Parameters.AddWithValue("@CreatedDate", smallDateTimeValue);
 
                     connection.Open();

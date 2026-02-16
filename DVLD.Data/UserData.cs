@@ -9,6 +9,40 @@ namespace DVLD.Data
 {
     public static class UserData
     {
+        public static bool IsCorrectUsernameAndPassword(string username, string password, bool isLogin)
+        {
+            string query = @"SELECT UserID FROM Users WHERE UserName = @UserName AND Password = @Password;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", username);
+                    command.Parameters.AddWithValue("@Password", password);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int UserId))
+                    {
+                        if (isLogin)
+                        {
+                            LoggedInUserInfo.UserId = UserId;
+                            LoggedInUserInfo.Username = username;
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking UserName and Password from Users.", ex);
+                throw;
+            }
+        }
+
         // ----------------------------Create----------------------------
         public static int Add(User user)
         {
@@ -176,6 +210,29 @@ namespace DVLD.Data
             }
         }
 
+        public static bool Exists(string username)
+        {
+            string query = "SELECT 1 FROM Users WHERE UserName = @UserName";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", username);
+                    connection.Open();
+
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking existence in users by UserId.", ex);
+                throw;
+            }
+        }
+
+
         public static bool IsPersonUsed(int personId, int excluedUserId)
         {
             string query = "SELECT 1 FROM Users WHERE PersonId = @PersonId AND UserId != @UserId";
@@ -242,7 +299,31 @@ namespace DVLD.Data
             }
 
         }
-                
+
+        public static bool IsActive(string username)
+        {
+            string query = @"SELECT 1 FROM Users WHERE UserName = @UserName AND IsActive = 1;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", username);
+                    connection.Open();
+
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking user activation status.", ex);
+                throw;
+            }
+
+        }
+
+
         public static DataTable GetAll()
         {
             string query = "SELECT * FROM Users";

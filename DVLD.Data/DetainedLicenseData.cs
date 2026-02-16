@@ -22,7 +22,7 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@licenseId", licenseId);
                     command.Parameters.AddWithValue("@fineFees", fineFees);
-                    command.Parameters.AddWithValue("@createdByUserId", 1);
+                    command.Parameters.AddWithValue("@createdByUserId", LoggedInUserInfo.UserId);
                     connection.Open();
 
                     object result = command.ExecuteScalar();

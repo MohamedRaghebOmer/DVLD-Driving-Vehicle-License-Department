@@ -23,7 +23,7 @@ namespace DVLD.Data
                     cmd.Parameters.AddWithValue("@TestAppointmentId", test.TestAppointmentID);
                     cmd.Parameters.AddWithValue("@TestResult", test.TestResult);
                     cmd.Parameters.AddWithValue("@Notes", test.Notes ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@CreatedByUserId", test.CreatedByUserID);
+                    cmd.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
                     conn.Open();
                     object result = cmd.ExecuteScalar();
 

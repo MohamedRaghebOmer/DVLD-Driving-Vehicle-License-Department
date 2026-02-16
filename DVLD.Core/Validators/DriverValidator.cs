@@ -17,9 +17,6 @@ namespace DVLD.Core.Validators
             if (driver.PersonId < 1)
                 throw new ValidationException("Person Id can't be negative.");
 
-            if (driver.CreatedByUserId < 1)
-                throw new ValidationException("User Id can't be negative.");
-
             if (driver.CreatedDate > DateTime.Now)
                 throw new ValidationException("Creation date can't be in the future.");
         }

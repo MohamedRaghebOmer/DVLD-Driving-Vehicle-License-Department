@@ -15,9 +15,6 @@ namespace DVLD.Business.EntityValidators
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
-
             /* 
                 * 1. Check if the driver already has the required license class.
                 * 2. Minimum age check.
@@ -59,9 +56,6 @@ namespace DVLD.Business.EntityValidators
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
-
             if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("Applicant does not have the required license class.");
 
@@ -78,9 +72,6 @@ namespace DVLD.Business.EntityValidators
 
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
-
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
 
             if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to replace does not exist.");
@@ -99,9 +90,6 @@ namespace DVLD.Business.EntityValidators
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
-
             if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to replace does not exist.");
 
@@ -118,9 +106,6 @@ namespace DVLD.Business.EntityValidators
 
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
-
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
 
             if (!LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass, true))
                 throw new BusinessException("License to release does not exist.");
@@ -143,8 +128,6 @@ namespace DVLD.Business.EntityValidators
             if (!PersonData.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
 
-            if (!UserData.Exists(application.CreatedByUserID))
-                throw new BusinessException("User creating does not exist.");
             /* 
                * 1. Check if the driver already has an international license.
                * 2. Check if the driver has an active class 3 license.
@@ -188,9 +171,6 @@ namespace DVLD.Business.EntityValidators
             if (updatedVersion.LastStatusDate != storedInfo.LastStatusDate)
                 throw new BusinessException("Last status date is automatically set, you cannot change it.");
 
-            if (updatedVersion.CreatedByUserID != storedInfo.CreatedByUserID)
-                throw new BusinessException("User creating cannot be changed.");
-
             if (updatedVersion.PaidFees < 0)
                 throw new BusinessException("Paid fees cannot be negative.");
 
@@ -217,7 +197,6 @@ namespace DVLD.Business.EntityValidators
 
             if (storedInfo.ApplicationStatus != ApplicationStatus.New && updatedVersion.ApplicationStatus != storedInfo.ApplicationStatus)
                 throw new BusinessException("Application status can only be changed from New.");
-
         }
     }
 }

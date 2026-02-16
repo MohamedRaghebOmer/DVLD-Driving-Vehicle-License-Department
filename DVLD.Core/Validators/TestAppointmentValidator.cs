@@ -23,9 +23,6 @@ namespace DVLD.Core.Validators
 
             if (testAppointment.PaidFees < 0)
                 throw new ValidationException("Paid fees cannot be negative.");
-
-            if (testAppointment.CreatedByUserId <= 0)
-                throw new ValidationException("CreatedByUserId must be greater than zero.");
         }
     }
 }
