@@ -35,7 +35,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@paidFees", license.PaidFees);
                     command.Parameters.AddWithValue("@isActive", license.IsActive);
                     command.Parameters.AddWithValue("@issueReason", (int)issueReason);
-                    command.Parameters.AddWithValue("@createdByUserID", license.CreatedByUserId);
+                    command.Parameters.AddWithValue("@createdByUserID", LoggedInUserInfo.UserId);
 
                     connection.Open();
                     object result = command.ExecuteScalar();

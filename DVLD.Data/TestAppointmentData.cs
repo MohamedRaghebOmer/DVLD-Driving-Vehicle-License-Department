@@ -26,7 +26,7 @@ namespace DVLD.Data
                         command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationId", testAppointment.LocalDrivingLicenseApplicationId);
                         command.Parameters.AddWithValue("@AppointmentDate", testAppointment.AppointmentDate);
                         command.Parameters.AddWithValue("@PaidFees", testAppointment.PaidFees);
-                        command.Parameters.AddWithValue("@CreatedByUserId", testAppointment.CreatedByUserId);
+                        command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
                         connection.Open();
 
                         object result = command.ExecuteScalar();

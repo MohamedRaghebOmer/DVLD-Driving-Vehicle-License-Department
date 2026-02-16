@@ -27,7 +27,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@ApplicationStatus", (int)application.ApplicationStatus);
                     command.Parameters.AddWithValue("@LastStatusDate", application.LastStatusDate);
                     command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
-                    command.Parameters.AddWithValue("@CreatedByUserId", application.CreatedByUserID);
+                    command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
                     connection.Open();
 
                     object result = command.ExecuteScalar();
@@ -73,7 +73,7 @@ namespace DVLD.Data
 
         public static Application GetApplication(int applicationId)
         {
-            string query = @"SELECT * FROM Applications WHERE ApplicationId = @appId";
+            string query = @"SELECT * FROM Applications WHERE ApplicationID = @appId";
 
             try
             {
@@ -90,13 +90,13 @@ namespace DVLD.Data
                             return new Application
                             (
                                 applicationId: Convert.ToInt32(reader["ApplicationID"]),
-                                applicantPersonId: Convert.ToInt32(reader["ApplicantPersonId"]),
+                                applicantPersonId: Convert.ToInt32(reader["ApplicantPersonID"]),
                                 applicationDate: Convert.ToDateTime(reader["ApplicationDate"]),
-                                applicationTypeId: (ApplicationType)Convert.ToInt32(reader["ApplicationTypeId"]),
+                                applicationTypeId: (ApplicationType)Convert.ToInt32(reader["ApplicationTypeID"]),
                                 applicationStatus: (ApplicationStatus)Convert.ToInt32(reader["ApplicationStatus"]),
                                 lastStatusDate: Convert.ToDateTime(reader["LastStatusDate"]),
                                 paidFees: Convert.ToDecimal(reader["PaidFees"]),
-                                createdByUserId: Convert.ToInt32(reader["CreatedByUserId"])
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
                             );
                         }
                     }

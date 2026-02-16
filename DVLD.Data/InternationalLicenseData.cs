@@ -25,7 +25,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@IssuedUsingLocalDrivingLicenseID", internationalLicense.IssuedUsingLocalLicenseID);
                     command.Parameters.AddWithValue("@ExpirationDate", internationalLicense.ExpirationDate);
                     command.Parameters.AddWithValue("@IsActive", internationalLicense.IsActive);
-                    command.Parameters.AddWithValue("@CreatedByUserID", internationalLicense.CreatedByUserID);
+                    command.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
 
                     connection.Open();
 
