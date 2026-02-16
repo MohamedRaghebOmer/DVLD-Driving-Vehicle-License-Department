@@ -72,7 +72,7 @@ namespace DVLD.Core.DTOs.Entities
         public int CreatedByUserId
         {
             get => _createdByUserId;
-            set
+            private set
             {
                 if (value > 0)
                     _createdByUserId = value;
@@ -99,13 +99,12 @@ namespace DVLD.Core.DTOs.Entities
             this._isLocked = false;
         }
 
-        public TestAppointment(TestType testTypeId, int localDrivingLicenseApplicationId, DateTime appointmentDate, decimal paidFees, int createdByUserId, bool isLocked) : this()
+        public TestAppointment(TestType testTypeId, int localDrivingLicenseApplicationId, DateTime appointmentDate, decimal paidFees, bool isLocked) : this()
         {
             TestTypeId = testTypeId;
             LocalDrivingLicenseApplicationId = localDrivingLicenseApplicationId;
             AppointmentDate = appointmentDate;
             PaidFees = paidFees;
-            CreatedByUserId = createdByUserId;
             IsLocked = isLocked;
         }
 

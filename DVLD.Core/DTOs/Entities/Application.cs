@@ -96,7 +96,7 @@ namespace DVLD.Core.DTOs.Entities
         public int CreatedByUserID
         {
             get => _createdByUserId;
-            set
+            private set
             {
                 if (value <= 0)
                     throw new ValidationException("CreatedByUserId must be a positive integer.");
@@ -117,7 +117,7 @@ namespace DVLD.Core.DTOs.Entities
             this._createdByUserId = -1; // Default value indicating not set
         }
 
-        public Application(int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees, int createdByUserId) : this()
+        public Application(int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees) : this()
         {
             ApplicantPersonID = applicantPersonId;
             ApplicationDate = applicationDate;
@@ -125,7 +125,6 @@ namespace DVLD.Core.DTOs.Entities
             ApplicationStatus = applicationStatus;
             LastStatusDate = lastStatusDate;
             PaidFees = paidFees;
-            CreatedByUserID = createdByUserId;
         }
 
         internal Application(int applicationId, int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees, int createdByUserId) : this()

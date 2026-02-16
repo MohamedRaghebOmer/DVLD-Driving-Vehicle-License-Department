@@ -67,7 +67,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _createdByUserId;
             
-            set
+            private set
             {
                 if (value < 0)
                     throw new ValidationException("Created by user ID cannot be negative.");
@@ -138,11 +138,10 @@ namespace DVLD.Core.DTOs.Entities
             this._releaseApplicationId = null; // Default value indicating not set
         }
 
-        public DetainedLicense(int licenseId, decimal fineFees, int createdByUserId) : this()
+        public DetainedLicense(int licenseId, decimal fineFees) : this()
         {
             LicenseID = licenseId;
             FineFees = fineFees;
-            CreatedByUserID = createdByUserId;
         }
 
         internal DetainedLicense(int detainId, int licenseId, DateTime detainDate, decimal fineFees, int createdByUserId, bool isReleased, DateTime? releaseDate, int? releasedByUserId, int? releaseApplicationId) : this()

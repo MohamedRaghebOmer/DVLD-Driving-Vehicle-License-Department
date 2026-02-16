@@ -41,7 +41,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             get => _createdByUserId;
 
-            set
+            private set
             {
                 if (value > 0)
                     _createdByUserId = value;
@@ -72,15 +72,14 @@ namespace DVLD.Core.DTOs.Entities
             this._createdDate = new DateTime(1900, 1, 1);
         }
 
-        public Driver(int personId, int createdByUserId) : this()
+        public Driver(int personId) : this()
         {
             // this._driverId = -1;
             this.PersonId = personId;
-            this.CreatedByUserId = createdByUserId;
             // this._dateCreated = new DateTime(1, 1, 1);
         }
 
-        internal Driver(int driverId, int personId, int createdByUserId, DateTime createdDate)
+        internal Driver(int driverId, int personId, int createdByUserId, DateTime createdDate) : this()
         {
             this.DriverId = driverId;
             this.PersonId = personId;
