@@ -12,9 +12,6 @@ namespace DVLD.Core.Validators
 
             if (test.TestAppointmentID <= 0)
                 throw new ValidationException("TestAppointmentID must be a positive integer.");
-
-            if (test.CreatedByUserID <= 0)
-                throw new ValidationException("CreatedByUserID must be a positive integer.");
         }
     }
 }

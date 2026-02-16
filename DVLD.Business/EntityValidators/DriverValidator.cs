@@ -10,23 +10,13 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.DriverValidator.Validate(driver);
 
-            if (UserData.Exists(driver.CreatedByUserId))
+            if (PersonData.Exists(driver.PersonId))
             {
-                if (UserData.IsActive(driver.CreatedByUserId))
-                {
-                    if (PersonData.Exists(driver.PersonId))
-                    {
-                        if (DriverData.IsPersonUsed(driver.PersonId, -1))
-                            throw new BusinessException("The person is already associated with another driver.");
-                    }
-                    else
-                        throw new BusinessException("Person doesn't exists.");
-                }
-                else
-                    throw new BusinessException("Account inactive. Please contact your administrator to activate your account.");
+                if (DriverData.IsPersonUsed(driver.PersonId, -1))
+                    throw new BusinessException("The person is already associated with another driver.");
             }
             else
-                throw new BusinessException($"User with id = {driver.CreatedByUserId} doesn't exits.");
+                throw new BusinessException("Person doesn't exists.");
         }
 
         public static void UpdateValidator(Driver driver)
@@ -34,28 +24,18 @@ namespace DVLD.Business.EntityValidators
             Core.Validators.DriverValidator.Validate(driver);
             Driver storedInfo = DriverData.GetByDriverId(driver.DriverId);
 
-            if (storedInfo.CreatedByUserId == driver.CreatedByUserId)
+            if (storedInfo.CreatedDate == driver.CreatedDate)
             {
-                if (UserData.IsActive(driver.CreatedByUserId))
+                if (PersonData.Exists(driver.PersonId))
                 {
-                    if (storedInfo.CreatedDate == driver.CreatedDate)
-                    {
-                        if (PersonData.Exists(driver.PersonId))
-                        {
-                            if (DriverData.IsPersonUsed(driver.PersonId, driver.DriverId))
-                                throw new BusinessException("The person is already associated with another driver.");
-                        }
-                        else
-                            throw new BusinessException("Person doesn't exists.");
-                    }
-                    else
-                        throw new BusinessException("Creation date can't be changed.");
+                    if (DriverData.IsPersonUsed(driver.PersonId, driver.DriverId))
+                        throw new BusinessException("The person is already associated with another driver.");
                 }
                 else
-                    throw new BusinessException("Account inactive. Please contact your administrator to activate your account.");
+                    throw new BusinessException("Person doesn't exists.");
             }
             else
-                throw new BusinessException($"Can't change user who created the driver to another one.");
+                throw new BusinessException("Creation date can't be changed.");
         }
     }
 }   

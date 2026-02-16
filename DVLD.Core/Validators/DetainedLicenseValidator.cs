@@ -16,9 +16,6 @@ namespace DVLD.Core.Validators
 
             if (detainedLicense.FineFees < 0)
                 throw new ValidationException("FineFees cannot be negative.");
-
-            if (detainedLicense.CreatedByUserID <= 0)
-                throw new ValidationException("CreatedByUserID must be a positive integer.");
         }
     }
 }

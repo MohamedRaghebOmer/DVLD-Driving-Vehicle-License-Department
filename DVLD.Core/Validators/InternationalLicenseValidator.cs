@@ -22,9 +22,6 @@ namespace DVLD.Core.Validators
 
             if (internationalLicense.ExpirationDate == new DateTime(1, 1, 1) || internationalLicense.ExpirationDate < DateTime.Now)
                 throw new ValidationException("Expiration date must be a valid date.");
-
-            if (internationalLicense.CreatedByUserID <= 0)
-                throw new ValidationException("User Id must be a positive integer.");
         }
     }
 }

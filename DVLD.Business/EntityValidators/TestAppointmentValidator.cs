@@ -16,10 +16,6 @@ namespace DVLD.Business.EntityValidators
             if (!LocalDrivingLicenseApplicationData.DoesApplicationExist(testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("The specified local driving license application does not exist.");
 
-            // Check if the user who created the test appointment exists
-            if (!UserData.Exists(testAppointment.CreatedByUserId))
-                throw new BusinessException("The specified user does not exist.");
-
             // Check if a test appointment already exists for the given test type and local driving license application
             if (TestAppointmentData.DoesApplicationExist(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("A test appointment already exists for the given test type and local driving license application.");
@@ -58,9 +54,6 @@ namespace DVLD.Business.EntityValidators
 
             if (testAppointment.PaidFees < existingTestAppointment.PaidFees)
                 throw new ValidationException("Cannot decrease fees after it increased.");
-
-            if (testAppointment.CreatedByUserId != existingTestAppointment.CreatedByUserId)
-                throw new BusinessException("Cannot change user who created the appointment.");
         }
     }
 }
