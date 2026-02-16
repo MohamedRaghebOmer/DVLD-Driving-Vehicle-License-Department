@@ -75,7 +75,7 @@ namespace DVLD.Core.DTOs.Entities
         public DateTime ExpirationDate
         {
             get => _expirationDate;
-            private set
+            set
             {
                 if (value == null || value == DateTime.MinValue || value < DateTime.Now)
                     throw new ValidationException("Invalid Expiration Date.");
@@ -102,7 +102,7 @@ namespace DVLD.Core.DTOs.Entities
         }
 
 
-        public InternationalLicense()
+        private InternationalLicense()
         {
             this._internationalLicenseId = -1;
             this._applicationId = -1;
@@ -114,11 +114,12 @@ namespace DVLD.Core.DTOs.Entities
             this._createdByUserId = -1;
         }
 
-        public InternationalLicense(int applicationId, int driverId, int issuedUsingLocalLicenseId) : this()
+        public InternationalLicense(int applicationId, int driverId, int issuedUsingLocalLicenseId, DateTime expirationDate) : this()
         {
             ApplicationID = applicationId;
             DriverID = driverId;
             IssuedUsingLocalLicenseID = issuedUsingLocalLicenseId;
+            ExpirationDate = expirationDate;
         }
 
         internal InternationalLicense(int internationalLicenseId, int applicationId, int driverId, int issuedUsingLocalLicenseId, DateTime issueDate, DateTime expirationDate, bool isActive, int createdByUserId) : this()

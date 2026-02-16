@@ -184,18 +184,21 @@ namespace DVLD.Data
 
         }
 
-        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus)
+        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus, bool autoChangeLastStatusDate = true)
         {
-            string query = @"UPDATE Applications SET ApplicationStatus = @newStatus, 
-                            LastStatusDate = @lastStatusDate
-                            WHERE ApplicationId = @applicationId";
+            string query = @"UPDATE Applications SET ApplicationStatus = @newStatus";
+
+            if (autoChangeLastStatusDate)
+                query += ", LastStatusDate = GETDATE()";
+
+            query += " WHERE ApplicationId = @applicationId;";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@newStatus", (int)newStatus);
-                    command.Parameters.AddWithValue("@lastStatusDate", DateTime.Now);
                     command.Parameters.AddWithValue("@applicationId", applicationId);
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;

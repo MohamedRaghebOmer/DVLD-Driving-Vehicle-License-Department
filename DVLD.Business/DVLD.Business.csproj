@@ -55,6 +55,7 @@
     <Compile Include="EntityValidators\TestAppointmentValidator.cs" />
     <Compile Include="EntityValidators\TestValidator.cs" />
     <Compile Include="EntityValidators\UserValidator.cs" />
+    <Compile Include="InternationalLicenseBusiness.cs" />
     <Compile Include="LicenseBusiness.cs" />
     <Compile Include="LicenseClassBusiness.cs" />
     <Compile Include="LocalDrivingLicenseApplicationBusiness.cs" />

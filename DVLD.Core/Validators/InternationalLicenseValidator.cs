@@ -20,9 +20,6 @@ namespace DVLD.Core.Validators
             if (internationalLicense.IssuedUsingLocalLicenseID <= 0)
                 throw new ValidationException("Local license id used to issue this license must be a positive integer.");
 
-            if (internationalLicense.IssueDate == new DateTime(1, 1, 1) || internationalLicense.IssueDate > DateTime.Now)
-                throw new ValidationException("Issue date must be a valid date.");
-
             if (internationalLicense.ExpirationDate == new DateTime(1, 1, 1) || internationalLicense.ExpirationDate < DateTime.Now)
                 throw new ValidationException("Expiration date must be a valid date.");
 

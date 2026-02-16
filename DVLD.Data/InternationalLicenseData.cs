@@ -12,7 +12,7 @@ namespace DVLD.Data
         public static int AddNewInternationalLicense(InternationalLicense internationalLicense)
         {
             string query = @"INSERT INTO InternationalLicenses(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssuedDate, ExpirationDate, IsActive, CreatedByUserID)
-                            VALUES (@ApplicationID, @DriverID, @IssuedUsingLocalLicenseID, @IssuedDate, @ExpirationDate, @IsActive, @CreatedByUserID);
+                            VALUES (@ApplicationID, @DriverID, @IssuedUsingLocalLicenseID, GETDATE(), @ExpirationDate, @IsActive, @CreatedByUserID);
                             SELECT SCOPE_IDENTITY();";
 
             try
@@ -23,7 +23,6 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@ApplicationID", internationalLicense.ApplicationID);
                     command.Parameters.AddWithValue("@DriverID", internationalLicense.DriverID);
                     command.Parameters.AddWithValue("@IssuedUsingLocalDrivingLicenseID", internationalLicense.IssuedUsingLocalLicenseID);
-                    command.Parameters.AddWithValue("@IssuedDate", internationalLicense.IssueDate);
                     command.Parameters.AddWithValue("@ExpirationDate", internationalLicense.ExpirationDate);
                     command.Parameters.AddWithValue("@IsActive", internationalLicense.IsActive);
                     command.Parameters.AddWithValue("@CreatedByUserID", internationalLicense.CreatedByUserID);
@@ -44,7 +43,7 @@ namespace DVLD.Data
             }
         }
 
-        public static DataTable GetAllInternationalLicenses()
+        public static DataTable GetAll()
         {
             string query = @"SELECT * FROM InternationalLicenses;";
             try
@@ -108,145 +107,6 @@ namespace DVLD.Data
             }
         }
 
-        public static InternationalLicense GetInternationalLicenseByApplicationId(int applicationID)
-        {
-            string query = @"SELECT * FROM InternationalLicenses WHERE ApplicationID = @ApplicationID;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@ApplicationID", applicationID);
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            return new InternationalLicense
-                                (
-                                    (int)reader["LicenseID"],
-                                    applicationID,
-                                    (int)reader["DriverID"],
-                                    (int)reader["IssuedUsingLocalLicenseID"],   
-                                    (DateTime)reader["IssuedDate"],
-                                    (DateTime)reader["ExpirationDate"],
-                                    (bool)reader["IsActive"],
-                                    (int)reader["CreatedByUserID"]
-                                );
-                        }
-                    }
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
-                throw;
-            }
-        }
-
-        public static InternationalLicense GetInternationalLicenseByDriverId(int driverID)
-        {
-            string query = @"SELECT * FROM InternationalLicenses WHERE DriverID = @DriverID;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@DriverID", driverID);
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            return new InternationalLicense
-                                (
-                                    (int)reader["LicenseID"],
-                                    (int)reader["ApplicationID"],
-                                    driverID,
-                                    (int)reader["IssuedUsingLocalLicenseID"],
-                                    (DateTime)reader["IssuedDate"],
-                                    (DateTime)reader["ExpirationDate"],
-                                    (bool)reader["IsActive"],
-                                    (int)reader["CreatedByUserID"]
-                                );
-                        }
-                    }
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
-                throw;
-            }
-        }
-        
-        public static InternationalLicense GetInternationalLicenseByLocalLicenseId(int localLicenseId)
-        {
-            string query = @"SELECT * FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@IssuedUsingLocalLicenseID", localLicenseId);
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            return new InternationalLicense
-                                (
-                                    (int)reader["LicenseID"],
-                                    (int)reader["ApplicationID"],
-                                    (int)reader["DriverID"],
-                                    localLicenseId,
-                                    (DateTime)reader["IssuedDate"],
-                                    (DateTime)reader["ExpirationDate"],
-                                    (bool)reader["IsActive"],
-                                    (int)reader["CreatedByUserID"]
-                                );
-                        }
-                    }
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
-                throw;
-            }
-        }
-
-        public static bool DoesInternationalLicenseIdExist(int internationalLicenseId)
-        {
-            string query = @"SELECT 1 FROM InternationalLicenses WHERE InternationalLicenseID = @InternationalLicenseID;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@LicenseID", internationalLicenseId);
-                    connection.Open();
-                    
-                    return command.ExecuteScalar() != null;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
-                throw;
-            }
-        }
-
         public static bool DoesApplicationIdExist(int applicationId, int excludedInternationalLicenseId = -1)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE ApplicationID = @ApplicationID AND InternationalLicenseID != @InternationalLicenseID;";
@@ -298,30 +158,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesLocalLicenseIdExist(int localLicenseId, int excludedInternationalLicenseId = -1)
-        {
-            string query = @"SELECT 1 FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID AND InternationalLicenseID != @InternationalLicenseID;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@IssuedUsingLocalLicenseID", localLicenseId);
-                    command.Parameters.AddWithValue("@InternationalLicenseID", excludedInternationalLicenseId);
-                    connection.Open();
-
-                    return command.ExecuteScalar() != null;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
-                throw;
-            }
-        }
-
-        public static bool DeactiveInternationalLicense(int internationalLicenseId)
+        public static bool DeactiveInternationalLicenseByLicenseId(int internationalLicenseId)
         {
             string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE InternationalLicenseID = @InternationalLicenseID;";
             
@@ -341,6 +178,50 @@ namespace DVLD.Data
                 AppLogger.LogError("DAL: Error while updating InternationalLicenses", ex);
                 throw;
             }
+        }
+
+        public static bool DeactiveInternationalLicenseByDriverId(int driverId)
+        {
+            string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE DriverID = @DriverID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", driverId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating InternationalLicenses", ex);
+                throw;
+            }
+        }
+
+        public static bool ActivateInternationalLicense(int internationalLicenseId)
+        {
+            string query = @"UPDATE InternationalLicenses SET IsActive = 1 WHERE InternationalLicenseID = @InternationalLicenseID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@InternationalLicenseID", internationalLicenseId);
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while activating InternationalLicenses.", ex);
+                throw;
+            }
+
         }
     }
 }
