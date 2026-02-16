@@ -63,7 +63,7 @@ namespace DVLD.Business.EntityValidators
         public static void UpdateValidator(License license)
         {
             Core.Validators.LicenseValidator.Validate(license);
-            License storedInfo = LicenseData.GetLicenseById(license.LicenseId);
+            License storedInfo = LicenseData.GetLicenseById(license.LicenseID);
             
             if (storedInfo.ApplicationId != license.ApplicationId)
                 throw new BusinessException("Can't change the application associated with the license.");

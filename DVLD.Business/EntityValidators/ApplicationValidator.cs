@@ -129,7 +129,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Cannot release an expired license.");
 
             int licenseId = LicenseData.GetLicenseIdByPersonId(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
-            if (!DetainedLicenseData.Exists(licenseId))
+            if (!DetainedLicenseData.DoesLicenseExist(licenseId))
                 throw new BusinessException("The license is not detained.");
 
             if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, ApplicationType.ReleaseDetainedDrivingLicense, ApplicationStatus.New))
@@ -148,7 +148,7 @@ namespace DVLD.Business.EntityValidators
             /* 
                * 1. Check if the driver already has an international license.
                * 2. Check if the driver has an active class 3 license.
-               * 3. Check if the applicant doesnot have uncompleted application from the same type.
+               * 3. Check if the applicant doesnot have uncompleted application with NewInternationalLicense type.
            */
 
             int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonID);
@@ -157,8 +157,8 @@ namespace DVLD.Business.EntityValidators
             if (driverId == -1)
                 throw new BusinessException("The applicant does not have a driving license, so cannot apply for an international license.");
 
-            if (InternationalLicenseData.DoesDriverHaveInternationalLicense(driverId))
-                throw new BusinessException("The applicant already has an international license.");
+            if (InternationalLicenseData.DoesDriverIdExist(driverId, true, true))
+                throw new BusinessException("The applicant already has an active international license.");
 
             if (!LicenseData.DoesDriverHasLicense(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
                 throw new BusinessException("The applicant does not have an active class 3 driving license.");
