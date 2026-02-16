@@ -47,7 +47,7 @@ namespace DVLD.Business
                     // Check if the applicant person is already associated with a driver, if not create a new driver record                    
                     driverId = DriverData.IsPersonUsed(application.ApplicantPersonID, -1) ? 
                         DriverData.GetDriverIdByPersonId(application.ApplicantPersonID) : 
-                        DriverData.Add(new Driver(application.ApplicantPersonID, license.CreatedByUserId));
+                        DriverData.Add(new Driver(application.ApplicantPersonID));
 
                     // Create the new license and add it to the database
                     if (driverId != -1)
