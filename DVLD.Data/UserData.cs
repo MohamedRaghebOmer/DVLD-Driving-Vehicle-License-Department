@@ -79,7 +79,7 @@ namespace DVLD.Data
 
 
         // ----------------------------Read----------------------------
-        public static User GetByUsersId(int userId)
+        public static User GetById(int userId)
         {
             string query = "SELECT * FROM Users WHERE UserId = @UserId";
 
@@ -232,8 +232,7 @@ namespace DVLD.Data
             }
         }
 
-
-        public static bool IsPersonUsed(int personId, int excluedUserId)
+        public static bool ExistsForPerson(int personId, int excluedUserId = -1)
         {
             string query = "SELECT 1 FROM Users WHERE PersonId = @PersonId AND UserId != @UserId";
             
@@ -255,7 +254,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsUsernameUsed(string username, int excluedUserId)
+        public static bool ExistsForUsername(string username, int excluedUserId = -1)
         {
             string query = "SELECT 1 FROM Users WHERE LOWER(Username) = LOWER(@Username) AND UserId != @UserId";
             
@@ -391,7 +390,7 @@ namespace DVLD.Data
 
 
         // ----------------------------Delete----------------------------
-        public static bool DeleteByUserId(int userId)
+        public static bool DeleteById(int userId)
         {
             string query = @"DELETE FROM Users WHERE Id = @userId;";
             
