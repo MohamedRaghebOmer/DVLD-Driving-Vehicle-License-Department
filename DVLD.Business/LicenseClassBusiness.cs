@@ -46,7 +46,7 @@ namespace DVLD.Business
                 throw new ValidationException("Undfined license class.");
             try
             {
-                return LicenseClassData.GetClassFees(licenseClass);
+                return LicenseClassData.GetFees(licenseClass);
             }
             catch (Exception ex)
             {

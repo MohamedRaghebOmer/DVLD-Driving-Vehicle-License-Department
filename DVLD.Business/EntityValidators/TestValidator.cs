@@ -16,7 +16,7 @@ namespace DVLD.Business.EntityValidators
             if (!TestAppointmentData.Exists(test.TestAppointmentID))
                 throw new ValidationException("The specified TestAppointmentID does not exist.");
 
-            if (TestData.DoesTestAppointmentExists(test.TestAppointmentID))
+            if (TestData.ExistsForTestAppointment(test.TestAppointmentID))
                 throw new ValidationException("A test with the same TestAppointmentID already exists.");
         }
     }

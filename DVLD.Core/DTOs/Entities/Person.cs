@@ -237,7 +237,7 @@ namespace DVLD.Core.DTOs.Entities
             this._thirdName = string.Empty;
             this._lastName = string.Empty;
             this._dateOfBirth = new DateTime(1, 1, 1);
-            this._gender = Gender.Unknown;
+            this._gender = Gender.Male;
             this._address = string.Empty;
             this._phone = string.Empty;
             this._email = string.Empty;

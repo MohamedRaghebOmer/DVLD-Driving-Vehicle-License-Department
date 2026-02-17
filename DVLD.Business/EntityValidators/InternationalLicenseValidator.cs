@@ -25,7 +25,7 @@ namespace DVLD.Business.EntityValidators
             Core.Validators.InternationalLicenseValidator.Validate(license);
             EnsureForeignKeysExist(license);
             Application application = ApplicationData.GetById(license.ApplicationID);
-            License localLicense = LicenseData.GetLicenseById(license.IssuedUsingLocalLicenseID);
+            License localLicense = LicenseData.GetById(license.IssuedUsingLocalLicenseID);
 
             // Check if the driver already has an international license.
             if (InternationalLicenseData.DoesDriverIdExist(localLicense.DriverId, true, true))

@@ -9,7 +9,7 @@ namespace DVLD.Data
 {
     public static class TestData
     {
-        public static int AddNewTest(Test test)
+        public static int Add(Test test)
         {
             string query = @"INSERT INTO Tests (TestAppointmentID, TestResult, Notes, CreatedByUserID) 
                             VALUES (@TestAppointmentId, @TestResult, @Notes, @CreatedByUserId);
@@ -39,7 +39,7 @@ namespace DVLD.Data
             }
         }
 
-        public static Test GetTestById(int testId)
+        public static Test GetById(int testId)
         {
             string query = @"SELECT TestID, TestAppointmentID, TestResult, Notes, CreatedByUserID 
                             FROM Tests WHERE TestID = @TestId";
@@ -157,7 +157,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesTestAppointmentExists(int testAppointmentId)
+        public static bool ExistsForTestAppointment(int testAppointmentId)
         {
             string query = "SELECT 1 FROM Tests WHERE TestAppointmentID = @appointmentId;";
 

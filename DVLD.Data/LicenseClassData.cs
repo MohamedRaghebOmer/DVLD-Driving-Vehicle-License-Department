@@ -59,7 +59,7 @@ namespace DVLD.Data
             }
         }
 
-        public static decimal GetClassFees(LicenseClass licenseClass)
+        public static decimal GetFees(LicenseClass licenseClass)
         {
             string query = "SELECT ClassFees FROM LicenseClasses WHERE LicenseClassId = @LicenseClassId;";
             try
