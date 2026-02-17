@@ -5,34 +5,23 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Business.EntityValidators;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Business
 {
     public static class ApplicationBusiness
     {
-        public static int NewLocalDrivingLicenseApplication(Application application, LicenseClass licenseClass)
+        public static Application NewLocalDrivingLicenseApplication(Application application, LicenseClass licenseClass)
         {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.NewLocalDrivingLicenseService)
-                throw new ValidationException("Application type must be New Local Driving License.");
+            ApplicationValidator.NewLocalDrivingLicenseValidator(application, licenseClass);
 
             try
             {
-                // Validate the application entity
-                ApplicationValidator.NewLocalDrivingLicenseValidator(application, licenseClass);
-
                 // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                int newApplicationId = ApplicationData.AddApplication(DBVersion);
-                LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
-                return newApplicationId;
+                int newApplicationId = ApplicationData.Add(application);
+                int newLocalDrivingLicenseApplicationId = LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
+                if (newApplicationId != -1 && newLocalDrivingLicenseApplicationId != -1)
+                    return ApplicationData.GetById(newApplicationId);
+                return null;
             }
             catch (Exception ex)
             {
@@ -41,146 +30,16 @@ namespace DVLD.Business
             }
         }
 
-        public static int RenewDrivingLicenseApplication(Application application, LicenseClass licenseClass)
+        public static Application NewInternationalLicenseApplication(Application application)
         {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.RenewDrivingLicenseService)
-                throw new ValidationException("Application type must be Renew Driving License.");
+            ApplicationValidator.NewInternationalLicenseValidator(application);
 
             try
             {
-                // Validate the application entity
-                ApplicationValidator.RenewDrivingLicenseValidator(application, licenseClass);
-
-                // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                int newApplicationId = ApplicationData.AddApplication(DBVersion);
-                LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
-                return newApplicationId;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while creating renew driving license application", ex);
-                throw;
-            }
-        }
-
-        public static int ReplacementForLostDrivingLicenseApplication(Application application, LicenseClass licenseClass)
-        {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.ReplacementForLostDrivingLicense)
-                throw new ValidationException("Application type must be Replacement for Lost Driving License.");
-
-            try
-            {
-                // Validate the application entity
-                ApplicationValidator.ReplacementForLostDrivingLicenseValidator(application, licenseClass);
-
-                // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                int newApplicationId = ApplicationData.AddApplication(DBVersion);
-                LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
-                return newApplicationId;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while creating replacement for lost driving license application", ex);
-                throw;
-            }
-        }
-
-        public static int ReplacementForDamagedDrivingLicenseApplication(Application application, LicenseClass licenseClass)
-        {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.ReplacementForDamagedDrivingLicense)
-                throw new ValidationException("Application type must be Replacement for Damaged Driving License.");
-
-            try
-            {
-                // Validate the application entity
-                ApplicationValidator.ReplacementForDamagedDrivingLicenseValidator(application, licenseClass);
-
-                // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                int newApplicationId = ApplicationData.AddApplication(DBVersion);
-                LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
-                return newApplicationId;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while creating replacement for damaged driving license application", ex);
-                throw;
-            }
-        }
-
-        public static int ReleaseDetainedDrivingLicenseApplication(Application application, LicenseClass licenseClass)
-        {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense)
-                throw new ValidationException("Application type must be Release of Detained Driving License.");
-
-            try
-            {
-                // Validate the application entity
-                ApplicationValidator.ReleaseDetainedDrivingLicenseValidator(application, licenseClass);
-
-                // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                int newApplicationId = ApplicationData.AddApplication(DBVersion);
-                LocalDrivingLicenseApplicationData.Add(new LocalDrivingLicenseApplication(newApplicationId, licenseClass));
-                return newApplicationId;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while creating change of personal information application", ex);
-                throw;
-            }
-        }
-
-        public static int NewInternationalLicenseApplication(Application application)
-        {
-            if (application == null)
-                throw new ValidationException("Application cannot be empty.");
-
-            if (application.ApplicationTypeID != ApplicationType.NewInternationalLicense)
-                throw new ValidationException("Application type must be New International Driving License.");
-
-            try
-            {
-                // Validate the application entity
-                ApplicationValidator.NewInternationalLicenseValidator(application);
-
-                // Insert the application into the database and get the new ApplicationId
-                Application DBVersion = application;
-                DBVersion.ApplicationDate = DateTime.Now;
-                DBVersion.ApplicationStatus = ApplicationStatus.New;
-                DBVersion.LastStatusDate = DateTime.Now;
-
-                return ApplicationData.AddApplication(DBVersion);
+                int newApplicationId = ApplicationData.Add(application);
+                if (newApplicationId != -1)
+                    return ApplicationData.GetById(newApplicationId);
+                return null;
             }
             catch (Exception ex)
             {
@@ -189,11 +48,11 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAllApplications()
+        public static DataTable GetAll()
         {
             try
             {
-                return ApplicationData.GetAllApplications();
+                return ApplicationData.GetAll();
             }
             catch (Exception ex)
             {
@@ -202,14 +61,14 @@ namespace DVLD.Business
             }
         }
 
-        public static Application GetApplicationById(int applicationId)
+        public static Application GetById(int applicationId)
         {
             if (applicationId <= 0)
                 return null;
 
             try
             {
-                return ApplicationData.GetApplication(applicationId);
+                return ApplicationData.GetById(applicationId);
             }
             catch (Exception ex)
             {
@@ -230,27 +89,5 @@ namespace DVLD.Business
                 throw;
             }
         }
-
-        public static Application Update(Application application)
-        {
-            try
-            {
-                // Validate the application entity
-                ApplicationValidator.UpdateValidator(application);
-
-                // Update the application in the database
-                if (ApplicationData.Update(application))
-                    return ApplicationData.GetApplication(application.ApplicationID);
-                else
-                    return null;
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while updating application", ex);
-                throw;
-            }
-        }
-
-
     }
 }

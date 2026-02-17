@@ -10,9 +10,9 @@ namespace DVLD.Data
 {
     public static class ApplicationData
     {
-        public static int AddApplication(Application application)
+        public static int Add(Application application)
         {
-            string query = @"INSERT INTO Applications (ApplicantPersonId, ApplicationDate, ApplicationTypeId, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserId)
+            string query = @"INSERT INTO Applications (ApplicantPersonId, GETDATE(), ApplicationTypeId, 1, GETDATE(), PaidFees, CreatedByUserId)
                             VALUES (@ApplicantPersonId, @ApplicationDate, @ApplicationTypeId, @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserId);
                             SELECT SCOPE_IDENTITY();";
 
@@ -22,16 +22,12 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@ApplicantPersonId", application.ApplicantPersonID);
-                    command.Parameters.AddWithValue("@ApplicationDate", application.ApplicationDate);
                     command.Parameters.AddWithValue("@ApplicationTypeId", (int)application.ApplicationTypeID);
-                    command.Parameters.AddWithValue("@ApplicationStatus", (int)application.ApplicationStatus);
-                    command.Parameters.AddWithValue("@LastStatusDate", application.LastStatusDate);
                     command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
                     command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
                     connection.Open();
 
                     object result = command.ExecuteScalar();
-
                     if (result != null && int.TryParse(result.ToString(), out int newApplicationId))
                         return newApplicationId;
                 }
@@ -45,7 +41,7 @@ namespace DVLD.Data
             }
         }
 
-        public static DataTable GetAllApplications()
+        public static DataTable GetAll()
         {
             string query = @"SELECT * FROM Applications";
 
@@ -71,7 +67,7 @@ namespace DVLD.Data
             }
         }
 
-        public static Application GetApplication(int applicationId)
+        public static Application GetById(int applicationId)
         {
             string query = @"SELECT * FROM Applications WHERE ApplicationID = @appId";
 
@@ -132,7 +128,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesPersonHaveApplication(int personId, ApplicationType applicationType, ApplicationStatus applicationStatus)
+        public static bool ExistsForPerson(int personId, ApplicationType applicationType, ApplicationStatus applicationStatus)
         {
             string query = @"SELECT 1 FROM Applications 
                             WHERE ApplicantPersonId = @personId AND ApplicationTypeId = @applicationType AND ApplicationStatus = @applicationStatus";
@@ -152,61 +148,6 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if person has application of specific type in Applications table.", ex);
-                throw;
-            }
-        }
-
-        public static bool Update(Application application)
-        {
-            string query = @"UPDATE Applications SET ApplicationStatus = @ApplicationStatus, 
-                            LastStatusDate = @LastStatusDate, PaidFees = @PaidFees 
-                            WHERE ApplicationId = @ApplicationId";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@ApplicationStatus", (int)application.ApplicationStatus);
-                    command.Parameters.AddWithValue("@LastStatusDate", application.LastStatusDate);
-                    command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
-                    command.Parameters.AddWithValue("@ApplicationId", application.ApplicationID);
-                    connection.Open();
-                    return command.ExecuteNonQuery() > 0;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while updating application in Applications table.", ex);
-                throw;
-            }
-
-        }
-
-        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus, bool autoChangeLastStatusDate = true)
-        {
-            string query = @"UPDATE Applications SET ApplicationStatus = @newStatus";
-
-            if (autoChangeLastStatusDate)
-                query += ", LastStatusDate = GETDATE()";
-
-            query += " WHERE ApplicationId = @applicationId;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@newStatus", (int)newStatus);
-                    command.Parameters.AddWithValue("@applicationId", applicationId);
-                    connection.Open();
-                    return command.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while updating application status in Applications table.", ex);
                 throw;
             }
         }

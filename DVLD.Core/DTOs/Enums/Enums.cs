@@ -1,6 +1,10 @@
 ﻿namespace DVLD.Core.DTOs.Enums
 {
-    public enum Gender { Male = 0, Female = 1, Unknown = 2}
+    public enum Gender
+    { 
+        Male = 0,
+        Female = 1
+    }
 
     public enum LicenseClass 
     { 

@@ -58,7 +58,7 @@ namespace DVLD.Business
 
             try
             {
-                return DetainedLicenseData.DoesDetainIdExist(detainId);
+                return DetainedLicenseData.Exists(detainId);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace DVLD.Business
 
             try
             {
-                return DetainedLicenseData.DoesLicenseExist(licenseId, isReleased);
+                return DetainedLicenseData.IsDetained(licenseId, isReleased);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace DVLD.Business
 
         public static bool ReleaseLicense(int licenseId, int applicationId)
         {
-            Application application = ApplicationData.GetApplication(applicationId);
+            Application application = ApplicationData.GetById(applicationId);
             DetainedLicenseValidator.ReleaseDetainedLicenseValidator(licenseId, application);
 
             try

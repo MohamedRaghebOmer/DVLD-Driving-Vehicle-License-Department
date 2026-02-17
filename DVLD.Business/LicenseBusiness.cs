@@ -19,7 +19,7 @@ namespace DVLD.Business
                 
                 try
                 {
-                    Application application = ApplicationData.GetApplication(license.ApplicationId);
+                    Application application = ApplicationData.GetById(license.ApplicationId);
                     ApplicationType applicationType = application.ApplicationTypeID;
                     IssueReason issueReason;
                     int driverId = -1;

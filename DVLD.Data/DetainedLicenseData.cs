@@ -1,9 +1,10 @@
-﻿using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Logging;
-using DVLD.Data.Settings;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using DVLD.Data.Settings;
+using DVLD.Core.Logging;
+using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 
 namespace DVLD.Data
 {
@@ -135,7 +136,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesDetainIdExist(int detainId)
+        public static bool Exists(int detainId)
         {
             string query = @"SELECT 1 FROM DetainedLicenses WHERE DetainID = @detainId;";
 
@@ -157,7 +158,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesLicenseExist(int licenseId, bool isReleased = false)
+        public static bool IsDetained(int licenseId, bool isReleased = false)
         {
             string query = @"SELECT 1 FROM DetainedLicenses WHERE LicenseID = @licenseId AND IsReleased = @isReleased;";
 
@@ -168,6 +169,32 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@licenseId", licenseId);
                     command.Parameters.AddWithValue("@isReleased", isReleased);
+                    connection.Open();
+
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking existence in DetainedLicenses.", ex);
+                throw;
+            }
+        }
+
+        public static bool IsDetained(int personId, LicenseClass licenseClass)
+        {
+            string query = @"SELECT 1 FROM DetainedLicenses DL
+                            JOIN Licenses L ON DL.LicenseID = L.LicenseID
+                            JOIN Drivers D ON L.DriverID = D.DriverID
+                            WHERE D.PersonID = @personId AND L.LicenseClass = @licenseClass AND IsReleased = 0;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@personId", personId);
+                    command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
                     connection.Open();
 
                     return command.ExecuteScalar() != null;

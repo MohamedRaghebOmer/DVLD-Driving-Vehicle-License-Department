@@ -278,7 +278,7 @@ namespace DVLD.Data
 
         public static bool IsActive(int licenseId)
         {
-            string query = @"SELECT IsActive FROM Licenses WHERE LicenseID = @licenseId;";
+            string query = @"SELECT 1 FROM Licenses WHERE LicenseID = @licenseId AND IsActive = 1;";
 
             try
             {
@@ -287,15 +287,36 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@licenseId", licenseId);
                     connection.Open();
-                    object result = command.ExecuteScalar();
-                    if (result != null && bool.TryParse(result.ToString(), out bool isActive))
-                        return isActive;
+                    return command.ExecuteScalar() != null;
                 }
-                return false; // Return false if the license is not found or if the value is invalid
             }
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking if license with ID {licenseId} is active.", ex);
+                throw;
+            }
+        }
+
+        public static bool IsActive(int personId, LicenseClass licenseClass)
+        {
+            string query = @"SELECT 1 FROM Licenses L
+                            INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                            WHERE D.PersonID = @personId AND L.LicenseClass = @licenseClass AND L.IsActive = 1;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@personId", personId);
+                    command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
+                    connection.Open();
+                    return command.ExecuteScalar() != null; 
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while checking if license is active.", ex);
                 throw;
             }
         }
