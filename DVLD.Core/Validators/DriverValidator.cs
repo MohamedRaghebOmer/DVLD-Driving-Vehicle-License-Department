@@ -11,14 +11,8 @@ namespace DVLD.Core.Validators
             if (driver == null)
                 throw new ValidationException("Driver can't be empty.");
 
-            if (driver.DriverId < 1)
-                throw new ValidationException("Driver Id can't be negative.");
-
             if (driver.PersonId < 1)
                 throw new ValidationException("Person Id can't be negative.");
-
-            if (driver.CreatedDate > DateTime.Now)
-                throw new ValidationException("Creation date can't be in the future.");
         }
     }
 }

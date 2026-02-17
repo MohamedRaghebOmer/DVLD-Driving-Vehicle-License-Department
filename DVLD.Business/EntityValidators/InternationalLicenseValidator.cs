@@ -45,7 +45,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
             // Check if the local license belongs to the applicant.
-            if (DriverData.GetByDriverId(DriverData.GetDriverIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
+            if (DriverData.GetById(DriverData.GetIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
                 throw new BusinessException("The local license does not belong to the applicant.");
 
             // Check if the local license is a class 3 license.

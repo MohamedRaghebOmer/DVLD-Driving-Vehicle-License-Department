@@ -40,7 +40,7 @@ namespace DVLD.Business
         {
             // If the person is already a driver, return the driver id else add a new driver and return the new driver id
             int driverId;
-            return (driverId = DriverData.GetDriverIdByPersonId(personId)) != -1? driverId : DriverData.Add(new Driver(personId));
+            return (driverId = DriverData.GetIdByPersonId(personId)) != -1? driverId : DriverData.Add(new Driver(personId));
         }
 
         private static int GetAndDeactivatePreviousLicense(int driverId, LicenseClass licenseClass)

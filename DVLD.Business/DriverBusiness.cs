@@ -1,64 +1,37 @@
 ﻿using System;
 using System.Data;
+using DVLD.Data;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Business.EntityValidators;
-using DVLD.Data;
 using DVLD.Core.Logging;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Business
 {
     public static class DriverBusiness
     {
-        public static Driver Save(Driver driver)
+        public static Driver Add(Driver driver)
         {
-            // Add new driver
-            if (driver.DriverId == -1)
-            {
-                DriverValidator.AddNewValidator(driver);
+            DriverValidator.AddNewValidator(driver);
                 
-                try
-                {
-                    int newDriverId = DriverData.Add(driver);
-                    
-                    if (newDriverId != -1)
-                        return DriverData.GetByDriverId(newDriverId);
-                   
-                    return null;
-                }
-                catch(Exception ex)
-                {
-                    AppLogger.LogError("BLL: Error while adding a new driver.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
-            }
-            else // Update existing driver
+            try
             {
-                DriverValidator.UpdateValidator(driver);
-
-                try
-                {
-                    if (DriverData.Update(driver))
-                        return DriverData.GetByDriverId(driver.DriverId);
-                    
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    AppLogger.LogError("BLL: Error while updating an existing driver.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
+                return (DriverData.Add(driver) != -1) ? DriverData.GetById(driver.DriverId) : null;
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while adding a new driver.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
-        public static Driver FindByDriverId(int driverId)
+        public static Driver GetByDriverId(int driverId)
         {
             if (driverId < 1)
                 return null;
 
             try
             {
-                return DriverData.GetByDriverId(driverId);
+                return DriverData.GetById(driverId);
             }
             catch(Exception ex)
             {
@@ -67,7 +40,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Driver FindByPersonId(int personId)
+        public static Driver GetByPersonId(int personId)
         {
             if (personId < 1)
                 return null;
@@ -96,13 +69,14 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsPersonUsed(int personId, int excludedDriverId)
+        public static bool ExistsForPerson(int personId, int excludedDriverId = -1)
         {
-            if (personId < 1 || excludedDriverId < 1)
+            if (personId < 1)
                 return false;
+
             try
             {
-                return DriverData.IsPersonUsed(personId, excludedDriverId);
+                return DriverData.ExistsForPerson(personId, excludedDriverId);
             }
             catch (Exception ex)
             {
@@ -111,10 +85,11 @@ namespace DVLD.Business
             }
         }
 
-        public static bool DoesDriverIdExist(int driverId)
+        public static bool Exists(int driverId)
         {
             if (driverId < 1)
                 return false;
+
             try
             {
                 return DriverData.Exists(driverId);
@@ -128,8 +103,8 @@ namespace DVLD.Business
 
         public static bool DeleteByDriverId(int driverId)
         {
-            if (driverId < 1 || !DriverData.Exists(driverId))
-                throw new ValidationException("The specified driver does not exist.");
+            if (driverId < 1)
+                return false;
 
             try
             {
@@ -144,8 +119,8 @@ namespace DVLD.Business
 
         public static bool DeleteByPersonId(int personId)
         {
-            if (personId < 1 || !DriverData.IsPersonUsed(personId, -1))
-                throw new ValidationException("The specified person does not exist.");
+            if (personId < 1)
+                return false;
 
             try
             {
@@ -158,6 +133,5 @@ namespace DVLD.Business
             }
 
         }
-
     }
 }
