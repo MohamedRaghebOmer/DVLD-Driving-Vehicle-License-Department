@@ -9,7 +9,7 @@ namespace DVLD.Data
 {
     public static class InternationalLicenseData
     {
-        public static int AddNewInternationalLicense(InternationalLicense internationalLicense)
+        public static int Add(InternationalLicense internationalLicense)
         {
             string query = @"INSERT INTO InternationalLicenses(ApplicationID, DriverID, IssuedUsingLocalLicenseID, IssuedDate, ExpirationDate, IsActive, CreatedByUserID)
                             VALUES (@ApplicationID, @DriverID, @IssuedUsingLocalLicenseID, GETDATE(), @ExpirationDate, @IsActive, @CreatedByUserID);
@@ -68,7 +68,7 @@ namespace DVLD.Data
             }
         }
 
-        public static InternationalLicense GetInternationalLicenseById(int licenseID)
+        public static InternationalLicense GetById(int licenseID)
         {
             string query = @"SELECT * FROM InternationalLicenses WHERE LicenseID = @LicenseID;";
 
@@ -107,7 +107,7 @@ namespace DVLD.Data
             }
         }
 
-        public static int GetLicenseIdByLocalLicenseId(int localLicenseId)
+        public static int GetIdByLocalLicenseId(int localLicenseId)
         {
             string query = @"SELECT InternationalLicenseID FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID;";
 
@@ -154,7 +154,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationIdExist(int applicationId, int excludedInternationalLicenseId = -1)
+        public static bool ExistsForApplication(int applicationId, int excludedInternationalLicenseId = -1)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE ApplicationID = @ApplicationID AND InternationalLicenseID != @InternationalLicenseID;";
 
@@ -177,7 +177,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesDriverIdExist(int driverId, bool isActive = false, bool notExpired = false)
+        public static bool ExistsForDirver(int driverId, bool isActive = false, bool notExpired = false)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE DriverID = @DriverID";
 
@@ -205,7 +205,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DeactiveInternationalLicenseByLicenseId(int internationalLicenseId)
+        public static bool DeactivateById(int internationalLicenseId)
         {
             string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE InternationalLicenseID = @InternationalLicenseID;";
             
@@ -227,7 +227,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DeactiveInternationalLicenseByDriverId(int driverId)
+        public static bool DeactivateByDriverId(int driverId)
         {
             string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE DriverID = @DriverID;";
 
@@ -248,7 +248,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ActivateInternationalLicense(int internationalLicenseId)
+        public static bool Activate(int internationalLicenseId)
         {
             string query = @"UPDATE InternationalLicenses SET IsActive = 1 WHERE InternationalLicenseID = @InternationalLicenseID;";
 
@@ -271,7 +271,7 @@ namespace DVLD.Data
 
         }
 
-        public static bool UpdateIssuedUsingLocalLicenseId(int internationalLicenseId, int issuedUsingLocalLicenseId)
+        public static bool UpdateLocalLicense(int internationalLicenseId, int issuedUsingLocalLicenseId)
         {
             string query = @"UPDATE InternationalLicenses SET IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID WHERE InternationalLicenseID = @InternationalLicenseID;";
 

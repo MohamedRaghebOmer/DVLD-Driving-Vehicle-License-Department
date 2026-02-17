@@ -61,7 +61,7 @@ namespace DVLD.Business
             int newLicenseId = LicenseData.Add(license, issueReason, driverId, LicenseClassData.GetDefaultValidityLength(license.LicenseClass));
 
             if (license.LicenseClass == LicenseClass.Class3_OrdinaryDrivingLicense && previousLicenseId != -1 && InternationalLicenseData.ExistsForLocalLicenseId(previousLicenseId))
-                InternationalLicenseData.UpdateIssuedUsingLocalLicenseId(InternationalLicenseData.GetLicenseIdByLocalLicenseId(previousLicenseId), newLicenseId);
+                InternationalLicenseData.UpdateLocalLicense(InternationalLicenseData.GetIdByLocalLicenseId(previousLicenseId), newLicenseId);
 
             return newLicenseId;
         }
