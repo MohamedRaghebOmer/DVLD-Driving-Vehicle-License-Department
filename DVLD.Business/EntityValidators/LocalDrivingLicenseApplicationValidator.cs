@@ -23,7 +23,7 @@ namespace DVLD.Business.EntityValidators
             Core.Validators.LocalDrivingLicenseApplicationValidator.Validate(localDrivingLicenseApplication);
             
             LocalDrivingLicenseApplication storedInfo = LocalDrivingLicenseApplicationData.GetById(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId);
-            Application application = ApplicationData.GetApplication(localDrivingLicenseApplication.ApplicationId);
+            Application application = ApplicationData.GetById(localDrivingLicenseApplication.ApplicationId);
 
             if (storedInfo.ApplicationId != localDrivingLicenseApplication.ApplicationId)
                 throw new BusinessException("Can't change the Application Id.");

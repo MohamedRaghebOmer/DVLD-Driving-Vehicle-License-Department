@@ -32,7 +32,7 @@ namespace DVLD.Business.EntityValidators
 
 
 
-            ApplicationStatus applicationStatus = ApplicationData.GetApplication(license.ApplicationId).ApplicationStatus;
+            ApplicationStatus applicationStatus = ApplicationData.GetById(license.ApplicationId).ApplicationStatus;
 
             if (applicationStatus == ApplicationStatus.Completed)
                 throw new BusinessException("License already exists for the completed application.");
@@ -42,7 +42,7 @@ namespace DVLD.Business.EntityValidators
 
 
 
-            ApplicationType applicationType = ApplicationData.GetApplication(license.ApplicationId).ApplicationTypeID;
+            ApplicationType applicationType = ApplicationData.GetById(license.ApplicationId).ApplicationTypeID;
 
             if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new BusinessException("Invalid application type.");

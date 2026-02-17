@@ -24,7 +24,7 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.InternationalLicenseValidator.Validate(license);
             EnsureForeignKeysExist(license);
-            Application application = ApplicationData.GetApplication(license.ApplicationID);
+            Application application = ApplicationData.GetById(license.ApplicationID);
             License localLicense = LicenseData.GetLicenseById(license.IssuedUsingLocalLicenseID);
 
             // Check if the driver already has an international license.
@@ -61,7 +61,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("The local license must belong to the driver.");
 
             // Check if the local license is not detained.
-            if (DetainedLicenseData.DoesLicenseExist(localLicense.LicenseID))
+            if (DetainedLicenseData.IsDetained(localLicense.LicenseID))
                 throw new BusinessException("The local license is detained.");
         }
     }

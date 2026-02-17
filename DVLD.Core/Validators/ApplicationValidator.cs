@@ -15,17 +15,8 @@ namespace DVLD.Core.Validators
             if (application.ApplicantPersonID <= 0)
                 throw new ValidationException("ApplicantPersonId must be a positive integer.");
 
-            if (application.ApplicationDate == new DateTime(1, 1, 1))
-                throw new ValidationException("ApplicationDate must be a valid date.");
-
             if (!Enum.IsDefined(typeof(ApplicationType), application.ApplicationTypeID))
                 throw new ValidationException("Invalid ApplicationTypeId.");
-
-            if (!Enum.IsDefined(typeof(ApplicationStatus), application.ApplicationStatus))
-                throw new ValidationException("Invalid ApplicationStatus.");
-
-            if (application.LastStatusDate == new DateTime(1, 1, 1))
-                throw new ValidationException("LastStatusDate must be a valid date.");
 
             if (application.PaidFees < 0)
                 throw new ValidationException("PaidFees cannot be negative.");

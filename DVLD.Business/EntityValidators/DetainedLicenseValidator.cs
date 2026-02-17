@@ -15,7 +15,7 @@ namespace DVLD.Business.EntityValidators
             if (licenseId <= 0 || !LicenseData.Exists(licenseId))
                 throw new BusinessException("Associated license does not exist.");
 
-            if (DetainedLicenseData.DoesLicenseExist(licenseId))
+            if (DetainedLicenseData.IsDetained(licenseId))
                 throw new BusinessException("License is already detained.");
         }
         
@@ -38,7 +38,7 @@ namespace DVLD.Business.EntityValidators
             if (application.PaidFees < applicationTypeFees)
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
-            if (!DetainedLicenseData.DoesLicenseExist(licenseID))
+            if (!DetainedLicenseData.IsDetained(licenseID))
                 throw new BusinessException("License is not detained.");
 
             if (LicenseData.IsExpired(licenseID))

@@ -41,7 +41,7 @@ namespace DVLD.Core.DTOs.Entities
         public DateTime ApplicationDate
         {
             get => _applicationDate;
-            set
+            private set
             {
                 if (value > DateTime.Now)
                     throw new ValidationException("ApplicationDate cannot be in the future.");
@@ -63,7 +63,7 @@ namespace DVLD.Core.DTOs.Entities
         public ApplicationStatus ApplicationStatus
         {
             get => _applicationStatus;
-            set
+            private set
             {
                 if (!Enum.IsDefined(typeof(ApplicationStatus), value))
                     throw new ValidationException("Invalid ApplicationStatus.");
@@ -74,7 +74,7 @@ namespace DVLD.Core.DTOs.Entities
         public DateTime LastStatusDate
         {
             get => _lastStatusDate;
-            set
+            private set
             {
                 if (value > DateTime.Now)
                     throw new ValidationException("LastStatusDate cannot be in the future.");
@@ -117,13 +117,10 @@ namespace DVLD.Core.DTOs.Entities
             this._createdByUserId = -1; // Default value indicating not set
         }
 
-        public Application(int applicantPersonId, DateTime applicationDate, ApplicationType applicationTypeId, ApplicationStatus applicationStatus, DateTime lastStatusDate, decimal paidFees) : this()
+        public Application(int applicantPersonId, ApplicationType applicationTypeId, decimal paidFees) : this()
         {
             ApplicantPersonID = applicantPersonId;
-            ApplicationDate = applicationDate;
             ApplicationTypeID = applicationTypeId;
-            ApplicationStatus = applicationStatus;
-            LastStatusDate = lastStatusDate;
             PaidFees = paidFees;
         }
 
