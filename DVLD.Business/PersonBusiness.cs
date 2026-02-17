@@ -12,6 +12,9 @@ namespace DVLD.Business
     {
         public static Person Save(Person person)
         {
+            if (person == null)
+                throw new ValidationException("Person cannot be empty.");
+
             // Add new person
             if (person.PersonId == -1)
             {
@@ -50,7 +53,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Person Find(int personId)
+        public static Person GetByPersonId(int personId)
         {
             if (personId < 1)
                 return null;
@@ -66,7 +69,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Person Find(string nationalNumber)
+        public static Person GetByNationalNumber(string nationalNumber)
         {
             if (string.IsNullOrWhiteSpace(nationalNumber))
                 return null;
@@ -110,7 +113,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsNationalNumberUsed(string nationalNumber, int excludePersonId)
+        public static bool ExistsForNationalNumber(string nationalNumber, int excludePersonId = -1)
         {
             if (string.IsNullOrWhiteSpace(nationalNumber))
                 return false;
@@ -125,7 +128,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool EmailUsedByOther(string email, int excludePersonId)
+        public static bool ExistsForEmail(string email, int excludePersonId = -1)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
@@ -142,8 +145,8 @@ namespace DVLD.Business
 
         public static bool Delete(int personId)
         {
-            if (personId < 1 || !PersonData.Exists(personId))
-                throw new ValidationException("Person not found.");
+            if (personId < 1)
+                return false;
 
             try
             {
@@ -159,8 +162,8 @@ namespace DVLD.Business
 
         public static bool Delete(string nationalNumber)
         {
-            if (string.IsNullOrWhiteSpace(nationalNumber) || !PersonData.IsNationalNumberUsed(nationalNumber, -1))
-                throw new ValidationException("Person not found.");
+            if (string.IsNullOrWhiteSpace(nationalNumber))
+                return false;
 
             try
             {

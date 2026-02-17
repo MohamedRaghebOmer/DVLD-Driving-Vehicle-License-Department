@@ -12,6 +12,9 @@ namespace DVLD.Business
     {        
         public static Country Save(Country country)
         {
+            if (country == null)
+                throw new ValidationException("Country cannot be empty.");
+
             // Add new country
             if (country.CountryId == -1)
             {
@@ -19,12 +22,7 @@ namespace DVLD.Business
 
                 try
                 {
-                    int insertedId = CountryData.Add(country);
-
-                    if (insertedId != -1)
-                        return CountryData.Get(insertedId);
-                    else
-                        return null;
+                    return (CountryData.Add(country) != -1) ? CountryData.Get(country.CountryId) : null;
                 }
                 catch (Exception ex)
                 {
@@ -38,10 +36,7 @@ namespace DVLD.Business
 
                 try
                 {
-                    if (CountryData.Update(country))
-                        return CountryData.Get(country.CountryId);
-                    else
-                        return null;
+                    return (CountryData.Update(country)) ? CountryData.Get(country.CountryId) : null;
                 }
                 catch (Exception ex)
                 {
@@ -51,7 +46,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Country Find(int id)
+        public static Country GetById(int id)
         {
             if (id <= 0)
                 return null;
@@ -67,7 +62,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Country Find(string countryName)
+        public static Country GetByName(string countryName)
         {
             if (string.IsNullOrWhiteSpace(countryName))
                 return null;
@@ -112,13 +107,14 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsCountryNameUsed(string countryName, int excludedId)
+        public static bool Exists(string countryName, int excludedId = -1)
         {
-            if (string.IsNullOrWhiteSpace(countryName) || excludedId < 1)
+            if (string.IsNullOrWhiteSpace(countryName))
                 return false;
+            
             try
             {
-                return CountryData.IsCountryNameUsed(countryName, excludedId);
+                return CountryData.Exists(countryName, excludedId);
             }
             catch (Exception ex)
             {
@@ -129,8 +125,8 @@ namespace DVLD.Business
         
         public static bool Delete(int countryId)
         {
-            if (countryId < 1 || !CountryData.Exists(countryId))
-                throw new ValidationException("The specified country does not exist.");
+            if (countryId < 1)
+                return false;
 
             try
             {
@@ -145,8 +141,8 @@ namespace DVLD.Business
 
         public static bool Delete(string countryName)
         {
-            if (string.IsNullOrWhiteSpace(countryName) || !CountryData.IsCountryNameUsed(countryName, -1))
-                throw new ValidationException(countryName + " country does not exist.");
+            if (string.IsNullOrWhiteSpace(countryName))
+                return false;
 
             try
             {

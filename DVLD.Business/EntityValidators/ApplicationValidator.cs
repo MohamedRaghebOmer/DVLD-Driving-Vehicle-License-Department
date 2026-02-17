@@ -16,14 +16,14 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Applicant person does not exist.");
 
             // Check if the person already has an application with the same type.
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.ExistsForPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
             // Check if the ApplicationFees is not payed completely.
             if (application.PaidFees < ApplicationTypeData.GetFees(application.ApplicationTypeID))
                 throw new BusinessException("Application fees are not payed completely.");
 
-            bool doesApplicantHaveLicense = LicenseData.ExistsForDriver(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
+            bool doesApplicantHaveLicense = LicenseData.ExistsForDriver(DriverData.GetIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (application.ApplicationTypeID == ApplicationType.NewLocalDrivingLicenseService)
             {
                 if (doesApplicantHaveLicense)
@@ -64,7 +64,7 @@ namespace DVLD.Business.EntityValidators
             if (application.PaidFees < ApplicationTypeData.GetFees(ApplicationType.NewInternationalLicense))
                 throw new BusinessException("Application fees are not payed completely.");
 
-            int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonID);
+            int driverId = DriverData.GetIdByPersonId(application.ApplicantPersonID);
             if (!LicenseData.ExistsForDriver(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
                 throw new BusinessException("The applicant does not have an active class 3 driving license.");
         }

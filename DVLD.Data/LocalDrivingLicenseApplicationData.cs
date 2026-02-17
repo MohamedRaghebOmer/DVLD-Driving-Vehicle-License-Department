@@ -20,8 +20,8 @@ namespace DVLD.Data
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationId", localDrivingLicenseApplication.ApplicationId);
-                    command.Parameters.AddWithValue("@LicenseClassId", (int)localDrivingLicenseApplication.LicenseClassId);
+                    command.Parameters.AddWithValue("@ApplicationId", localDrivingLicenseApplication.ApplicationID);
+                    command.Parameters.AddWithValue("@LicenseClassId", (int)localDrivingLicenseApplication.LicenseClassID);
                     connection.Open();
                     object result = command.ExecuteScalar();
                     if (result != null && int.TryParse(result.ToString(), out int newLocalDrivingLicenseApplicationId))
@@ -128,9 +128,9 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationExist(int applicationId, int excludedId = -1)
+        public static bool ExistsForApplication(int applicationId, int excludedId = -1)
         {
-            string query = @"SELECT 1 FROM LocalDrivingLicenseApplications WHERE ApplicationId = @ApplicationId AND LocalDrivingLicenseApplicationId != @ExcludedId;";
+            string query = @"SELECT 1 FROM LocalDrivingLicenseApplications WHERE ApplicationId = @ApplicationId AND LocalDrivingLicenseApplicationID != @ExcludedId;";
 
             try
             {
@@ -151,7 +151,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesPersonHaveApplication(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
+        public static bool ExistsForPerson(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
         {
             string query = @"SELECT 1 FROM LocalDrivingLicenseApplications ldl
                             INNER JOIN Applications a ON ldl.ApplicationId = a.ApplicationId
@@ -173,29 +173,6 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if a person has a new application for a specific license class in LocalDrivingLicenseApplications table.", ex);
-                throw;
-            }
-        }
-
-        public static bool Update(LocalDrivingLicenseApplication localDrivingLicenseApplication)
-        {
-            string query = @"UPDATE LocalDrivingLicenseApplications
-                            SET LicenseClassId = @LicenseClassId
-                            WHERE LocalDrivingLicenseApplicationId = @LocalDrivingLicenseApplicationId";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@LicenseClassId", (int)localDrivingLicenseApplication.LicenseClassId);
-                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationId", localDrivingLicenseApplication.LocalDrivingLicenseApplicationId);
-                    connection.Open();
-                    return command.ExecuteNonQuery() > 0; // Returns true if at least one record was updated
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while updating a record in LocalDrivingLicenseApplications table.", ex);
                 throw;
             }
         }

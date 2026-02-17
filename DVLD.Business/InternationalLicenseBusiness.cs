@@ -10,21 +10,21 @@ namespace DVLD.Business
 {
     public static class InternationalLicenseBusiness
     {
-        public static InternationalLicense AddNewInternationalLicense(InternationalLicense internationalLicense)
+        public static InternationalLicense Add(InternationalLicense internationalLicense)
         {
             InternationalLicenseValidator.AddNewValidator(internationalLicense);
 
             try
             {
                 // Check if the driver has active and expired International License
-                if (InternationalLicenseData.DoesDriverIdExist(internationalLicense.DriverID, true, false))
-                    InternationalLicenseData.DeactiveInternationalLicenseByDriverId(internationalLicense.DriverID);
+                if (InternationalLicenseData.ExistsForDirver(internationalLicense.DriverID, true, false))
+                    InternationalLicenseData.DeactivateByDriverId(internationalLicense.DriverID);
 
-                int newInternationalLicenseId = InternationalLicenseData.AddNewInternationalLicense(internationalLicense);
+                int newInternationalLicenseId = InternationalLicenseData.Add(internationalLicense);
                 bool isApplicationCompleted = ApplicationData.UpdateApplicationStatus(internationalLicense.ApplicationID, ApplicationStatus.Completed);
                 
                 if (newInternationalLicenseId != -1 && isApplicationCompleted)
-                    return InternationalLicenseData.GetInternationalLicenseById(newInternationalLicenseId);
+                    return InternationalLicenseData.GetById(newInternationalLicenseId);
                 return null;
             }
             catch(Exception ex)
@@ -47,11 +47,11 @@ namespace DVLD.Business
             }
         }
 
-        public static InternationalLicense GetInternationalLicenseById(int internationalLicenseId)
+        public static InternationalLicense GetById(int internationalLicenseId)
         {
             try
             {
-                return InternationalLicenseData.GetInternationalLicenseById(internationalLicenseId);
+                return InternationalLicenseData.GetById(internationalLicenseId);
             }
             catch(Exception ex)
             {
@@ -60,11 +60,11 @@ namespace DVLD.Business
             }
         }
 
-        public static bool DeactiveInternationalLicense(int internationalLicenseId)
+        public static bool Deactive(int internationalLicenseId)
         {
             try
             {
-                return InternationalLicenseData.DeactiveInternationalLicenseByLicenseId(internationalLicenseId);
+                return InternationalLicenseData.DeactivateById(internationalLicenseId);
             }
             catch(Exception ex)
             {
@@ -73,11 +73,11 @@ namespace DVLD.Business
             }
         }
 
-        public static bool ActivateInternationalLicense(int internationalLicenseId)
+        public static bool Activate(int internationalLicenseId)
         {
             try
             {
-                return InternationalLicenseData.ActivateInternationalLicense(internationalLicenseId);
+                return InternationalLicenseData.Activate(internationalLicenseId);
             }
             catch (Exception ex)
             {

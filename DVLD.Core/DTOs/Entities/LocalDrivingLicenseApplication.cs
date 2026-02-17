@@ -10,7 +10,8 @@ namespace DVLD.Core.DTOs.Entities
         private int _applicationId;
         private LicenseClass _licenseClassId;
 
-        public int LocalDrivingLicenseApplicationId
+
+        public int LocalDrivingLicenseApplicationID
         {
             get => _localDrivingLicenseApplicationId;
             private set
@@ -21,7 +22,7 @@ namespace DVLD.Core.DTOs.Entities
             }
         }
 
-        public int ApplicationId
+        public int ApplicationID
         {
             get => _applicationId;
             set
@@ -32,7 +33,7 @@ namespace DVLD.Core.DTOs.Entities
             }
         }
 
-        public LicenseClass LicenseClassId
+        public LicenseClass LicenseClassID
         {
             get => _licenseClassId;
             set
@@ -53,15 +54,15 @@ namespace DVLD.Core.DTOs.Entities
 
         public LocalDrivingLicenseApplication(int applicationId, LicenseClass licenseClassId) : this()
         {
-            ApplicationId = applicationId;
-            LicenseClassId = licenseClassId;
+            ApplicationID = applicationId;
+            LicenseClassID = licenseClassId;
         }
 
         internal LocalDrivingLicenseApplication(int localDrivingLicenseApplicationId, int applicationId, LicenseClass licenseClassId) : this()
         {
-            LocalDrivingLicenseApplicationId = localDrivingLicenseApplicationId;
-            ApplicationId = applicationId;
-            LicenseClassId = licenseClassId;
+            LocalDrivingLicenseApplicationID = localDrivingLicenseApplicationId;
+            ApplicationID = applicationId;
+            LicenseClassID = licenseClassId;
         }
     }
 }

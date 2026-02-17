@@ -30,6 +30,9 @@ namespace DVLD.Business
 
         public static User Save(User user)
         {
+            if (user == null)
+                throw new ValidationException("User cannot be empty.");
+
             // Add new 
             if (user.UserId == -1)
             {
@@ -40,7 +43,7 @@ namespace DVLD.Business
                     int newUserId = UserData.Add(user);
                     if (newUserId != -1)
                     {
-                        return UserData.GetByUsersId(newUserId);
+                        return UserData.GetById(newUserId);
                     }
                     return null;
                 }
@@ -57,7 +60,7 @@ namespace DVLD.Business
                 try
                 {
                     if (UserData.Update(user))
-                        return UserData.GetByUsersId(user.UserId);
+                        return UserData.GetById(user.UserId);
                     
                     return null;
                 }
@@ -69,14 +72,14 @@ namespace DVLD.Business
             }
         }
 
-        public static User FindByUserId(int userId)
+        public static User GetById(int userId)
         {
             if (userId < 1)
                 return null;
 
             try
             {
-                return UserData.GetByUsersId(userId);
+                return UserData.GetById(userId);
             }
             catch(Exception ex)
             {
@@ -85,7 +88,7 @@ namespace DVLD.Business
             }
         }
 
-        public static User FindByPersonId(int personId)
+        public static User GetByPersonId(int personId)
         {
             if (personId < 1)
                 return null;
@@ -102,7 +105,7 @@ namespace DVLD.Business
 
         }
 
-        public static User FindByUserByName(string username)
+        public static User GetByUsername(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
                 return null;
@@ -119,7 +122,7 @@ namespace DVLD.Business
 
         }
 
-        public static DataTable GetAllUsers()
+        public static DataTable GetAll()
         {
             try
             {
@@ -164,13 +167,13 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsUsernameUsed(string username, int excludedUserId)
+        public static bool IsUsernameUsed(string username, int excludedUserId = -1)
         {
             if (string.IsNullOrWhiteSpace(username))
                 return false;
             try
             {
-                return UserData.IsUsernameUsed(username, excludedUserId);
+                return UserData.ExistsForUsername(username, excludedUserId);
             }
             catch (Exception ex)
             {
@@ -179,13 +182,13 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsPersonUsed(int personId, int excludedUserId)
+        public static bool IsPersonUsed(int personId, int excludedUserId = -1)
         {
             if (personId < 1)
                 return false;
             try
             {
-                return UserData.IsPersonUsed(personId, excludedUserId);
+                return UserData.ExistsForPerson(personId, excludedUserId);
             }
             catch (Exception ex)
             {
@@ -194,14 +197,14 @@ namespace DVLD.Business
             }
         }
 
-        public static bool DeleteByUserId(int userId)
+        public static bool DeleteById(int userId)
         {
-            if (userId < 1 || !UserData.Exists(userId))
-                throw new ValidationException("Invalid user Id.");
+            if (userId < 1)
+                return false;
 
             try
             {
-                return UserData.DeleteByUserId(userId);
+                return UserData.DeleteById(userId);
             }
             catch (Exception ex)
             {
@@ -212,8 +215,8 @@ namespace DVLD.Business
 
         public static bool DeleteByPersonId(int personId)
         {
-            if (personId < 1 || !UserData.Exists(personId))
-                throw new ValidationException("Invalid person Id.");
+            if (personId < 1)
+                return false;
 
             try
             {
@@ -229,8 +232,8 @@ namespace DVLD.Business
 
         public static bool DeleteByUsername(string username)
         {
-            if (string.IsNullOrWhiteSpace(username) || !UserData.IsUsernameUsed(username, -1))
-                throw new ValidationException("Invalid username.");
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
 
             try
             {

@@ -69,14 +69,12 @@ namespace DVLD.Core.DTOs.Entities
             this._driverId = -1;
             this._personId = -1;
             this._createdByUserId = -1;
-            this._createdDate = new DateTime(1900, 1, 1);
+            this._createdDate = new DateTime(1900, 1, 1); // Default value for short date
         }
 
         public Driver(int personId) : this()
         {
-            // this._driverId = -1;
             this.PersonId = personId;
-            // this._dateCreated = new DateTime(1, 1, 1);
         }
 
         internal Driver(int driverId, int personId, int createdByUserId, DateTime createdDate) : this()

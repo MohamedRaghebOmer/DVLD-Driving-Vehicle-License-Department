@@ -10,10 +10,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.UserValidator.Validate(user);
 
-            if (UserData.IsPersonUsed(user.PersonId, -1))
+            if (UserData.ExistsForPerson(user.PersonId))
                 throw new BusinessException("The person is already associated with another user.");
 
-            if (UserData.IsUsernameUsed(user.Username, -1))
+            if (UserData.ExistsForUsername(user.Username))
                 throw new BusinessException("The username is already taken.");
         }
 
@@ -21,10 +21,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.UserValidator.Validate(user);
 
-            if (UserData.IsPersonUsed(user.PersonId, user.UserId)) 
+            if (UserData.ExistsForPerson(user.PersonId, user.UserId)) 
                 throw new BusinessException("The person is already associated with another user.");
 
-            if (UserData.IsUsernameUsed(user.Username, user.UserId))
+            if (UserData.ExistsForUsername(user.Username, user.UserId))
                 throw new BusinessException("The username is already taken by another user.");
         }
     }

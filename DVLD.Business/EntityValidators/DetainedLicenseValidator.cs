@@ -6,7 +6,7 @@ using DVLD.Core.DTOs.Enums;
 namespace DVLD.Business.EntityValidators
 {
     internal class DetainedLicenseValidator
-    {                     // International licenses cannot be detained
+    {
         public static void DetainNewLicenseValidator(int licenseId, decimal fineFees)
         {          
             if (fineFees <= 0)

@@ -1,11 +1,11 @@
-﻿using DVLD.Business.EntityValidators;
+﻿using System;
+using System.Data;
+using DVLD.Data;
+using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
-using DVLD.Data;
-using System;
-using System.Data;
 
 namespace DVLD.Business
 {
@@ -40,7 +40,7 @@ namespace DVLD.Business
         {
             // If the person is already a driver, return the driver id else add a new driver and return the new driver id
             int driverId;
-            return (driverId = DriverData.GetDriverIdByPersonId(personId)) != -1? driverId : DriverData.Add(new Driver(personId));
+            return (driverId = DriverData.GetIdByPersonId(personId)) != -1? driverId : DriverData.Add(new Driver(personId));
         }
 
         private static int GetAndDeactivatePreviousLicense(int driverId, LicenseClass licenseClass)
@@ -60,11 +60,13 @@ namespace DVLD.Business
             int previousLicenseId = GetAndDeactivatePreviousLicense(driverId, license.LicenseClass);
             int newLicenseId = LicenseData.Add(license, issueReason, driverId, LicenseClassData.GetDefaultValidityLength(license.LicenseClass));
 
-            if (previousLicenseId != -1 && InternationalLicenseData.ExistsForLocalLicenseId(previousLicenseId))
-                InternationalLicenseData.UpdateIssuedUsingLocalLicenseId(InternationalLicenseData.GetLicenseIdByLocalLicenseId(previousLicenseId), newLicenseId);
+            if (license.LicenseClass == LicenseClass.Class3_OrdinaryDrivingLicense && previousLicenseId != -1 && InternationalLicenseData.ExistsForLocalLicenseId(previousLicenseId))
+                InternationalLicenseData.UpdateLocalLicense(InternationalLicenseData.GetIdByLocalLicenseId(previousLicenseId), newLicenseId);
 
             return newLicenseId;
         }
+
+
 
         public static License Add(License license)
         {
