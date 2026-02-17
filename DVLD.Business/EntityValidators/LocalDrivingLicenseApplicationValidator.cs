@@ -34,7 +34,7 @@ namespace DVLD.Business.EntityValidators
             if (application.ApplicationStatus != ApplicationStatus.New && storedInfo.LicenseClassId != localDrivingLicenseApplication.LicenseClassId)
                 throw new BusinessException("Can't change license class after the application is no longer new.");
 
-            if (TestAppointmentData.DoesApplicationExist(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId))
+            if (TestAppointmentData.ExistsForApplication(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("Can't change the license class after there is a Test Appointment related to it.");
         }
     }

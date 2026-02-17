@@ -99,13 +99,12 @@ namespace DVLD.Core.DTOs.Entities
             this._isLocked = false;
         }
 
-        public TestAppointment(TestType testTypeId, int localDrivingLicenseApplicationId, DateTime appointmentDate, decimal paidFees, bool isLocked) : this()
+        public TestAppointment(TestType testTypeId, int localDrivingLicenseApplicationId, DateTime appointmentDate, decimal paidFees) : this()
         {
             TestTypeId = testTypeId;
             LocalDrivingLicenseApplicationId = localDrivingLicenseApplicationId;
             AppointmentDate = appointmentDate;
             PaidFees = paidFees;
-            IsLocked = isLocked;
         }
 
         internal TestAppointment(int testAppointmentId, TestType testTypeId, int localDrivingLicenseApplicationId, DateTime appointmentDate, decimal paidFees, int createdByUserId, bool isLocked) : this()

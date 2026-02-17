@@ -27,9 +27,6 @@ namespace DVLD.Core.Validators
             if (person.DateOfBirth == null || person.DateOfBirth > DateTime.Now.AddYears(-18))
                 throw new ValidationException("Date of birth is required and must be at least 18 years old.");
 
-            if (person.Gender == Gender.Unknown)
-                throw new ValidationException("Gender is required.");
-
             if (string.IsNullOrWhiteSpace(person.Address))
                 throw new ValidationException("Address is required.");
 

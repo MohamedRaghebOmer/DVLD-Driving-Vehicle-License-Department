@@ -107,6 +107,53 @@ namespace DVLD.Data
             }
         }
 
+        public static int GetLicenseIdByLocalLicenseId(int localLicenseId)
+        {
+            string query = @"SELECT InternationalLicenseID FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IssuedUsingLocalLicenseID", localLicenseId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int licenseId))
+                        return licenseId;
+
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
+                throw;
+            }
+        }
+
+        public static bool ExistsForLocalLicenseId(int localLicenseId)
+        {
+            string query = @"SELECT 1 FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IssuedUsingLocalLicenseID", localLicenseId);
+                    connection.Open();
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
+                throw;
+            }
+        }
+
         public static bool DoesApplicationIdExist(int applicationId, int excludedInternationalLicenseId = -1)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE ApplicationID = @ApplicationID AND InternationalLicenseID != @InternationalLicenseID;";
@@ -222,6 +269,28 @@ namespace DVLD.Data
                 throw;
             }
 
+        }
+
+        public static bool UpdateIssuedUsingLocalLicenseId(int internationalLicenseId, int issuedUsingLocalLicenseId)
+        {
+            string query = @"UPDATE InternationalLicenses SET IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID WHERE InternationalLicenseID = @InternationalLicenseID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IssuedUsingLocalLicenseID", issuedUsingLocalLicenseId);
+                    command.Parameters.AddWithValue("@InternationalLicenseID", internationalLicenseId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating IssuedUsingLocalLicenseID for InternationalLicenses.", ex);
+                throw;
+            }
         }
     }
 }

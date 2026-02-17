@@ -23,15 +23,15 @@ namespace DVLD.Business.EntityValidators
 
 
             // Check if driver already has license with the same type.
-            if (LicenseData.DoesDriverHasLicense(license.DriverId, license.LicenseClass))
+            if (LicenseData.ExistsForDriver(license.DriverId, license.LicenseClass))
                 throw new BusinessException("Driver already has an license with the same type.");
 
             // Check if the application already associated with another license.
-            if (LicenseData.DoesApplicationExist(license.ApplicationId))
+            if (LicenseData.ExistsForApplication(license.ApplicationId))
                 throw new BusinessException("License for the application already exists.");
 
 
-
+            // Check if the application is completed.
             ApplicationStatus applicationStatus = ApplicationData.GetById(license.ApplicationId).ApplicationStatus;
 
             if (applicationStatus == ApplicationStatus.Completed)
@@ -41,7 +41,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Can't add license for a canceled application.");
 
 
-
+            // Check if the application type is valid.
             ApplicationType applicationType = ApplicationData.GetById(license.ApplicationId).ApplicationTypeID;
 
             if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
@@ -51,37 +51,19 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Can't add license for an international application.");
 
 
-
+            // Check if the driver has passed all three tests.
             LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetByApplicationId(license.ApplicationId);
             _ = localDrivingLicenseApplication
                 ?? throw new BusinessException("Local driving license application does not exist.");
             
             if (!TestData.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("Driver has not passed all three tests.");
-        }
 
-        public static void UpdateValidator(License license)
-        {
-            Core.Validators.LicenseValidator.Validate(license);
-            License storedInfo = LicenseData.GetLicenseById(license.LicenseID);
-            
-            if (storedInfo.ApplicationId != license.ApplicationId)
-                throw new BusinessException("Can't change the application associated with the license.");
 
-            if (storedInfo.DriverId != license.DriverId)
-                throw new BusinessException("Can't change the driver associated with the license.");
-
-            if (storedInfo.LicenseClass != license.LicenseClass)
-                throw new BusinessException("Can't change the license class of an existing license.");
-
-            if (storedInfo.IssueDate != license.IssueDate)
-                throw new BusinessException("Can't change license issue date.");
-
-            if (storedInfo.ExpirationDate != license.ExpirationDate)
-                throw new BusinessException("Can't change license expiration date.");
-
-            if (storedInfo.IssueReason != license.IssueReason)
-                throw new BusinessException("Can't change license issue reason.");
+            // Check if the license class fees are paid.
+            decimal licenseClassFees = LicenseClassData.GetFees(license.LicenseClass);
+            if (license.PaidFees != licenseClassFees)
+                throw new BusinessException($"Paid fees must be {licenseClassFees} for this license class.");
         }
     }
 }

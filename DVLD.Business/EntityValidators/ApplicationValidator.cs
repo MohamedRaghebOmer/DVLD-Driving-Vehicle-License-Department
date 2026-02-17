@@ -23,7 +23,7 @@ namespace DVLD.Business.EntityValidators
             if (application.PaidFees < ApplicationTypeData.GetFees(application.ApplicationTypeID))
                 throw new BusinessException("Application fees are not payed completely.");
 
-            bool doesApplicantHaveLicense = LicenseData.DoesDriverHasLicense(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
+            bool doesApplicantHaveLicense = LicenseData.ExistsForDriver(DriverData.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (application.ApplicationTypeID == ApplicationType.NewLocalDrivingLicenseService)
             {
                 if (doesApplicantHaveLicense)
@@ -65,7 +65,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Application fees are not payed completely.");
 
             int driverId = DriverData.GetDriverIdByPersonId(application.ApplicantPersonID);
-            if (!LicenseData.DoesDriverHasLicense(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
+            if (!LicenseData.ExistsForDriver(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
                 throw new BusinessException("The applicant does not have an active class 3 driving license.");
         }
     }

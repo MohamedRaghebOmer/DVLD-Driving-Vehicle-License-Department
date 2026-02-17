@@ -151,5 +151,32 @@ namespace DVLD.Data
                 throw;
             }
         }
+        
+        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus, bool autoUpdateLastStatusDate = true)
+        {
+            string query = @"UPDATE Applications SET ApplicationStatus = @applicationStatus";
+            
+            if (autoUpdateLastStatusDate)
+                query += ", LastStatusDate = GETDATE()";
+            
+            query += " WHERE ApplicationID = @applicationId;";
+            
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@applicationStatus", (int)newStatus);
+                    command.Parameters.AddWithValue("@applicationId", applicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating application status in Applications table.", ex);
+                throw;
+            }
+        }
     }
 }

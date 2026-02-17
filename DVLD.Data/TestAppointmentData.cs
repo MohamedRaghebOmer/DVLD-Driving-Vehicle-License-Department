@@ -10,7 +10,7 @@ namespace DVLD.Data
 {
     public static class TestAppointmentData
     {
-        public static int AddNewTestAppointment(TestAppointment testAppointment)
+        public static int Add(TestAppointment testAppointment)
         {
             string query = @"INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, AppointmentDate, PaidFees, CreatedByUserId)
                 VALUES (@TestTypeId, @LocalDrivingLicenseApplicationId, @AppointmentDate, @PaidFees, @CreatedByUserId);
@@ -156,7 +156,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationExist(int localDrivingLicenseApplicationId, int excludedId = -1)
+        public static bool ExistsForApplication(int localDrivingLicenseApplicationId, int excludedId = -1)
         {
             string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestAppointmentID != @excludedId;";
             
@@ -180,7 +180,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DoesApplicationExist(TestType testType, int localDrivingLicenseApplicationId)
+        public static bool ExistsForApplication(TestType testType, int localDrivingLicenseApplicationId)
         {
             string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestTypeID = @testTypeId;";
             
@@ -204,67 +204,31 @@ namespace DVLD.Data
             }
         }
 
-        public static bool HaveAllTestsBeenDone(int localDrivingLicenseApplicationId)
+        public static bool UpdateDate(int testAppointmentId, DateTime newDate)
         {
-            const int numberOfTests = 3;
-            string query = @"SELECT 1
-                            FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localAppId 
-                            HAVING COUNT(IsLocked) = @numberOfTests;";
-
+            string query = @"UPDATE TestAppointments SET AppointmentDate = @newDate WHERE TestAppointmentId = @TestAppointmentId";
+            
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))
                 {
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@localAppId", localDrivingLicenseApplicationId);
-                        command.Parameters.AddWithValue("@numberOfTests", numberOfTests);
+                        command.Parameters.AddWithValue("@newDate", newDate);
+                        command.Parameters.AddWithValue("@TestAppointmentId", testAppointmentId);
                         connection.Open();
-                        
-                        return command.ExecuteScalar() != null; // Returns true if there are no unlocked test appointments
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while checking if all tests have been done for Application ID {localDrivingLicenseApplicationId}.", ex);
-                throw;
-            }
-        }
-
-        public static bool UpdateTestAppointment(TestAppointment testAppointment)
-        {
-            string query = @"UPDATE TestAppointments SET TestTypeID = @TestTypeId, LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationId,
-                            AppointmentDate = @AppointmentDate, PaidFees = @PaidFees, CreatedByUserId = @CreatedByUserId, IsLocked = @IsLocked
-                            WHERE TestAppointmentId = @TestAppointmentId";
-
-            try
-            {
-                using (var connection = new SqlConnection(DataSettings.connectionString))
-                {
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@TestTypeId", testAppointment.TestTypeId);
-                        command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationId", testAppointment.LocalDrivingLicenseApplicationId);
-                        command.Parameters.AddWithValue("@AppointmentDate", testAppointment.AppointmentDate);
-                        command.Parameters.AddWithValue("@PaidFees", testAppointment.PaidFees);
-                        command.Parameters.AddWithValue("@CreatedByUserId", testAppointment.CreatedByUserId);
-                        command.Parameters.AddWithValue("@IsLocked", testAppointment.IsLocked);
-                        command.Parameters.AddWithValue("@TestAppointmentId", testAppointment.TestAppointmentId);
-                        connection.Open();
-
                         return command.ExecuteNonQuery() > 0; // Returns true if at least one row was updated
                     }
                 }
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"DAL: Error while updating TestAppointment with ID {testAppointment.TestAppointmentId}.", ex);
+                AppLogger.LogError($"DAL: Error while updating TestAppointment with ID {testAppointmentId} date.", ex);
                 throw;
             }
         }
 
-        public static bool LockTestAppointment(int testAppointmentId)
+        public static bool Lock(int testAppointmentId)
         {
             string query = @"UPDATE TestAppointments SET IsLocked = 1 WHERE TestAppointmentId = @TestAppointmentId";
             
@@ -287,7 +251,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool DeleteTestAppointment(int testAppointmentId)
+        public static bool Delete(int testAppointmentId)
         {
             string query = @"DELETE FROM TestAppointments WHERE TestAppointmentId = @TestAppointmentId";
 

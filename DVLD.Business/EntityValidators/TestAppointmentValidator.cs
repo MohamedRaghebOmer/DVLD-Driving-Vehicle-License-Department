@@ -1,5 +1,4 @@
-﻿using System;
-using DVLD.Data;
+﻿using DVLD.Data;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
@@ -11,49 +10,49 @@ namespace DVLD.Business.EntityValidators
         public static void AddNewValidator(TestAppointment testAppointment)
         {
             Core.Validators.TestAppointmentValidator.Validate(testAppointment);
+            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetById(testAppointment.LocalDrivingLicenseApplicationId);
+            Application application = ApplicationData.GetById(localDrivingLicenseApplication.ApplicationId);
 
             // Check if the local driving license application exists
             if (!LocalDrivingLicenseApplicationData.DoesApplicationExist(testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("The specified local driving license application does not exist.");
 
+            if (application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReleaseDetainedDrivingLicense)
+                throw new BusinessException("This application type does not need a Test to be completed.");
+
+            if (application.ApplicationTypeID == ApplicationType.RenewDrivingLicenseService && testAppointment.TestTypeId != TestType.VisionTest)
+                throw new BusinessException("This test type is not required for this application type.");
+
             // Check if a test appointment already exists for the given test type and local driving license application
-            if (TestAppointmentData.DoesApplicationExist(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
+            if (TestAppointmentData.ExistsForApplication(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("A test appointment already exists for the given test type and local driving license application.");
 
-            if (testAppointment.TestTypeId == TestType.WrittenTheoryTest)
+            switch(testAppointment.TestTypeId)
             {
-                // Check if a vision test appointment exists for the same local driving license application before scheduling a written theory test appointment
-                if (!TestAppointmentData.DoesApplicationExist(TestType.VisionTest, testAppointment.LocalDrivingLicenseApplicationId))
-                    throw new BusinessException("A vision test appointment must be scheduled before scheduling a written theory test appointment.");
+                case TestType.WrittenTheoryTest:
+                    // Check if a vision test appointment exists for the same local driving license application before scheduling a written theory test appointment
+                    if (!TestAppointmentData.ExistsForApplication(TestType.VisionTest, testAppointment.LocalDrivingLicenseApplicationId))
+                        throw new BusinessException("A vision test appointment must be scheduled before scheduling a written theory test appointment.");
+
+                    if (testAppointment.PaidFees != 20)
+                        throw new BusinessException("Paid fees must be 20 dollars for a written theory test.");                
+                    break;
+
+                case TestType.VisionTest:
+                    if (testAppointment.PaidFees != 10)
+                        throw new BusinessException("Paid fees must be 10 dollars for a practical street test.");
+                    break;
+
+                case TestType.PracticalStreetTest:
+                    // Check if a written theory test appointment exists for the same local driving license application before scheduling a practical street test appointment
+                    if (!TestAppointmentData.ExistsForApplication(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
+                        throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
+
+                    decimal licenseClassFees = LicenseClassData.GetFees(localDrivingLicenseApplication.LicenseClassId);
+                    if (testAppointment.PaidFees != licenseClassFees)
+                        throw new BusinessException($"Paid fees must be {licenseClassFees} dollars for a vision test.");
+                    break;
             }
-
-            if (testAppointment.TestTypeId == TestType.PracticalStreetTest)
-            {
-                // Check if a written theory test appointment exists for the same local driving license application before scheduling a practical street test appointment
-                if (!TestAppointmentData.DoesApplicationExist(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
-                    throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
-            }
-        }
-
-        public static void UpdateValidator(TestAppointment testAppointment)
-        {
-            Core.Validators.TestAppointmentValidator.Validate(testAppointment);
-            TestAppointment existingTestAppointment = TestAppointmentData.GetById(testAppointment.TestAppointmentId);
-
-            if (TestAppointmentData.IsLocked(testAppointment.TestAppointmentId))
-                throw new BusinessException("TestAppointment cannot be modified because the test has already been completed.");
-
-            if (existingTestAppointment.TestTypeId != testAppointment.TestTypeId)
-                throw new BusinessException("Cannot change Test Type after the test is done.");
-
-            if (existingTestAppointment.LocalDrivingLicenseApplicationId != testAppointment.LocalDrivingLicenseApplicationId)
-                throw new BusinessException("Cannot change local driving license application id after the test is done.");
-
-            if (testAppointment.AppointmentDate < DateTime.Now)
-                throw new BusinessException("Appointment date cannot be in the past.");
-
-            if (testAppointment.PaidFees < existingTestAppointment.PaidFees)
-                throw new ValidationException("Cannot decrease fees after it increased.");
         }
     }
 }

@@ -9,15 +9,15 @@ namespace DVLD.Business
 {
     public static class TestBusiness
     {
-        public static Test CreateNewTest(Test test)
+        public static Test Add(Test test)
         {
             TestValidator.AddNewValidator(test);
 
             try
             {
-                int newTestId = TestData.AddNewTest(test);
-                TestAppointmentData.LockTestAppointment(test.TestAppointmentID);
-                return TestData.GetTestById(newTestId);
+                int newTestId = TestData.Add(test);
+                TestAppointmentData.Lock(test.TestAppointmentID);
+                return TestData.GetById(newTestId);
             }
             catch (Exception ex)
             {
@@ -26,14 +26,14 @@ namespace DVLD.Business
             }
         }
 
-        public static Test GetTestById(int testId)
+        public static Test GetById(int testId)
         {
             if (testId <= 0)
                 return null;
 
             try
             {
-                return TestData.GetTestById(testId);
+                return TestData.GetById(testId);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAllTests()
+        public static DataTable GetAll()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool UpdateTestNotes(int testId, string newNotes)
+        public static bool UpdateNotes(int testId, string newNotes)
         {
             if (testId <= 0)
                 return false;
