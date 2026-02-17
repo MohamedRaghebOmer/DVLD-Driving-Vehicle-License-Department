@@ -129,7 +129,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsCountryNameUsed(string countryName, int excludedId)
+        public static bool Exists(string countryName, int excludedId = -1)
         {
             string query = @"SELECT 1 
                             FROM Countries 

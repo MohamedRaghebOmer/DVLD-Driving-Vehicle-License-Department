@@ -13,7 +13,7 @@ namespace DVLD.Business.EntityValidators
             if (country.CountryName.Length < 3)
                 throw new BusinessException("Country name is too short, please try another one.");
 
-            if (CountryData.IsCountryNameUsed(country.CountryName, -1))
+            if (CountryData.Exists(country.CountryName))
                 throw new BusinessException($"Country with name {country.CountryName} is already exists, please try another one.");
         }
 
@@ -24,7 +24,7 @@ namespace DVLD.Business.EntityValidators
             if (country.CountryName.Length < 3)
                 throw new BusinessException("Country name is too short, please try another one.");
 
-            if (CountryData.IsCountryNameUsed(country.CountryName, country.CountryId))
+            if (CountryData.Exists(country.CountryName, country.CountryId))
                 throw new BusinessException($"The country name '{country.CountryName}'  is already exists, please try another one.");
         }
     }

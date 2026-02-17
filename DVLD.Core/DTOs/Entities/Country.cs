@@ -40,13 +40,6 @@ namespace DVLD.Core.DTOs.Entities
         }
 
 
-        // Consturctores
-        public Country()
-        {
-            this._countryId = -1;
-            this._countryName = string.Empty;
-        }
-
         public Country(string countryName)
         {
             this._countryId = -1;
