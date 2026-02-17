@@ -177,7 +177,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsNationalNumberUsed(string nationalNumber, int excludedId)
+        public static bool IsNationalNumberUsed(string nationalNumber, int excludedId = -1)
         {
             string query = "SELECT 1 FROM People WHERE NationalNo = @nationalNumber AND PersonId != @excludedId;";
 
@@ -201,7 +201,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsEmailUsed(string email, int excludedId)
+        public static bool IsEmailUsed(string email, int excludedId = -1)
         {
             string query = "SELECT 1 FROM People WHERE Email = @Email AND PersonId != @excludedId;";
             try
