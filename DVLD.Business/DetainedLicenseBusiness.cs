@@ -8,15 +8,15 @@ using DVLD.Business.EntityValidators;
 namespace DVLD.Business
 {
     public static class DetainedLicenseBusiness
-    {                     // International licenses cannot be detained
-        public static DetainedLicense DetainNewLicense(int licenseId, decimal fineFees)
+    {                    
+        public static DetainedLicense Add(int licenseId, decimal fineFees)
         {
             DetainedLicenseValidator.DetainNewLicenseValidator(licenseId, fineFees);
             
             try
             {
-                int detainedLicenseId = DetainedLicenseData.DetainNewLicense(licenseId, fineFees);
-                return DetainedLicenseData.GetDetainedLicenseById(detainedLicenseId);
+                int detainedLicenseId = DetainedLicenseData.Add(licenseId, fineFees);
+                return DetainedLicenseData.GetByLicenseId(detainedLicenseId);
             }
             catch(Exception ex)
             {
@@ -25,11 +25,14 @@ namespace DVLD.Business
             }
         }
 
-        public static DetainedLicense GetDetainedLicenseById(int detainedLicenseId)
+        public static DetainedLicense GetById(int detainedLicenseId)
         {
+            if (detainedLicenseId <= 0)
+                return null;
+
             try
             {
-                return DetainedLicenseData.GetDetainedLicenseById(detainedLicenseId);
+                return DetainedLicenseData.GetByLicenseId(detainedLicenseId);
             }
             catch (Exception ex)
             {
@@ -51,7 +54,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool DoesDetainIdExist(int detainId)
+        public static bool Exists(int detainId)
         {
             if (detainId <= 0)
                 return false;
@@ -67,14 +70,14 @@ namespace DVLD.Business
             }
         }
 
-        public static bool DoesLicenseExist(int licenseId, bool isReleased = false)
+        public static bool IsDetained(int licenseId)
         {
             if (licenseId <= 0)
                 return false;
 
             try
             {
-                return DetainedLicenseData.IsDetained(licenseId, isReleased);
+                return DetainedLicenseData.IsDetained(licenseId);
             }
             catch (Exception ex)
             {
@@ -99,15 +102,14 @@ namespace DVLD.Business
             }
         }
 
-        public static bool ReleaseLicense(int licenseId, int applicationId)
+        public static bool Release(int licenseId, int applicationId)
         {
-            Application application = ApplicationData.GetById(applicationId);
-            DetainedLicenseValidator.ReleaseDetainedLicenseValidator(licenseId, application);
+            DetainedLicenseValidator.ReleaseDetainedLicenseValidator
+                (licenseId, ApplicationData.GetById(applicationId));
 
             try
             {
-                                                           // Update 1 below to actual UserId
-                return DetainedLicenseData.ReleaseLicense(licenseId, 1, applicationId);
+                return DetainedLicenseData.Release(licenseId,  applicationId);
             }
             catch (Exception ex)
             {

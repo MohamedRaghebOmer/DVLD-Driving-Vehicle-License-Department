@@ -10,7 +10,7 @@ namespace DVLD.Data
 {
     public static class DetainedLicenseData
     {
-        public static int DetainNewLicense(int licenseId, decimal fineFees)
+        public static int Add(int licenseId, decimal fineFees)
         {
             string query = @"INSERT INTO DetainedLicenses (LicenseID, DetainDate, FineFees, CreatedByUserID)
                             VALUES (@licenseId, GETDATE(), @fineFees, @createdByUserId);
@@ -95,7 +95,7 @@ namespace DVLD.Data
             }
         }
 
-        public static DetainedLicense GetDetainedLicenseById(int licenseId)
+        public static DetainedLicense GetByLicenseId(int licenseId)
         {
             string query = @"SELECT * FROM DetainedLicenses WHERE LicenseID = @licenseId AND IsReleased = 0;";
 
@@ -158,7 +158,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool IsDetained(int licenseId, bool isReleased = false)
+        public static bool IsDetained(int licenseId)
         {
             string query = @"SELECT 1 FROM DetainedLicenses WHERE LicenseID = @licenseId AND IsReleased = @isReleased;";
 
@@ -168,7 +168,6 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@licenseId", licenseId);
-                    command.Parameters.AddWithValue("@isReleased", isReleased);
                     connection.Open();
 
                     return command.ExecuteScalar() != null;
@@ -207,7 +206,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ReleaseLicense(int licenseId, int releasedByUserId, int releaseApplicationId)
+        public static bool Release(int licenseId, int releaseApplicationId)
         {
             string query = @"UPDATE DetainedLicenses SET IsReleased = 1, ReleaseDate = GETDATE(), ReleasedByUserID = @releasedByUserId, ReleaseApplicationID = @releaseApplicationId WHERE DetainedID = @detainedLicenseId;";
 
@@ -217,7 +216,7 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@detainedLicenseId", licenseId);
-                    command.Parameters.AddWithValue("@releasedByUserId", releasedByUserId);
+                    command.Parameters.AddWithValue("@releasedByUserId", LoggedInUserInfo.UserId);
                     command.Parameters.AddWithValue("@releaseApplicationId", releaseApplicationId);
                     connection.Open();
 
