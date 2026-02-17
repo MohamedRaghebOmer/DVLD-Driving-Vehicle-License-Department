@@ -11,10 +11,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.TestAppointmentValidator.Validate(testAppointment);
             LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetById(testAppointment.LocalDrivingLicenseApplicationId);
-            Application application = ApplicationData.GetById(localDrivingLicenseApplication.ApplicationId);
+            Application application = ApplicationData.GetById(localDrivingLicenseApplication.ApplicationID);
 
             // Check if the local driving license application exists
-            if (!LocalDrivingLicenseApplicationData.DoesApplicationExist(testAppointment.LocalDrivingLicenseApplicationId))
+            if (!LocalDrivingLicenseApplicationData.ExistsForApplication(testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("The specified local driving license application does not exist.");
 
             if (application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReleaseDetainedDrivingLicense)
@@ -48,7 +48,7 @@ namespace DVLD.Business.EntityValidators
                     if (!TestAppointmentData.ExistsForApplication(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
                         throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
 
-                    decimal licenseClassFees = LicenseClassData.GetFees(localDrivingLicenseApplication.LicenseClassId);
+                    decimal licenseClassFees = LicenseClassData.GetFees(localDrivingLicenseApplication.LicenseClassID);
                     if (testAppointment.PaidFees != licenseClassFees)
                         throw new BusinessException($"Paid fees must be {licenseClassFees} dollars for a vision test.");
                     break;

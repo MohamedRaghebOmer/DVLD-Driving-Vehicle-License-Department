@@ -16,7 +16,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Applicant person does not exist.");
 
             // Check if the person already has an application with the same type.
-            if (LocalDrivingLicenseApplicationData.DoesPersonHaveApplication(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationData.ExistsForPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
             // Check if the ApplicationFees is not payed completely.

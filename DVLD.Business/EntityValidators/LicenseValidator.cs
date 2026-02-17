@@ -56,7 +56,7 @@ namespace DVLD.Business.EntityValidators
             _ = localDrivingLicenseApplication
                 ?? throw new BusinessException("Local driving license application does not exist.");
             
-            if (!TestData.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationId))
+            if (!TestData.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationID))
                 throw new BusinessException("Driver has not passed all three tests.");
 
 
