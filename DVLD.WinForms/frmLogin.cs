@@ -1,8 +1,8 @@
-﻿using DVLD.Business;
-using DVLD.Core.Exceptions;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Windows.Forms;
+using System.ComponentModel;
+using DVLD.Business;
+using DVLD.Core.Exceptions;
 
 namespace DVLD.WinForms
 {
@@ -13,7 +13,7 @@ namespace DVLD.WinForms
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmLogin_Load(object sender, EventArgs e)
         {
 
         }
