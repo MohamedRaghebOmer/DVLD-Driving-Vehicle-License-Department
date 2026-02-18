@@ -1,6 +1,6 @@
 ﻿namespace DVLD.WinForms
 {
-    partial class frmLogin
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // frmLogin
+            // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1361, 806);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.Name = "frmLogin";
-            this.Text = "Login Screen";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "frmMain";
+            this.Text = "Main";
             this.ResumeLayout(false);
 
         }
@@ -47,4 +44,3 @@
         #endregion
     }
 }
-
