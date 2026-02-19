@@ -129,7 +129,6 @@
     <None Include="Images\MainScreen\ManagePeople\btnAddNewPerson.png" />
     <None Include="Images\MainScreen\ManagePeople\btnClose.png" />
     <Content Include="Resources\BlackBackground.jpg" />
-    <None Include="Resources\close.png" />
     <Content Include="Resources\Lock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
