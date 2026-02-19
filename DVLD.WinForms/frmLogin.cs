@@ -20,6 +20,19 @@ namespace DVLD.WinForms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtUsername.Text))
+            {
+                MessageBox.Show("Username is required.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtPassword.Text))
+            {
+                MessageBox.Show("Password is required.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
             try
             {
                 if (UserBusiness.Login(txtUsername.Text, txtPassword.Text))
@@ -37,14 +50,15 @@ namespace DVLD.WinForms
             }
             catch (BusinessException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Deactivated Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception)
             {
-                MessageBox.Show("There was a problem while trying to login you in. Please try again later.");
+                MessageBox.Show("There was a problem while trying to login you in. Please try again later.", "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // Escape key
         private void frmLogin_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -76,6 +90,7 @@ namespace DVLD.WinForms
                 errorProvider1.SetError(txtPassword, "");
         }
 
+        // Make the form able to close even the textboxes are empty
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.AutoValidate = AutoValidate.Disable;

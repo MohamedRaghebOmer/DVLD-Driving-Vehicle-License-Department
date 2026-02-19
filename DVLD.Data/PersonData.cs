@@ -224,7 +224,7 @@ namespace DVLD.Data
 
         public static DataTable GetAll()
         {
-            string query = "SELECT * FROM People;";
+            string query = "SELECT * FROM People_View;;";
             
             try
             {
@@ -239,7 +239,6 @@ namespace DVLD.Data
                         {
                             DataTable allPeople = new DataTable();
                             allPeople.Load(reader);
-                            
                             return allPeople;
                         }
                         else

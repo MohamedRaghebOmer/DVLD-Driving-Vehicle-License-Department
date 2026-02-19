@@ -46,7 +46,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Country GetById(int id)
+        public static Country Get(int id)
         {
             if (id <= 0)
                 return null;
@@ -62,7 +62,7 @@ namespace DVLD.Business
             }
         }
 
-        public static Country GetByName(string countryName)
+        public static Country Get(string countryName)
         {
             if (string.IsNullOrWhiteSpace(countryName))
                 return null;
@@ -74,6 +74,22 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading country info with name = {countryName}");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static string GetName(int countryId)
+        {
+            if (countryId <= 0)
+                return null;
+
+            try
+            {
+                return CountryData.GetName(countryId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading country name with Id = {countryId}");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

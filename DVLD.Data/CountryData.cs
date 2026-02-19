@@ -104,6 +104,31 @@ namespace DVLD.Data
             }
         }
 
+        public static string GetName(int countryId)
+        {
+            string query = @"SELECT CountryName
+                            FROM Countries
+                            WHERE CountryId = @countryId;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@countryId", countryId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    return result?.ToString(); // Return null if not found
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from Countries table.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int countryId)
         {
             string query = @"SELECT 1
