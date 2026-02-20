@@ -98,6 +98,19 @@ namespace DVLD.Business
             }
         }
 
+        public static DataTable GetAllWithDateParts()
+        {
+            try
+            {
+                return PersonData.GetAllWithDateParts();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading all people with date parts.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static bool Exists(int personId)
         {
             if (personId < 1)

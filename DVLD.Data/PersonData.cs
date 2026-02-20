@@ -254,6 +254,40 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetAllWithDateParts()
+        {
+            string query = @"SELECT *, 
+                                    DAY(DateOfBirth) AS BirthDay, 
+                                    MONTH(DateOfBirth) AS BirthMonth, 
+                                    YEAR(DateOfBirth) AS BirthYear 
+                             FROM People_View;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable allPeople = new DataTable();
+                            allPeople.Load(reader);
+                            return allPeople;
+                        }
+                        else
+                            return null;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
 
         // -----------------------Update-------------------------
         public static bool Update(Person person)

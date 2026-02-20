@@ -6,7 +6,7 @@ namespace DVLD.Core.DTOs.Entities
 {
     public class Person
     {
-        private const int MaxNameLength = 15;
+        private const int MaxNameLength = 20;
 
         private int _personId;
         private string _nationalNo;
@@ -44,7 +44,7 @@ namespace DVLD.Core.DTOs.Entities
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ValidationException("National number cannot be empty.");
 
-                if (value.Length > 5 && value.Length < 20)
+                if (value.Length < 20)
                     _nationalNo = value;
                 else
                     throw new ValidationException("Invalid national number length.");

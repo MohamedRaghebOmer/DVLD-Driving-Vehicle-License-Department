@@ -150,33 +150,6 @@
   <metadata name="colEmail.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADy
-        AwAAAk1TRnQBSQFMAwEBAAEIAQABCAEAASgBAAEoAQAE/wEFAQAI/wFCAU0BdgcAAXYDAAEoAwABoAMA
-        ASgDAAEBAQABBAUAAYABDBgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQADgAMAAf8CAAH/
-        AwAC/wEAAf8DAAH/AQAB/wEAAv8CAAP/+AABDwH/AfcBfwH/AfBKAAF5BJkBmAHwSAABeQaZAZgB8EYA
-        AfkImQGXRQAB/wqZAY9EAAF5C5kB8EIAAQ8MmQGAQgAB+QOZAXkEmQGXAYkCmQGXQgABiQKZAZcB9wSZ
-        AY8B+AOZAfBAAAEPA5kBfwH/AXkCmQGYAv8BiQKZAYBAAAH5ApkBlwL/AfcCmQGPAv8B+AKZAZ9AAAH5
-        ApkBnwP/AXkBlwP/AfcCmQGYQAABeQOZA/8B9wF/A/8BiQOZAfA/AAGJA5kBnwb/AfgEmQHwPgABDwWZ
-        Bv8BiQSZAfA+AAEPBZkBnwT/AfcFmQHwPgABDwaZBP8BeQWZAXA+AAEPBZkBlwT/AXkFmQFwPgABDwWZ
-        AX8E/wH3BZkB8D8ABJkBlwb/AXkEmQHwPwABeQOZAX8G/wH3BJkB8D8AAfkCmQGXA/8B9wGfA/8BeQOZ
-        AfA/AAH5ApkBnwP/AXkBmQP/AfcCmQGXQAABBwKZAZgC/wH3ApkBnwL/AXkCmQGQQAABDwOZAY8B/wF5
-        A5kB/wH3A5kBcEEAAXkCmQGYAfcEmQGfAXkDmUIAAQgMmQGfQgABDwyZAXBDAAH5CpkBlwHwQwABDwGJ
-        CZkBcEUAAQcImQGPRwAB9waZAZ9JAAH/AXkCmQGYAX8B8EsAAv8B8P8ANQABQgFNAT4HAAE+AwABKAMA
-        AaADAAEoAwABAQEAAQEFAAEgAQMWAAP/AQAF/w8ABf8PAAX/DwAB/wH+AQABfwH/DwAB/wH8AQABHwH/
-        DwAB/wHwAQABBwH/DwAB/wHAAQABAwH/DwAB/wMAAf8PAAH/AwABfw8AAf4DAAF/DwAB/AMAAT8PAAH8
-        AwABHw8AAfgDAAEfDwAB8AMAAQ8PAAHwAwABDw8AAfADAAEHDwAB8AMAAQcPAAHgAwABBw8AAeADAAEH
-        DwAB4AMAAQcPAAHgAwABBw8AAeADAAEHDwAB8AMAAQcPAAHwAwABBw8AAfADAAEHDwAB8AMAAQ8PAAH4
-        AwABHw8AAfgDAAEfDwAB/AMAAT8PAAH+AwABPw8AAf4DAAF/DwAB/wMAAX8PAAH/AYABAAEBAf8PAAH/
-        AeABAAEDAf8PAAH/AfABAAEPAf8PAAH/AfwBAAEfAf8PAAL/AcEC/w8ABf8PAAX/DwAF/w8ACw==
-</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

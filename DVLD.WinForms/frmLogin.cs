@@ -12,12 +12,7 @@ namespace DVLD.WinForms
         {
             InitializeComponent();
         }
-
-        private void frmLogin_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtUsername.Text))
@@ -32,30 +27,32 @@ namespace DVLD.WinForms
                 return;
             }
 
+            bool canLogin = false;
 
             try
             {
-                if (UserBusiness.Login(txtUsername.Text, txtPassword.Text))
-                {
-                    this.Hide();
-                    frmMain frm = new frmMain();
-                    frm.ShowDialog();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Incorrect username or password.", 
-                        "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                canLogin = UserBusiness.Login(txtUsername.Text, txtPassword.Text);
             }
             catch (BusinessException ex)
             {
-                MessageBox.Show(ex.Message, "Deactivated Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, "Your Account was deactivated, please contact the system admin.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception)
             {
                 MessageBox.Show("There was a problem while trying to login you in. Please try again later.", "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            if (canLogin)
+            {
+                this.Hide();
+                frmMain frm = new frmMain();
+                frm.ShowDialog();
+                this.Close();
+                return;
+            }
+            else
+                MessageBox.Show("Incorrect username or password.",
+                "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         // Escape key
