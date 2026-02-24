@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="Application\LocalDrivingLicenseService.cs" />
     <Compile Include="Application\ApplicationTypeService.cs" />
-    <Compile Include="Misc\CountryService.cs" />
+    <Compile Include="CoreServices\CountryService.cs" />
     <Compile Include="License\DetainedLicenseService.cs" />
-    <Compile Include="Misc\DriverService.cs" />
+    <Compile Include="CoreServices\DriverService.cs" />
     <Compile Include="EntityValidators\ApplicationValidator.cs" />
     <Compile Include="EntityValidators\DetainedLicenseValidator.cs" />
     <Compile Include="EntityValidators\DriverValidator.cs" />
@@ -58,14 +58,14 @@
     <Compile Include="License\LicenseService.cs" />
     <Compile Include="License\LicenseClassService.cs" />
     <Compile Include="Application\LocalDrivingLicenseApplicationService.cs" />
-    <Compile Include="Misc\PersonService.cs" />
+    <Compile Include="CoreServices\PersonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityValidators\CountryValidator.cs" />
     <Compile Include="EntityValidators\PersonValidator.cs" />
     <Compile Include="Test\TestAppointmentService.cs" />
     <Compile Include="Test\TestService.cs" />
     <Compile Include="Test\TestTypeService.cs" />
-    <Compile Include="Misc\UserService.cs" />
+    <Compile Include="CoreServices\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DVLD.Core\DVLD.Core.csproj">

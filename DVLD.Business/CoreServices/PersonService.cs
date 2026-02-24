@@ -7,6 +7,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using DVLD.Core.Helpers;
 
 namespace DVLD.Business
 {
@@ -53,7 +54,7 @@ namespace DVLD.Business
             if (fileName == null) 
                 return null;
 
-            return Path.Combine(GetImagesFolderPath(), fileName);
+            return Path.Combine(PathHelper.ImagesFolderPath, fileName);
         }
 
         public static string GetImagePath(string imageFileName)
@@ -61,22 +62,7 @@ namespace DVLD.Business
             if (string.IsNullOrEmpty(imageFileName))
                 return null;
             
-            return Path.Combine(GetImagesFolderPath(), imageFileName);
-        }
-
-        public static string GetImagesFolderPath()
-        {
-            return Path.Combine(GetProgramDataPath(), "Images");
-        }
-
-        public static string GetProgramDataPath()
-        {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
-        }
-
-        public static string GetLogsFolderPath()
-        {
-            return Path.Combine(GetProgramDataPath(), "Logs");
+            return Path.Combine(PathHelper.ImagesFolderPath, imageFileName);
         }
 
         public static DataTable GetAllWithDateParts()

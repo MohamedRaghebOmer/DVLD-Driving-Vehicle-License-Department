@@ -62,7 +62,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(1378, 80);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // btnApplications
             // 
@@ -76,7 +75,6 @@
             this.btnApplications.Name = "btnApplications";
             this.btnApplications.Size = new System.Drawing.Size(180, 70);
             this.btnApplications.Text = "Applications";
-            this.btnApplications.Click += new System.EventHandler(this.btnApplications_Click);
             // 
             // btnPeople
             // 
@@ -104,7 +102,6 @@
             this.btnDrivers.Name = "btnDrivers";
             this.btnDrivers.Size = new System.Drawing.Size(140, 70);
             this.btnDrivers.Text = "Drivers";
-            this.btnDrivers.Click += new System.EventHandler(this.btnDrivers_Click);
             // 
             // btnUsers
             // 

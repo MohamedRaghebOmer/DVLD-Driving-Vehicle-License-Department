@@ -43,20 +43,20 @@
   <ItemGroup>
     <Compile Include="Application\ApplicationRepository.cs" />
     <Compile Include="Application\ApplicationTypeRepository.cs" />
-    <Compile Include="Misc\CountryRepository.cs" />
+    <Compile Include="CoreRepositories\CountryRepository.cs" />
     <Compile Include="DataSettings.cs" />
     <Compile Include="License\DetainedLicenseRepository.cs" />
-    <Compile Include="Misc\DriverRepository.cs" />
+    <Compile Include="CoreRepositories\DriverRepository.cs" />
     <Compile Include="License\InternationalLicenseRepository.cs" />
     <Compile Include="License\LicenseClassRepository.cs" />
     <Compile Include="License\LicenseRepository.cs" />
     <Compile Include="Application\LocalDrivingLicenseApplicationRepository.cs" />
-    <Compile Include="Misc\PersonRepository.cs" />
+    <Compile Include="CoreRepositories\PersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestAppointmentRepository.cs" />
     <Compile Include="Test\TestRepository.cs" />
     <Compile Include="Test\TestTypeRepository.cs" />
-    <Compile Include="Misc\UserRepository.cs" />
+    <Compile Include="CoreRepositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DVLD.Core\DVLD.Core.csproj">

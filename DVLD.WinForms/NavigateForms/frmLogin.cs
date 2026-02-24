@@ -5,12 +5,13 @@ using DVLD.Core.Exceptions;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using DVLD.Core.Helpers;
 
 namespace DVLD.WinForms
 {
     public partial class frmLogin : Form
     {
-        string filePath = Path.Combine(PersonService.GetLogsFolderPath(), "remember.txt");
+        string filePath = Path.Combine(PathHelper.LoggingFolderPath, "remember.txt");
 
         public frmLogin()
         {
@@ -107,8 +108,8 @@ namespace DVLD.WinForms
             // If chkRemember is checked, and there no remembered cardinalities => then save cardinalities.
             if (chkRememberMe.Checked && !AreThereRememberedCardinalities())
             {
-                if (!Directory.Exists(PersonService.GetLogsFolderPath()))
-                    Directory.CreateDirectory(PersonService.GetLogsFolderPath());
+                if (!Directory.Exists(PathHelper.LoggingFolderPath))
+                    Directory.CreateDirectory(PathHelper.LoggingFolderPath);
 
                 string username = txtUsername.Text;
                 string password = txtPassword.Text;

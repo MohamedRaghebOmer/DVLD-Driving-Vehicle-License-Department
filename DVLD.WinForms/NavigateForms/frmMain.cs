@@ -18,21 +18,6 @@ namespace DVLD.WinForms
             frm.ShowDialog();
         }
 
-        private void btnDrivers_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnApplications_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();

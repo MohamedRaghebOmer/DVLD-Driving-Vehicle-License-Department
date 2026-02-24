@@ -8,6 +8,7 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Properties;
 using System.Data;
+using DVLD.Core.Helpers;
 
 namespace DVLD.WinForms
 {
@@ -511,7 +512,7 @@ namespace DVLD.WinForms
             if (string.IsNullOrEmpty(_selectedImageTempPath) || !File.Exists(_selectedImageTempPath))
                 return null;
 
-            string imagesFolderPath = PersonService.GetImagesFolderPath();
+            string imagesFolderPath = PathHelper.ImagesFolderPath;
 
             if (!Directory.Exists(imagesFolderPath))
                 Directory.CreateDirectory(imagesFolderPath);
