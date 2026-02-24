@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.Logging;
+using DVLD.Data.Settings;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Logging;
 
 namespace DVLD.Data
 {
@@ -104,6 +105,56 @@ namespace DVLD.Data
             }
         }
 
+        public static string GetName(int countryId)
+        {
+            string query = @"SELECT CountryName
+                            FROM Countries
+                            WHERE CountryId = @countryId;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@countryId", countryId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    return result?.ToString(); // Return null if not found
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from Countries table.", ex);
+                throw;
+            }
+        }
+
+        public static int GetIdByName(string countryName)
+        {
+            string query = @"SELECT CountryID
+                            FROM Countries
+                            WHERE LOWER(CountryName) = LOWER(@countryName);";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@countryName", countryName);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    return result != null ? Convert.ToInt32(result) : -1; // Return -1 if not found
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from Countries table.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int countryId)
         {
             string query = @"SELECT 1
@@ -156,25 +207,26 @@ namespace DVLD.Data
 
         }
 
-        public static DataTable GetAll()
+        public static DataTable GetAllNames()
         {
-            string query = @"SELECT CountryId, CountryName
-                            FROM Countries
-                            ORDER BY CountryName;";
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Countries ORDER BY CountryName;", connection))
                 {
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        DataTable countriesTable = new DataTable();
-                        countriesTable.Load(reader);
-
-                        return countriesTable;
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
                     }
+                
+                    return null;
                 }
             }
             catch(Exception ex)
@@ -198,7 +250,7 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@newCountryName", country.CountryName);
-                    command.Parameters.AddWithValue("@countryId", country.CountryId);
+                    command.Parameters.AddWithValue("@countryId", country.CountryID);
 
                     connection.Open();
 

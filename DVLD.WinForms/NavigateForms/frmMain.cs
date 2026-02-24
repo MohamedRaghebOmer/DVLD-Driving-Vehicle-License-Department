@@ -1,0 +1,31 @@
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace DVLD.WinForms
+{
+    public partial class frmMain : Form
+    {
+        public frmMain()
+        {
+            InitializeComponent();
+        }
+
+        private void btnPeople_Click(object sender, EventArgs e)
+        {
+            frmManagePeople frm = new frmManagePeople();
+            frm.ShowDialog();
+        }
+
+        private void btnDrivers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnApplications_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
