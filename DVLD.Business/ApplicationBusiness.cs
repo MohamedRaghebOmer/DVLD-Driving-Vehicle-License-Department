@@ -5,6 +5,7 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Business.EntityValidators;
+using System.Diagnostics;
 
 namespace DVLD.Business
 {
@@ -25,8 +26,8 @@ namespace DVLD.Business
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("BLL: Error while creating new local driving license", ex);
-                throw;
+                AppLogger.LogError("BLL: Error while creating new local driving license");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
@@ -44,7 +45,7 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while creating new international driving license application", ex);
-                throw;
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
@@ -57,7 +58,7 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while retrieving all applications", ex);
-                throw;
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
@@ -73,7 +74,7 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while retrieving application by id", ex);
-                throw;
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
@@ -86,7 +87,7 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while checking if application exists", ex);
-                throw;
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
     }

@@ -44,7 +44,7 @@ namespace DVLD.Data
                         command.Parameters.AddWithValue("@Email", person.Email);
                     else
                         command.Parameters.AddWithValue("@Email", DBNull.Value);
-                    command.Parameters.AddWithValue("@NationalityCountryId", person.NationalityCountryId);
+                    command.Parameters.AddWithValue("@NationalityCountryId", person.NationalityCountryID);
                     if (!string.IsNullOrEmpty(person.ImagePath))
                         command.Parameters.AddWithValue("@ImagePath", person.ImagePath);
                     else
@@ -70,7 +70,7 @@ namespace DVLD.Data
         // ----------------------Read---------------------------
         public static Person Get(int personId)
         {
-            string query = @"SELECT * FROM People WHERE PersonId = @PersonId;";
+            string query = @"SELECT * FROM People WHERE PersonID = @PersonId;";
 
             try
             {
@@ -85,7 +85,7 @@ namespace DVLD.Data
                         if (reader.Read())
                         {
                             return new Person(
-                                (int)reader["PersonId"],
+                                (int)reader["PersonID"],
                                 (string)reader["NationalNo"],
                                 (string)reader["FirstName"],
                                 (string)reader["SecondName"],
@@ -96,7 +96,7 @@ namespace DVLD.Data
                                 (string)reader["Address"],
                                 (string)reader["Phone"],
                                 reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
-                                (int)reader["NationalityCountryId"],
+                                (int)reader["NationalityCountryID"],
                                 reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
                             );
                         }
@@ -111,39 +111,23 @@ namespace DVLD.Data
             return null;
         }
 
-        public static Person Get(string nationalNumber)
+        public static string GetImagePath(int personId)
         {
-            string query = @"SELECT * FROM People WHERE NationalNo = @nationalNumber;";
+            string query = "SELECT ImagePath FROM People WHERE PersonID = @personId;";
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@nationalNumber", nationalNumber);
-                    connection.Open();
+                    command.Parameters.AddWithValue("@personId", personId);
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new Person(
-                                (int)reader["PersonId"],
-                                (string)reader["NationalNo"],
-                                (string)reader["FirstName"],
-                                (string)reader["SecondName"],
-                                reader["ThirdName"] == DBNull.Value ? string.Empty : (string)reader["ThirdName"],
-                                (string)reader["LastName"],
-                                (DateTime)reader["DateOfBirth"],
-                                (Gender)(byte)reader["Gender"],
-                                (string)reader["Address"],
-                                (string)reader["Phone"],
-                                reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
-                                (int)reader["NationalityCountryId"],
-                                reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
-                            );
-                        }
-                    }
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+
+                    if (result != null)
+                        return result.ToString();
+                    return null;
                 }
             }
             catch (Exception ex)
@@ -151,7 +135,6 @@ namespace DVLD.Data
                 AppLogger.LogError("DAL: Error while reading from People." + ex);
                 throw;
             }
-            return null;
         }
 
         public static bool Exists(int personId)
@@ -222,32 +205,21 @@ namespace DVLD.Data
             }
         }
 
-        public static DataTable GetAll()
+        public static bool IsPhoneUsed(string phone, int excludedId = -1)
         {
-            string query = "SELECT * FROM People_View;;";
-            
+            string query = "SELECT 1 FROM People WHERE Phone = @Phone AND PersonID != @excludedId;";
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@Phone", phone);
+                    command.Parameters.AddWithValue("@excludedId", excludedId);
                     connection.Open();
-
-                    using(SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            DataTable allPeople = new DataTable();
-                            allPeople.Load(reader);
-                            return allPeople;
-                        }
-                        else
-                            return null;
-
-                    }
+                    return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while reading from People." + ex);
                 throw;
@@ -328,12 +300,12 @@ namespace DVLD.Data
                         command.Parameters.AddWithValue("@Email", person.Email);
                     else
                         command.Parameters.AddWithValue("@Email", DBNull.Value);
-                    command.Parameters.AddWithValue("@NationalityCountryId", person.NationalityCountryId);
+                    command.Parameters.AddWithValue("@NationalityCountryId", person.NationalityCountryID);
                     if (!string.IsNullOrEmpty(person.ImagePath))
                         command.Parameters.AddWithValue("@ImagePath", person.ImagePath);
                     else
                         command.Parameters.AddWithValue("@ImagePath", DBNull.Value);
-                    command.Parameters.AddWithValue("@PersonId", person.PersonId);
+                    command.Parameters.AddWithValue("@PersonId", person.PersonID);
 
                     connection.Open();
 
@@ -351,7 +323,7 @@ namespace DVLD.Data
         // -----------------------Delete--------------------------
         public static bool Delete(int personId)
         {
-            string query = @"DELETE FROM People WHERE PersonId = @personId;";
+            string query = @"DELETE FROM People WHERE PersonID = @personId;";
 
             try
             {
@@ -370,28 +342,5 @@ namespace DVLD.Data
                 throw;
             }
         }
-
-        public static bool Delete(string nationalNumber)
-        {
-            string query = @"DELETE FROM People WHERE NationalNo = @nationalNumber;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@nationalNumber", nationalNumber);
-                    connection.Open();
-
-                    return command.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while deleting from People." + ex);
-                throw;
-            }
-        }
-
     }
 }

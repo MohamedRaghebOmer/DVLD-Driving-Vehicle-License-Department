@@ -1,3 +1,6 @@
+#App Loger
+logs.txt
+
 #ignore database backups
 Backups/
 

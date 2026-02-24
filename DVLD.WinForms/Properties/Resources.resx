@@ -118,40 +118,109 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="UsersToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\UsersToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Application64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\Application64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Username" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Username.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Black870" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Black870.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AccountSettingsToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\AccountSettingsToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BluePen512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\BluePen512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ManagePeople" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\ManagePeople.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BluePhone512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\BluePhone512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Password" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Password.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Calendar512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Calendar512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BlackBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackBackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Card32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\Card32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PeopleToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\PeopleToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Card64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\Card64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AccessControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AccessControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Details512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Details512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btnAddNewPerson" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\ManagePeople\btnAddNewPerson.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Driver64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\Driver64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DriverToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\DriverToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Earth512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Earth512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ApplicationsToolStrip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\MainScreen\ApplicationsToolStrip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Enter32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\Enter32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Login" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FemaleSign512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\FemaleSign512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="frmLogin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico\frmLogin.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="frmMain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico\frmMain.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="frmManagePeople" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico\frmManagePeople.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GrayCard512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\GrayCard512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LocationPin512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\LocationPin512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaleSign512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\MaleSign512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ManWithAddtionMark72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72px\ManWithAddtionMark72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ManWithQuestionMark72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72px\ManWithQuestionMark72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NameCard512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\NameCard512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrangeEmail512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\OrangeEmail512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordBox72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72px\PasswordBox72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\People64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PeopleStanding64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\PeopleStanding64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PeopleWithHair512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\PeopleWithHair512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PoepleWithHair64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\PoepleWithHair64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedBin512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\RedBin512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SendEmail512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\SendEmail512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\Settings64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TelephoneCall512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\TelephoneCall512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UsernameBox72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72px\UsernameBox72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Users64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px\Users64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteLockWithBalckBackground225" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\WhiteLockWithBalckBackground225.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WomanWithQuestionMark72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\72px\WomanWithQuestionMark72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

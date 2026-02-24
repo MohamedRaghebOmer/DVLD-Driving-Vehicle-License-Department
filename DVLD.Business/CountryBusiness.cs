@@ -1,10 +1,11 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
-using DVLD.Core.Logging;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Exceptions;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -16,13 +17,13 @@ namespace DVLD.Business
                 throw new ValidationException("Country cannot be empty.");
 
             // Add new country
-            if (country.CountryId == -1)
+            if (country.CountryID == -1)
             {
                 CountryValidator.AddNewValidator(country);
 
                 try
                 {
-                    return (CountryData.Add(country) != -1) ? CountryData.Get(country.CountryId) : null;
+                    return (CountryData.Add(country) != -1) ? CountryData.Get(country.CountryID) : null;
                 }
                 catch (Exception ex)
                 {
@@ -36,7 +37,7 @@ namespace DVLD.Business
 
                 try
                 {
-                    return (CountryData.Update(country)) ? CountryData.Get(country.CountryId) : null;
+                    return (CountryData.Update(country)) ? CountryData.Get(country.CountryID) : null;
                 }
                 catch (Exception ex)
                 {
@@ -94,11 +95,27 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAll()
+        public static int GetIdByName(string countryName)
+        {
+            if (string.IsNullOrWhiteSpace(countryName))
+                return -1;
+
+            try
+            {
+                return CountryData.GetIdByName(countryName);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading country Id with name = {countryName}");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static DataTable GetAllNames()
         {
             try
             {
-                return CountryData.GetAll();
+                return CountryData.GetAllNames();
             }
             catch (Exception ex)
             {

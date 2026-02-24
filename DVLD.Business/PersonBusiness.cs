@@ -1,59 +1,34 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Logging;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Exceptions;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
+using System.Drawing;
+using System.IO;
 
 namespace DVLD.Business
 {
     public static class PersonBusiness
     {
-        public static Person Save(Person person)
+        public static int Add(Person person)
         {
             if (person == null)
-                throw new ValidationException("Person cannot be empty.");
-
-            // Add new person
-            if (person.PersonId == -1)
+                throw new ValidationException("Person info cannot be empty.");
+            
+            try
             {
-                PersonValidator.AddNewValidator(person);
-
-                try
-                {
-                    int newPersonId = PersonData.Add(person);
-                    
-                    if (newPersonId != -1)
-                        return PersonData.Get(newPersonId);
-                    return null;
-                }
-                catch(Exception ex)
-                {
-                    AppLogger.LogError("BLL: Error while saving new person.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
+                return PersonData.Add(person);
             }
-            else // Update existing person
+            catch(Exception ex)
             {
-                PersonValidator.UpdateValidator(person);
-                
-                try
-                {
-                    if (PersonData.Update(person))
-                        return PersonData.Get(person.PersonId);
-                    
-                    return null;
-                }
-                catch(Exception ex)
-                {
-                    AppLogger.LogError("BLL: Error while saving existing person.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
+                AppLogger.LogError("BLL: Error while saving new person.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
-        public static Person GetByPersonId(int personId)
+        public static Person GetById(int personId)
         {
             if (personId < 1)
                 return null;
@@ -69,33 +44,26 @@ namespace DVLD.Business
             }
         }
 
-        public static Person GetByNationalNumber(string nationalNumber)
+        public static string GetImagePath(int personId)
         {
-            if (string.IsNullOrWhiteSpace(nationalNumber))
+            if (personId < 1) return null;
+
+            string fileName = PersonData.GetImagePath(personId);
+            
+            if (fileName == null) 
                 return null;
 
-            try
-            {
-                return PersonData.Get(nationalNumber);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while reading person with national number = {nationalNumber}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
+            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
+            return Path.Combine(dvldFolder, fileName);
         }
 
-        public static DataTable GetAll()
+        public static string GetImagePath(string imageFileName)
         {
-            try
-            {
-                return PersonData.GetAll();
-            }
-            catch(Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while reading all people.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
+            if (string.IsNullOrEmpty(imageFileName))
+                return null;
+
+            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
+            return Path.Combine(dvldFolder, imageFileName);
         }
 
         public static DataTable GetAllWithDateParts()
@@ -111,22 +79,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool Exists(int personId)
-        {
-            if (personId < 1)
-                return false;
-            try
-            {
-                return PersonData.Exists(personId);
-            }
-            catch(Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while checking existence of person with Id = {personId}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
-
-        public static bool ExistsForNationalNumber(string nationalNumber, int excludePersonId = -1)
+        public static bool IsNationalNoUsed(string nationalNumber, int excludePersonId = -1)
         {
             if (string.IsNullOrWhiteSpace(nationalNumber))
                 return false;
@@ -141,7 +94,7 @@ namespace DVLD.Business
             }
         }
 
-        public static bool ExistsForEmail(string email, int excludePersonId = -1)
+        public static bool IsEmailUsed(string email, int excludePersonId = -1)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
@@ -156,37 +109,62 @@ namespace DVLD.Business
             }
         }
 
+        public static bool IsPhoneUsed(string phone, int excludePersonId = -1)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                return false;
+
+            try
+            {
+                return PersonData.IsPhoneUsed(phone, excludePersonId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while checking if phone = {phone} is used by other.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool Update(Person person)
+        {
+            if (person == null)
+                throw new ValidationException("Person info cannot be empty.");
+
+            try
+            {
+                return PersonData.Update(person);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while updating person with Id = {person.PersonID}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static bool Delete(int personId)
         {
             if (personId < 1)
                 return false;
 
-            try
-            {
-                return PersonData.Delete(personId);
-            }
-            catch(Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while deleting person with Id = {personId}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            string imagePath = GetImagePath(personId);
 
-            }
-        }
+            bool isDeleted = PersonData.Delete(personId);
 
-        public static bool Delete(string nationalNumber)
-        {
-            if (string.IsNullOrWhiteSpace(nationalNumber))
+            if (!isDeleted)
                 return false;
 
             try
             {
-                return PersonData.Delete(nationalNumber);
+                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+                    File.Delete(imagePath);
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"BLL: Error while deleting person with national number = {nationalNumber}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+                AppLogger.LogError($"BLL: Error while deleting person with Id = {personId}.");
+                throw new Exception("Can't delete person because there is data associated with it.", ex);
             }
+
+            return true;
         }
     }
 }

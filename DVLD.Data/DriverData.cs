@@ -110,7 +110,7 @@ namespace DVLD.Data
             }
             catch(Exception ex)
             {
-                AppLogger.LogError("DAL: Erorr while selecting form Drivers.", ex);
+                AppLogger.LogError("DAL: Error while selecting form Drivers.", ex);
                 throw;
             }
         }
@@ -135,7 +135,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Erorr while selecting form Drivers.", ex);
+                AppLogger.LogError("DAL: Error while selecting form Drivers.", ex);
                 throw;
             }
         }
@@ -158,7 +158,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Erorr while selecting form Drivers.", ex);
+                AppLogger.LogError("DAL: Error while selecting form Drivers.", ex);
                 throw;
             }
         }
@@ -178,7 +178,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Erorr while selecting form Drivers.", ex);
+                AppLogger.LogError("DAL: Error while selecting form Drivers.", ex);
                 throw;
             }
         }
