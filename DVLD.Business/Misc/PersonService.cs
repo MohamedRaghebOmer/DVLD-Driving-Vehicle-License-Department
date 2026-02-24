@@ -53,17 +53,30 @@ namespace DVLD.Business
             if (fileName == null) 
                 return null;
 
-            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
-            return Path.Combine(dvldFolder, fileName);
+            return Path.Combine(GetImagesFolderPath(), fileName);
         }
 
         public static string GetImagePath(string imageFileName)
         {
             if (string.IsNullOrEmpty(imageFileName))
                 return null;
+            
+            return Path.Combine(GetImagesFolderPath(), imageFileName);
+        }
 
-            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
-            return Path.Combine(dvldFolder, imageFileName);
+        public static string GetImagesFolderPath()
+        {
+            return Path.Combine(GetProgramDataPath(), "Images");
+        }
+
+        public static string GetProgramDataPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
+        }
+
+        public static string GetLogsFolderPath()
+        {
+            return Path.Combine(GetProgramDataPath(), "Logs");
         }
 
         public static DataTable GetAllWithDateParts()

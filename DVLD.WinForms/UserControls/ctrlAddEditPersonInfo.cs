@@ -511,12 +511,13 @@ namespace DVLD.WinForms
             if (string.IsNullOrEmpty(_selectedImageTempPath) || !File.Exists(_selectedImageTempPath))
                 return null;
 
-            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
-            if (!Directory.Exists(dvldFolder))
-                Directory.CreateDirectory(dvldFolder);
+            string imagesFolderPath = PersonService.GetImagesFolderPath();
+
+            if (!Directory.Exists(imagesFolderPath))
+                Directory.CreateDirectory(imagesFolderPath);
 
             string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(_selectedImageTempPath);
-            string destinationPath = Path.Combine(dvldFolder, newFileName);
+            string destinationPath = Path.Combine(imagesFolderPath, newFileName);
 
             try
             {

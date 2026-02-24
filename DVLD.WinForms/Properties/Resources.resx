@@ -166,6 +166,9 @@
   <data name="GrayCard512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\GrayCard512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="information32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\information32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="LocationPin512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\LocationPin512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -222,5 +225,11 @@
   </data>
   <data name="WomanWithQuestionMark72" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\72px\WomanWithQuestionMark72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResetPassword32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\ResetPassword32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SingOut32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\SingOut32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -223,6 +223,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap information32 {
+            get {
+                object obj = ResourceManager.GetObject("information32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LocationPin512 {
             get {
                 object obj = ResourceManager.GetObject("LocationPin512", resourceCulture);
@@ -343,6 +353,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ResetPassword32 {
+            get {
+                object obj = ResourceManager.GetObject("ResetPassword32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SendEmail512 {
             get {
                 object obj = ResourceManager.GetObject("SendEmail512", resourceCulture);
@@ -356,6 +376,16 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap Settings64 {
             get {
                 object obj = ResourceManager.GetObject("Settings64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SingOut32 {
+            get {
+                object obj = ResourceManager.GetObject("SingOut32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

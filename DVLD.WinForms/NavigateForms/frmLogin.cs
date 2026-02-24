@@ -1,18 +1,49 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.ComponentModel;
 using DVLD.Business;
 using DVLD.Core.Exceptions;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DVLD.WinForms
 {
     public partial class frmLogin : Form
     {
+        string filePath = Path.Combine(PersonService.GetLogsFolderPath(), "remember.txt");
+
         public frmLogin()
         {
             InitializeComponent();
         }
-        
+
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+            RememberUser();
+        }
+
+        private void RememberUser()
+        {
+            if (AreThereRememberedCardinalities())
+            {
+                string[] lines = File.ReadAllLines(filePath);
+
+                if (lines.Length == 2)
+                {
+                    txtUsername.Text = lines[0];
+
+                    byte[] encryptedPassword = Convert.FromBase64String(lines[1]);
+                    byte[] decryptedPassword = ProtectedData.Unprotect(encryptedPassword, null, DataProtectionScope.CurrentUser);
+
+                    txtPassword.Text = Encoding.UTF8.GetString(decryptedPassword);
+
+                    chkRememberMe.Checked = true;
+                }
+            }
+            else
+                chkRememberMe.Checked = false;
+        }
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtUsername.Text))
@@ -44,18 +75,18 @@ namespace DVLD.WinForms
 
             if (canLogin)
             {
+                SaveRememberCardinalities();
+
                 this.Hide();
                 frmMain frm = new frmMain();
                 frm.ShowDialog();
                 this.Close();
-                return;
             }
             else
                 MessageBox.Show("Incorrect username or password.",
                 "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // Escape key
         private void frmLogin_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -65,17 +96,39 @@ namespace DVLD.WinForms
             }
         }
 
-        // Make the form able to close even the textboxes are empty
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.AutoValidate = AutoValidate.Disable;
             e.Cancel = false;
         }
 
-        private void frmLogin_Load(object sender, EventArgs e)
+        private void SaveRememberCardinalities()
         {
+            // If chkRemember is checked, and there no remembered cardinalities => then save cardinalities.
+            if (chkRememberMe.Checked && !AreThereRememberedCardinalities())
+            {
+                if (!Directory.Exists(PersonService.GetLogsFolderPath()))
+                    Directory.CreateDirectory(PersonService.GetLogsFolderPath());
 
+                string username = txtUsername.Text;
+                string password = txtPassword.Text;
+
+                // Encrypt Password
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] encryptedPassword = ProtectedData.Protect(passwordBytes, null, DataProtectionScope.CurrentUser);
+
+                // Save to file
+                File.WriteAllLines(filePath, new string[] {username, Convert.ToBase64String(encryptedPassword)});
+            }
+            else if (!chkRememberMe.Checked && AreThereRememberedCardinalities())
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        private bool AreThereRememberedCardinalities()
+        {
+            return File.Exists(filePath) && !string.IsNullOrEmpty(File.ReadAllText(filePath));
         }
     }
-
 }

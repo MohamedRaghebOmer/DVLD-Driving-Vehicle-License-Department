@@ -27,5 +27,16 @@ namespace DVLD.WinForms
         {
 
         }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+            Environment.Exit(0);
+        }
     }
 }
