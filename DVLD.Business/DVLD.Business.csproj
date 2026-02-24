@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationBusiness.cs" />
-    <Compile Include="ApplicationTypeBusiness.cs" />
-    <Compile Include="CountryBusiness.cs" />
-    <Compile Include="DetainedLicenseBusiness.cs" />
-    <Compile Include="DriverBusiness.cs" />
+    <Compile Include="Application\LocalDrivingLicenseService.cs" />
+    <Compile Include="Application\ApplicationTypeService.cs" />
+    <Compile Include="Misc\CountryService.cs" />
+    <Compile Include="License\DetainedLicenseService.cs" />
+    <Compile Include="Misc\DriverService.cs" />
     <Compile Include="EntityValidators\ApplicationValidator.cs" />
     <Compile Include="EntityValidators\DetainedLicenseValidator.cs" />
     <Compile Include="EntityValidators\DriverValidator.cs" />
@@ -54,18 +54,18 @@
     <Compile Include="EntityValidators\TestAppointmentValidator.cs" />
     <Compile Include="EntityValidators\TestValidator.cs" />
     <Compile Include="EntityValidators\UserValidator.cs" />
-    <Compile Include="InternationalLicenseBusiness.cs" />
-    <Compile Include="LicenseBusiness.cs" />
-    <Compile Include="LicenseClassBusiness.cs" />
-    <Compile Include="LocalDrivingLicenseApplicationBusiness.cs" />
-    <Compile Include="PersonBusiness.cs" />
+    <Compile Include="License\InternationalLicenseService.cs" />
+    <Compile Include="License\LicenseService.cs" />
+    <Compile Include="License\LicenseClassService.cs" />
+    <Compile Include="Application\LocalDrivingLicenseApplicationService.cs" />
+    <Compile Include="Misc\PersonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityValidators\CountryValidator.cs" />
     <Compile Include="EntityValidators\PersonValidator.cs" />
-    <Compile Include="TestAppointmentBusiness.cs" />
-    <Compile Include="TestBusiness.cs" />
-    <Compile Include="TestTypeBusiness.cs" />
-    <Compile Include="UserBusiness.cs" />
+    <Compile Include="Test\TestAppointmentService.cs" />
+    <Compile Include="Test\TestService.cs" />
+    <Compile Include="Test\TestTypeService.cs" />
+    <Compile Include="Misc\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DVLD.Core\DVLD.Core.csproj">

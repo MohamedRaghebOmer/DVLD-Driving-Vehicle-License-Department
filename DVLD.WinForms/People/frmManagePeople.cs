@@ -26,7 +26,7 @@ namespace DVLD.WinForms
 
         private void LoadDataGridView()
         {
-            DataTable people = PersonBusiness.GetAllWithDateParts();
+            DataTable people = PersonService.GetAllWithDateParts();
             people.CaseSensitive = cbMatchCase.Checked;
             dgvPeople.DataSource = people;
         }
@@ -227,7 +227,7 @@ namespace DVLD.WinForms
 
             try
             {
-                if (!PersonBusiness.Delete(personID))
+                if (!PersonService.Delete(personID))
                 {
                     MessageBox.Show("Person does not exist.",
                                     "Failed",

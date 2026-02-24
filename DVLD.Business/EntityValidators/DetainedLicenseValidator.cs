@@ -12,10 +12,10 @@ namespace DVLD.Business.EntityValidators
             if (fineFees <= 0)
                 throw new BusinessException("Fine fees must be greater than 0.");
 
-            if (licenseId <= 0 || !LicenseData.Exists(licenseId))
+            if (licenseId <= 0 || !LicenseRepository.Exists(licenseId))
                 throw new BusinessException("Associated license does not exist.");
 
-            if (DetainedLicenseData.IsDetained(licenseId))
+            if (DetainedLicenseRepository.IsDetained(licenseId))
                 throw new BusinessException("License is already detained.");
         }
         
@@ -24,24 +24,24 @@ namespace DVLD.Business.EntityValidators
             if (application == null || application.ApplicationID <= 0)
                 throw new BusinessException("Associated application does not exist.");
 
-            if (licenseID <= 0 || !LicenseData.Exists(licenseID))
+            if (licenseID <= 0 || !LicenseRepository.Exists(licenseID))
                 throw new BusinessException("Associated license does not exist.");
 
-            if (LicenseData.GetPersonIdByLicenseId(licenseID) != application.ApplicantPersonID)
+            if (LicenseRepository.GetPersonIdByLicenseId(licenseID) != application.ApplicantPersonID)
                 throw new BusinessException("Associated license does not belong to the applicant.");
 
             if (application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense ||
                 application.ApplicationStatus != ApplicationStatus.New)
             throw new BusinessException("Invalid application.");
 
-            decimal applicationTypeFees = ApplicationTypeData.GetFees(ApplicationType.ReleaseDetainedDrivingLicense);
+            decimal applicationTypeFees = ApplicationTypeRepository.GetFees(ApplicationType.ReleaseDetainedDrivingLicense);
             if (application.PaidFees < applicationTypeFees)
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
-            if (!DetainedLicenseData.IsDetained(licenseID))
+            if (!DetainedLicenseRepository.IsDetained(licenseID))
                 throw new BusinessException("License is not detained.");
 
-            if (LicenseData.IsExpired(licenseID))
+            if (LicenseRepository.IsExpired(licenseID))
                 throw new BusinessException("Cannot release an expired license.");
         }
     }

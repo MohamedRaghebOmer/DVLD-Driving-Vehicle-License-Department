@@ -89,7 +89,7 @@ namespace DVLD.WinForms
 
         private void LoadCountries_comboBox()
         {
-            DataTable dtCountries = CountryBusiness.GetAllNames();
+            DataTable dtCountries = CountryService.GetAllNames();
             if (dtCountries != null && dtCountries.Rows.Count > 0)
             {
                 cbCountry.DataSource = dtCountries;
@@ -105,7 +105,7 @@ namespace DVLD.WinForms
 
         private void LoadPersonInfo()
         {
-            person = PersonBusiness.GetById(PersonID);
+            person = PersonService.GetById(PersonID);
 
             if (person == null)
             {
@@ -133,7 +133,7 @@ namespace DVLD.WinForms
             _selectedImageTempPath = null;
             _imageRemoved = false;
 
-            string fullImagePath = PersonBusiness.GetImagePath(person.ImagePath);
+            string fullImagePath = PersonService.GetImagePath(person.ImagePath);
 
             if (!string.IsNullOrEmpty(fullImagePath) && File.Exists(fullImagePath))
             {
@@ -221,11 +221,11 @@ namespace DVLD.WinForms
 
                 if (isUpdate)
                 {
-                    success = PersonBusiness.Update(person);
+                    success = PersonService.Update(person);
                 }
                 else
                 {
-                    newId = PersonBusiness.Add(person);
+                    newId = PersonService.Add(person);
                     success = newId > 0;
 
                     if (success)
@@ -275,7 +275,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullPath = PersonBusiness.GetImagePath(newImageFileName);
+                string fullPath = PersonService.GetImagePath(newImageFileName);
                 if (File.Exists(fullPath))
                     File.Delete(fullPath);
             }
@@ -300,7 +300,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullOldPath = PersonBusiness.GetImagePath(oldImageFileName);
+                string fullOldPath = PersonService.GetImagePath(oldImageFileName);
 
                 if (!string.IsNullOrEmpty(fullOldPath) &&
                     File.Exists(fullOldPath))
@@ -325,7 +325,7 @@ namespace DVLD.WinForms
             if (person != null && txtNationalNumber.Text == person.NationalNumber)
                 return;
 
-            if (PersonBusiness.IsNationalNoUsed(txtNationalNumber.Text, PersonID))
+            if (PersonService.IsNationalNoUsed(txtNationalNumber.Text, PersonID))
             {
                 errorProvider1.SetError(txtNationalNumber, "National number already exists.");
                 txtNationalNumber.Focus();
@@ -345,7 +345,7 @@ namespace DVLD.WinForms
             if (person != null && txtPhone.Text == person.Phone)
                 return;
 
-            if (PersonBusiness.IsPhoneUsed(txtPhone.Text, PersonID))
+            if (PersonService.IsPhoneUsed(txtPhone.Text, PersonID))
             {
                 errorProvider1.SetError(txtPhone, "Phone number already exists.");
                 txtPhone.Focus();
@@ -381,7 +381,7 @@ namespace DVLD.WinForms
                 return;
             }
 
-            if (PersonBusiness.IsEmailUsed(txtEmail.Text, PersonID))
+            if (PersonService.IsEmailUsed(txtEmail.Text, PersonID))
             {
                 errorProvider1.SetError(txtEmail, "Email already exists.");
                 txtEmail.Focus();

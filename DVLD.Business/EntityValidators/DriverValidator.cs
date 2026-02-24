@@ -10,10 +10,10 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.DriverValidator.Validate(driver);
 
-            if (!PersonData.Exists(driver.PersonId))
+            if (!PersonRepository.Exists(driver.PersonId))
                 throw new BusinessException("Person doesn't exists.");
             
-            if (DriverData.ExistsForPerson(driver.PersonId))
+            if (DriverRepository.ExistsForPerson(driver.PersonId))
                 throw new BusinessException("The person is already associated with another driver.");
         }
     }

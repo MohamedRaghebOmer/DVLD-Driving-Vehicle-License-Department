@@ -32,7 +32,7 @@ namespace DVLD.WinForms.UserControls
 
         private void SetValues()
         {
-            Person person = PersonBusiness.GetById(PersonID);
+            Person person = PersonService.GetById(PersonID);
 
             if (person == null) return;
 
@@ -62,7 +62,7 @@ namespace DVLD.WinForms.UserControls
             lblAddress.Text = person.Address;
             lblDateOfBirth.Text = person.DateOfBirth.ToString("dd/mm/yyyy");
             lblPhone.Text = person.Phone;
-            lblCountry.Text = CountryBusiness.GetName(person.NationalityCountryID);
+            lblCountry.Text = CountryService.GetName(person.NationalityCountryID);
             LoadPersonImage();
         }
 
@@ -75,7 +75,7 @@ namespace DVLD.WinForms.UserControls
         {
             try
             {
-                string imagePath = PersonBusiness.GetImagePath(PersonID);
+                string imagePath = PersonService.GetImagePath(PersonID);
 
                 if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
                 {

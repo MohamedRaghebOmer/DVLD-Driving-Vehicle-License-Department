@@ -31,7 +31,7 @@ namespace DVLD.WinForms
 
             try
             {
-                canLogin = UserBusiness.Login(txtUsername.Text, txtPassword.Text);
+                canLogin = UserService.Login(txtUsername.Text, txtPassword.Text);
             }
             catch (BusinessException ex)
             {

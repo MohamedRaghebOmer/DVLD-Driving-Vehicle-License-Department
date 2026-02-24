@@ -10,11 +10,11 @@ namespace DVLD.Business.EntityValidators
         public static void AddNewValidator(TestAppointment testAppointment)
         {
             Core.Validators.TestAppointmentValidator.Validate(testAppointment);
-            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetById(testAppointment.LocalDrivingLicenseApplicationId);
-            Application application = ApplicationData.GetById(localDrivingLicenseApplication.ApplicationID);
+            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationRepository.GetById(testAppointment.LocalDrivingLicenseApplicationId);
+            Application application = ApplicationRepository.GetById(localDrivingLicenseApplication.ApplicationID);
 
             // Check if the local driving license application exists
-            if (!LocalDrivingLicenseApplicationData.ExistsForApplication(testAppointment.LocalDrivingLicenseApplicationId))
+            if (!LocalDrivingLicenseApplicationRepository.ExistsForApplication(testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("The specified local driving license application does not exist.");
 
             if (application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReleaseDetainedDrivingLicense)
@@ -24,14 +24,14 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("This test type is not required for this application type.");
 
             // Check if a test appointment already exists for the given test type and local driving license application
-            if (TestAppointmentData.ExistsForApplication(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
+            if (TestAppointmentRepository.ExistsForApplication(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("A test appointment already exists for the given test type and local driving license application.");
 
             switch(testAppointment.TestTypeId)
             {
                 case TestType.WrittenTheoryTest:
                     // Check if a vision test appointment exists for the same local driving license application before scheduling a written theory test appointment
-                    if (!TestAppointmentData.ExistsForApplication(TestType.VisionTest, testAppointment.LocalDrivingLicenseApplicationId))
+                    if (!TestAppointmentRepository.ExistsForApplication(TestType.VisionTest, testAppointment.LocalDrivingLicenseApplicationId))
                         throw new BusinessException("A vision test appointment must be scheduled before scheduling a written theory test appointment.");
 
                     if (testAppointment.PaidFees != 20)
@@ -45,10 +45,10 @@ namespace DVLD.Business.EntityValidators
 
                 case TestType.PracticalStreetTest:
                     // Check if a written theory test appointment exists for the same local driving license application before scheduling a practical street test appointment
-                    if (!TestAppointmentData.ExistsForApplication(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
+                    if (!TestAppointmentRepository.ExistsForApplication(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
                         throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
 
-                    decimal licenseClassFees = LicenseClassData.GetFees(localDrivingLicenseApplication.LicenseClassID);
+                    decimal licenseClassFees = LicenseClassRepository.GetFees(localDrivingLicenseApplication.LicenseClassID);
                     if (testAppointment.PaidFees != licenseClassFees)
                         throw new BusinessException($"Paid fees must be {licenseClassFees} dollars for a vision test.");
                     break;
