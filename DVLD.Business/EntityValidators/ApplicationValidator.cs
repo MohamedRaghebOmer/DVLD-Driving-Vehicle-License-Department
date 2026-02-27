@@ -7,7 +7,7 @@ namespace DVLD.Business.EntityValidators
 {
     internal class ApplicationValidator
     {                    
-        public static void NewLocalDrivingLicenseValidator(Application application, LicenseClass licenseClass)
+        public static void AddNewValidator(Application application, LicenseClass licenseClass)
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
@@ -45,28 +45,28 @@ namespace DVLD.Business.EntityValidators
             }
         }
 
-        public static void NewInternationalLicenseValidator(Application application)
-        {
-            Core.Validators.ApplicationValidator.Validate(application);
+        //public static void NewInternationalLicenseValidator(Application application)
+        //{
+        //    Core.Validators.ApplicationValidator.Validate(application);
 
-            // Check if the person exists.
-            if (!PersonRepository.Exists(application.ApplicantPersonID))
-                throw new BusinessException("Applicant person does not exist.");
+        //    // Check if the person exists.
+        //    if (!PersonRepository.Exists(application.ApplicantPersonID))
+        //        throw new BusinessException("Applicant person does not exist.");
 
-            // Check if the person already has an application with the same type.
-            if (ApplicationRepository.ExistsForPerson(application.ApplicantPersonID, ApplicationType.NewInternationalLicense, ApplicationStatus.New))
-                throw new BusinessException("There is already an uncompleted application of the same type.");
+        //    // Check if the person already has an application with the same type.
+        //    if (ApplicationRepository.ExistsForPerson(application.ApplicantPersonID, ApplicationType.NewInternationalLicense, ApplicationStatus.New))
+        //        throw new BusinessException("There is already an uncompleted application of the same type.");
 
-            if (ApplicationRepository.ExistsForPerson(application.ApplicantPersonID, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.Completed))
-                throw new BusinessException("Person already has a completed local driving license application.");
+        //    if (ApplicationRepository.ExistsForPerson(application.ApplicantPersonID, ApplicationType.NewLocalDrivingLicenseService, ApplicationStatus.Completed))
+        //        throw new BusinessException("Person already has a completed local driving license application.");
 
-            // Check if the ApplicationFees is not payed completely.
-            if (application.PaidFees < ApplicationTypeRepository.GetFees(ApplicationType.NewInternationalLicense))
-                throw new BusinessException("Application fees are not payed completely.");
+        //    // Check if the ApplicationFees is not payed completely.
+        //    if (application.PaidFees < ApplicationTypeRepository.GetFees(ApplicationType.NewInternationalLicense))
+        //        throw new BusinessException("Application fees are not payed completely.");
 
-            int driverId = DriverRepository.GetIdByPersonId(application.ApplicantPersonID);
-            if (!LicenseRepository.ExistsForDriver(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
-                throw new BusinessException("The applicant does not have an active class 3 driving license.");
-        }
+        //    int driverId = DriverRepository.GetIdByPersonId(application.ApplicantPersonID);
+        //    if (!LicenseRepository.ExistsForDriver(driverId, LicenseClass.Class3_OrdinaryDrivingLicense, true))
+        //        throw new BusinessException("The applicant does not have an active class 3 driving license.");
+        //}
     }
 }

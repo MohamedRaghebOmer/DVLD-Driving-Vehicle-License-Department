@@ -5,79 +5,24 @@ namespace DVLD.Core.DTOs.Entities
 {
     public class Driver
     {
-        private int _driverId;
-        private int _personId;
-        private int _createdByUserId;
-        private DateTime _createdDate;
+        public int DriverId { get; private set; }
 
+        public int PersonId { get; set; }
 
-        public int DriverId
-        {
-            get => _driverId;
+        public int CreatedByUserId { get; private set; }
 
-            private set
-            {
-                if (value > 0)
-                    _driverId = value;
-                else
-                    throw new ValidationException("Driver Id must be a positive integer.");
-            }
-        }
-
-        public int PersonId
-        {
-            get => _personId;
-
-            set
-            {
-                if (value > 0)
-                    _personId = value;
-                else
-                    throw new ValidationException("Person Id must be a positive integer.");
-            }
-        }
-
-        public int CreatedByUserId
-        {
-            get => _createdByUserId;
-
-            private set
-            {
-                if (value > 0)
-                    _createdByUserId = value;
-                else
-                    throw new ValidationException("User Id must be a positive integer.");
-            }
-        }
-
-        public DateTime CreatedDate
-        {
-            get => _createdDate;
-
-            private set
-            {
-                if (value <= DateTime.Now)
-                    _createdDate = value;
-                else
-                    throw new ValidationException("Creation date can't be in the future.");
-            }
-        }
-
+        public DateTime CreatedDate { get; private set; }
 
         public Driver()
         {
-            this._driverId = -1;
-            this._personId = -1;
-            this._createdByUserId = -1;
-            this._createdDate = new DateTime(1900, 1, 1); // Default value for short date
+            this.DriverId = -1;
+            this.PersonId = -1;
+            this.CreatedByUserId = -1;
+            this.CreatedDate = new DateTime(1900, 1, 1); // Default value for short date
         }
 
-        public Driver(int personId) : this()
-        {
-            this.PersonId = personId;
-        }
-
-        internal Driver(int driverId, int personId, int createdByUserId, DateTime createdDate) : this()
+        internal Driver(int driverId, int personId, int createdByUserId, 
+            DateTime createdDate) : this()
         {
             this.DriverId = driverId;
             this.PersonId = personId;
