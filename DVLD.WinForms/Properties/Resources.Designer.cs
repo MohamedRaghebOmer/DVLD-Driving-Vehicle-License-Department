@@ -63,6 +63,36 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddNewUser512 {
+            get {
+                object obj = ResourceManager.GetObject("AddNewUser512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddNewUser64 {
+            get {
+                object obj = ResourceManager.GetObject("AddNewUser64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddPerson24 {
+            get {
+                object obj = ResourceManager.GetObject("AddPerson24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Application64 {
             get {
                 object obj = ResourceManager.GetObject("Application64", resourceCulture);
@@ -126,6 +156,16 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap Card64 {
             get {
                 object obj = ResourceManager.GetObject("Card64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Close32 {
+            get {
+                object obj = ResourceManager.GetObject("Close32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -207,6 +247,16 @@ namespace DVLD.WinForms.Properties {
             get {
                 object obj = ResourceManager.GetObject("frmManagePeople", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] frmManageUsers {
+            get {
+                object obj = ResourceManager.GetObject("frmManageUsers", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -333,6 +383,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Plus512 {
+            get {
+                object obj = ResourceManager.GetObject("Plus512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PoepleWithHair64 {
             get {
                 object obj = ResourceManager.GetObject("PoepleWithHair64", resourceCulture);
@@ -363,6 +423,46 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RightArrow32 {
+            get {
+                object obj = ResourceManager.GetObject("RightArrow32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save32 {
+            get {
+                object obj = ResourceManager.GetObject("Save32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SearchPerson24 {
+            get {
+                object obj = ResourceManager.GetObject("SearchPerson24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SearchPerson32 {
+            get {
+                object obj = ResourceManager.GetObject("SearchPerson32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SendEmail512 {
             get {
                 object obj = ResourceManager.GetObject("SendEmail512", resourceCulture);
@@ -386,6 +486,16 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap SingOut32 {
             get {
                 object obj = ResourceManager.GetObject("SingOut32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Team512 {
+            get {
+                object obj = ResourceManager.GetObject("Team512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

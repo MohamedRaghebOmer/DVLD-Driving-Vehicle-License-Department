@@ -65,13 +65,10 @@ namespace DVLD.WinForms
             {
                 canLogin = UserService.Login(txtUsername.Text, txtPassword.Text);
             }
-            catch (BusinessException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Your Account was deactivated, please contact the system admin.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("There was a problem while trying to login you in. Please try again later.", "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             if (canLogin)
@@ -84,8 +81,10 @@ namespace DVLD.WinForms
                 this.Close();
             }
             else
+            {
                 MessageBox.Show("Incorrect username or password.",
-                "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void frmLogin_KeyDown(object sender, KeyEventArgs e)
@@ -106,7 +105,7 @@ namespace DVLD.WinForms
         private void SaveRememberCardinalities()
         {
             // If chkRemember is checked, and there no remembered cardinalities => then save cardinalities.
-            if (chkRememberMe.Checked && !AreThereRememberedCardinalities())
+            if (chkRememberMe.Checked && !AreThereRememberedCardinalities(true))
             {
                 if (!Directory.Exists(PathHelper.LoggingFolderPath))
                     Directory.CreateDirectory(PathHelper.LoggingFolderPath);
@@ -127,9 +126,33 @@ namespace DVLD.WinForms
             }
         }
 
-        private bool AreThereRememberedCardinalities()
+        private bool AreThereRememberedCardinalities(bool checkExistingPassword = false)
         {
-            return File.Exists(filePath) && !string.IsNullOrEmpty(File.ReadAllText(filePath));
+            bool fileExistsAndContainText = File.Exists(filePath) && !string.IsNullOrEmpty(File.ReadAllText(filePath));
+
+            if (!fileExistsAndContainText)
+                return false;
+
+            if (!checkExistingPassword)
+                return true;
+
+            if (GetDecryptedPassword() == txtPassword.Text)
+                return true;
+            return false;
+        }
+
+        private string GetDecryptedPassword()
+        {
+            string[] lines = File.ReadAllLines(filePath);
+
+            if (lines.Length == 2)
+            {
+                byte[] encryptedPassword = Convert.FromBase64String(lines[1]);
+                byte[] decryptedPassword = ProtectedData.Unprotect(encryptedPassword, null, DataProtectionScope.CurrentUser);
+
+                return Encoding.UTF8.GetString(decryptedPassword);
+            }
+            return null;
         }
     }
 }

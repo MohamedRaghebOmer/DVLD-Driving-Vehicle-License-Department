@@ -1,13 +1,11 @@
-﻿using DVLD.Business.EntityValidators;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Exceptions;
+using DVLD.Core.Helpers;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using DVLD.Core.Helpers;
 
 namespace DVLD.Business
 {
@@ -17,12 +15,12 @@ namespace DVLD.Business
         {
             if (person == null)
                 throw new ValidationException("Person info cannot be empty.");
-            
+
             try
             {
                 return PersonRepository.Add(person);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while saving new person.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -36,32 +34,77 @@ namespace DVLD.Business
 
             try
             {
-                return PersonRepository.Get(personId);
+                return PersonRepository.GetById(personId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading person with Id = {personId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
-        public static string GetImagePath(int personId)
+        public static Person GetByNationalNo(string nationalNo)
+        {
+            if (string.IsNullOrWhiteSpace(nationalNo))
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByNationalNo(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with national number = {nationalNo}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static int GetIdByNationalNo(string NationalNo)
+        {
+            if (string.IsNullOrEmpty(NationalNo))
+                return -1;
+
+            try
+            {
+                return PersonRepository.GetIdByNationalNo(NationalNo);
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person id with national number = {NationalNo}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static string GetImagePathByPersonId(int personId)
         {
             if (personId < 1) return null;
 
-            string fileName = PersonRepository.GetImagePath(personId);
-            
-            if (fileName == null) 
+            string fileName = PersonRepository.GetImagePathByPersonId(personId);
+
+            if (fileName == null)
                 return null;
 
             return Path.Combine(PathHelper.ImagesFolderPath, fileName);
         }
 
-        public static string GetImagePath(string imageFileName)
+        public static string GetImagePathByNationalNo(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            string fileName = PersonRepository.GetImagePathByNationalNo(nationalNo);
+
+            if (fileName == null)
+                return null;
+
+            return Path.Combine(PathHelper.ImagesFolderPath, fileName);
+        }
+
+        public static string GetImagePathByFileName(string imageFileName)
         {
             if (string.IsNullOrEmpty(imageFileName))
                 return null;
-            
+
             return Path.Combine(PathHelper.ImagesFolderPath, imageFileName);
         }
 
@@ -78,13 +121,29 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsNationalNoUsed(string nationalNumber, int excludePersonId = -1)
+        public static bool Exists(int personId)
+        {
+            if (personId < 1)
+                return false;
+
+            try
+            {
+                return PersonRepository.Exists(personId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while checking if person with Id = {personId} exists.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool Exists(string nationalNumber, int excludePersonId = -1)
         {
             if (string.IsNullOrWhiteSpace(nationalNumber))
                 return false;
             try
             {
-                return PersonRepository.IsNationalNumberUsed(nationalNumber, excludePersonId);
+                return PersonRepository.Exists(nationalNumber, excludePersonId);
             }
             catch (Exception ex)
             {
@@ -145,7 +204,7 @@ namespace DVLD.Business
             if (personId < 1)
                 return false;
 
-            string imagePath = GetImagePath(personId);
+            string imagePath = GetImagePathByPersonId(personId);
 
             bool isDeleted = PersonRepository.Delete(personId);
 

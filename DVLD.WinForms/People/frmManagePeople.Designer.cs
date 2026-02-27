@@ -91,7 +91,7 @@
             this.dgvPeople.AllowUserToOrderColumns = true;
             this.dgvPeople.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPeople.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvPeople.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPeople.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -221,8 +221,8 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(30, 30);
+            this.contextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDetailsToolStripMenuItem,
             this.toolStripSeparator2,
@@ -233,26 +233,26 @@
             this.sendEmailToolStripMenuItem,
             this.phoneCallToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(221, 232);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(192, 172);
             // 
             // showDetailsToolStripMenuItem
             // 
             this.showDetailsToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.Details512;
             this.showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
-            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.showDetailsToolStripMenuItem.Text = "Show Details";
             this.showDetailsToolStripMenuItem.Click += new System.EventHandler(this.showDetailsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(217, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
             // 
             // addNewPersonToolStripMenuItem
             // 
             this.addNewPersonToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.ManWithAddtionMark72;
             this.addNewPersonToolStripMenuItem.Name = "addNewPersonToolStripMenuItem";
-            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.addNewPersonToolStripMenuItem.Text = "Add New Person";
             this.addNewPersonToolStripMenuItem.Click += new System.EventHandler(this.btnAddNewPerson_Click);
             // 
@@ -260,7 +260,7 @@
             // 
             this.editToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.BluePen512;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
@@ -268,20 +268,20 @@
             // 
             this.deleteToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.RedBin512;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(217, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
             // 
             // sendEmailToolStripMenuItem
             // 
             this.sendEmailToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.SendEmail512;
             this.sendEmailToolStripMenuItem.Name = "sendEmailToolStripMenuItem";
-            this.sendEmailToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.sendEmailToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.sendEmailToolStripMenuItem.Text = "Send Email";
             this.sendEmailToolStripMenuItem.Click += new System.EventHandler(this.sendEmailToolStripMenuItem_Click);
             // 
@@ -289,7 +289,7 @@
             // 
             this.phoneCallToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.BluePhone512;
             this.phoneCallToolStripMenuItem.Name = "phoneCallToolStripMenuItem";
-            this.phoneCallToolStripMenuItem.Size = new System.Drawing.Size(220, 36);
+            this.phoneCallToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.phoneCallToolStripMenuItem.Text = "Phone Call";
             this.phoneCallToolStripMenuItem.Click += new System.EventHandler(this.phoneCallToolStripMenuItem_Click);
             // 
@@ -309,7 +309,7 @@
             this.cbFilterBy.FormattingEnabled = true;
             this.cbFilterBy.Items.AddRange(new object[] {
             "None",
-            "Person ID",
+            "Person Id",
             "National Number",
             "First Name",
             "Second Name",
@@ -453,9 +453,9 @@
             this.btnAddNewPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNewPerson.BackgroundImage = global::DVLD.WinForms.Properties.Resources.ManWithAddtionMark72;
             this.btnAddNewPerson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnAddNewPerson.Location = new System.Drawing.Point(1400, 306);
+            this.btnAddNewPerson.Location = new System.Drawing.Point(1403, 306);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
-            this.btnAddNewPerson.Size = new System.Drawing.Size(81, 80);
+            this.btnAddNewPerson.Size = new System.Drawing.Size(78, 80);
             this.btnAddNewPerson.TabIndex = 2;
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
             this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);

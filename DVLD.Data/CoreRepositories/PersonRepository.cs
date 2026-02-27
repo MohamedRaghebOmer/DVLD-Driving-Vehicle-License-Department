@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -51,7 +51,7 @@ namespace DVLD.Data
                         command.Parameters.AddWithValue("@ImagePath", DBNull.Value);
 
                     connection.Open();
-                    
+
                     object result = command.ExecuteScalar();
 
                     if (result != null && int.TryParse(result.ToString(), out int personId))
@@ -68,7 +68,7 @@ namespace DVLD.Data
 
 
         // ----------------------Read---------------------------
-        public static Person Get(int personId)
+        public static Person GetById(int personId)
         {
             string query = @"SELECT * FROM People WHERE PersonID = @PersonId;";
 
@@ -111,7 +111,76 @@ namespace DVLD.Data
             return null;
         }
 
-        public static string GetImagePath(int personId)
+        public static Person GetByNationalNo(string nationalNo)
+        {
+            string query = "SELECT * FROM People WHERE NationalNo = @NationalNo;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@NationalNo", nationalNo);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Person(
+                                (int)reader["PersonID"],
+                                (string)reader["NationalNo"],
+                                (string)reader["FirstName"],
+                                (string)reader["SecondName"],
+                                reader["ThirdName"] == DBNull.Value ? string.Empty : (string)reader["ThirdName"],
+                                (string)reader["LastName"],
+                                (DateTime)reader["DateOfBirth"],
+                                (Gender)(byte)reader["Gender"],
+                                (string)reader["Address"],
+                                (string)reader["Phone"],
+                                reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
+                                (int)reader["NationalityCountryID"],
+                                reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
+                            );
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
+
+        public static int GetIdByNationalNo(string nationalNo)
+        {
+            string query = @"SELECT PersonID FROM People WHERE NationalNo = @nationalNo;";
+
+            try
+            {
+                using (var conn = new SqlConnection(DataSettings.connectionString))
+                using (var comm = new SqlCommand(query, conn))
+                {
+                    comm.Parameters.AddWithValue("@nationalNo", nationalNo);
+                    conn.Open();
+
+                    object result = comm.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                        return id;
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
+
+        public static string GetImagePathByPersonId(int personId)
         {
             string query = "SELECT ImagePath FROM People WHERE PersonID = @personId;";
 
@@ -137,6 +206,32 @@ namespace DVLD.Data
             }
         }
 
+        public static string GetImagePathByNationalNo(string nationalNo)
+        {
+            string query = "SELECT ImagePath FROM People WHERE NationalNo = @nationalNo;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nationalNo", nationalNo);
+
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+
+                    if (result != null)
+                        return result.ToString();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int personId)
         {
             string query = "SELECT 1 FROM People WHERE PersonId = @personId;";
@@ -144,23 +239,23 @@ namespace DVLD.Data
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query , connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@personId", personId);
-                    
+
                     connection.Open();
 
                     return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while reading from People." + ex);
                 throw;
             }
         }
 
-        public static bool IsNationalNumberUsed(string nationalNumber, int excludedId = -1)
+        public static bool Exists(string nationalNumber, int excludedId = -1)
         {
             string query = "SELECT 1 FROM People WHERE NationalNo = @nationalNumber AND PersonId != @excludedId;";
 

@@ -14,6 +14,7 @@ namespace DVLD.WinForms
 {
     public partial class ctrlAddEditPersonInfo : UserControl
     {
+        public delegate void OnPersonSelected(int personId);
         public event Action<int> OnAddNew;
         public event Action<bool> OnUpdate;
         public event Action OnCancel;
@@ -134,7 +135,7 @@ namespace DVLD.WinForms
             _selectedImageTempPath = null;
             _imageRemoved = false;
 
-            string fullImagePath = PersonService.GetImagePath(person.ImagePath);
+            string fullImagePath = PersonService.GetImagePathByFileName(person.ImagePath);
 
             if (!string.IsNullOrEmpty(fullImagePath) && File.Exists(fullImagePath))
             {
@@ -276,7 +277,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullPath = PersonService.GetImagePath(newImageFileName);
+                string fullPath = PersonService.GetImagePathByFileName(newImageFileName);
                 if (File.Exists(fullPath))
                     File.Delete(fullPath);
             }
@@ -301,7 +302,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullOldPath = PersonService.GetImagePath(oldImageFileName);
+                string fullOldPath = PersonService.GetImagePathByFileName(oldImageFileName);
 
                 if (!string.IsNullOrEmpty(fullOldPath) &&
                     File.Exists(fullOldPath))
@@ -326,7 +327,7 @@ namespace DVLD.WinForms
             if (person != null && txtNationalNumber.Text == person.NationalNumber)
                 return;
 
-            if (PersonService.IsNationalNoUsed(txtNationalNumber.Text, PersonID))
+            if (PersonService.Exists(txtNationalNumber.Text, PersonID))
             {
                 errorProvider1.SetError(txtNationalNumber, "National number already exists.");
                 txtNationalNumber.Focus();

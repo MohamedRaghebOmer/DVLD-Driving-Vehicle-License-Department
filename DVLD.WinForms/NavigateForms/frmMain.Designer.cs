@@ -115,6 +115,7 @@
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(130, 70);
             this.btnUsers.Text = "Users";
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             // 
             // btnAccountSettings
             // 
@@ -143,6 +144,7 @@
             this.currToolStripMenuItem.Size = new System.Drawing.Size(246, 38);
             this.currToolStripMenuItem.Text = "Current User Info";
             this.currToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.currToolStripMenuItem.Click += new System.EventHandler(this.currToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
@@ -152,6 +154,7 @@
             this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(246, 38);
             this.changePasswordToolStripMenuItem.Text = "Change Password";
             this.changePasswordToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

@@ -1,17 +1,19 @@
-﻿using System;
+﻿using DVLD.Core.Helpers;
+using System;
 using System.IO;
 
 namespace DVLD.Core.Logging
 {
     public static class AppLogger
     {
-        private static readonly string logFilePath = "logs.txt";
+        private static readonly string logFilePath = Path.Combine((PathHelper.LoggingFolderPath), "log.txt");
 
         public static void LogError(string message, Exception ex = null)
         {
             using (var writer = new StreamWriter(logFilePath, true))
             {
                 writer.WriteLine($"{DateTime.Now} | ERROR | {message}");
+                
                 if (ex != null)
                 {
                     writer.WriteLine($"Exception: {ex.GetType().Name}: {ex.Message}");

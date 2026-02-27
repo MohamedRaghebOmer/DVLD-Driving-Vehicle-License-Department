@@ -10,7 +10,7 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.PersonValidator.Validate(person);
 
-            if (PersonRepository.IsNationalNumberUsed(person.NationalNumber))
+            if (PersonRepository.Exists(person.NationalNumber))
                 throw new BusinessException("National number is already exists, please enter a valid one.");
 
             if (!CountryRepository.Exists(person.NationalityCountryID))
@@ -21,7 +21,7 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.PersonValidator.Validate(person);
 
-            if (PersonRepository.IsNationalNumberUsed(person.NationalNumber, person.PersonID))
+            if (PersonRepository.Exists(person.NationalNumber, person.PersonID))
                 throw new BusinessException("National number is already exists, please enter a valid one.");
 
             if (!CountryRepository.Exists(person.NationalityCountryID))

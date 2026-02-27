@@ -51,9 +51,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 29);
+            this.label1.Size = new System.Drawing.Size(132, 29);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Person ID:";
+            this.label1.Text = "Person Id:";
             // 
             // lblPersonID
             // 

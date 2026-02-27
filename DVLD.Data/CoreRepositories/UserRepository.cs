@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -36,7 +36,7 @@ namespace DVLD.Data
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking UserName and Password from Users.", ex);
                 throw;
@@ -46,7 +46,7 @@ namespace DVLD.Data
         // ----------------------------Create----------------------------
         public static int Add(User user)
         {
-            string query = @"INSERT INTO Users (PersonId, Username, Password, IsActive)
+            const string query = @"INSERT INTO Users (PersonID, UserName, Password, IsActive)
                             VALUES (@PersonId, @Username, @Password, @IsActive);
                             SELECT SCOPE_IdENTITY();";
 
@@ -63,10 +63,10 @@ namespace DVLD.Data
                     connection.Open();
 
                     object result = command.ExecuteScalar();
-                    
+
                     if (result != null && int.TryParse(result.ToString(), out int newUserId))
-                         return newUserId;
-                    
+                        return newUserId;
+
                     return -1;
                 }
             }
@@ -81,7 +81,7 @@ namespace DVLD.Data
         // ----------------------------Read----------------------------
         public static User GetById(int userId)
         {
-            string query = "SELECT * FROM Users WHERE UserId = @UserId";
+            string query = "SELECT * FROM Users WHERE UserID = @UserId";
 
             try
             {
@@ -97,8 +97,8 @@ namespace DVLD.Data
                         {
                             return new User
                             (
-                                Convert.ToInt32(reader["UserId"]),
-                                Convert.ToInt32(reader["PersonId"]),
+                                Convert.ToInt32(reader["UserID"]),
+                                Convert.ToInt32(reader["PersonID"]),
                                 reader["Username"].ToString(),
                                 reader["Password"].ToString(),
                                 Convert.ToBoolean(reader["IsActive"])
@@ -139,7 +139,7 @@ namespace DVLD.Data
                                 reader["Password"].ToString(),
                                 Convert.ToBoolean(reader["IsActive"])
                             );
-                        }   
+                        }
                     }
                 }
                 return null;
@@ -187,11 +187,61 @@ namespace DVLD.Data
                 throw;
             }
         }
-        
+
+        public static string GetPassword(int userId)
+        {
+            const string query = @"SELECT Password FROM Users WHERE UserID = @UserID";
+
+            try
+            {
+                using (var conn = new SqlConnection(DataSettings.connectionString))
+                using (var comm = new SqlCommand(query, conn))
+                {
+                    comm.Parameters.AddWithValue("@UserID", userId);
+                    conn.Open();
+
+                    object result = comm.ExecuteScalar();
+                    if (result != null)
+                        return result.ToString();
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while reading passowrd where user id = {userId}.", ex);
+                throw;
+            }
+        }
+
+        public static bool ChangePassword(int userId, string newPassword)
+        {
+            string query = @"UPDATE Users
+                            SET [Password] = @NewPassword
+                            WHERE [UserID] = @UserID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@NewPassword", newPassword);
+                    com.Parameters.AddWithValue("@UserID", userId);
+                    con.Open();
+                    return com.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating user password.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int userId)
         {
             string query = "SELECT 1 FROM Users WHERE UserId = @UserId";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -232,17 +282,17 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForPerson(int personId, int excluedUserId = -1)
+        public static bool ExistsByPersonId(int personId, int excluedUserId = -1)
         {
-            string query = "SELECT 1 FROM Users WHERE PersonId = @PersonId AND UserId != @UserId";
-            
+            string query = "SELECT 1 FROM Users WHERE PersonID = @PersonId AND UserID != @UserId";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@PersonId", excluedUserId);
-                    command.Parameters.AddWithValue("@UserId", personId);
+                    command.Parameters.AddWithValue("@PersonId", personId);
+                    command.Parameters.AddWithValue("@UserId", excluedUserId);
                     connection.Open();
                     return command.ExecuteScalar() != null;
                 }
@@ -254,17 +304,17 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForUsername(string username, int excluedUserId = -1)
+        public static bool ExistsByUsername(string username, int excluedUserId = -1)
         {
-            string query = "SELECT 1 FROM Users WHERE LOWER(Username) = LOWER(@Username) AND UserId != @UserId";
-            
+            string query = "SELECT 1 FROM Users WHERE UserName = @UserName AND UserID != @UserId";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Username", excluedUserId);
-                    command.Parameters.AddWithValue("@UserId", username);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@UserId", excluedUserId);
                     connection.Open();
                     return command.ExecuteScalar() != null;
                 }
@@ -322,7 +372,6 @@ namespace DVLD.Data
 
         }
 
-
         public static DataTable GetAll()
         {
             string query = "SELECT * FROM Users";
@@ -355,6 +404,36 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetAllWithDetails()
+        {
+            string query = "SELECT * FROM Users_View;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable usersTable = new DataTable();
+                            usersTable.Load(reader);
+                            return usersTable;
+                        }
+
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting all from users.", ex);
+                throw;
+            }
+        }
 
         // ----------------------------Update----------------------------
         public static bool Update(User user)
@@ -392,8 +471,8 @@ namespace DVLD.Data
         // ----------------------------Delete----------------------------
         public static bool DeleteById(int userId)
         {
-            string query = @"DELETE FROM Users WHERE Id = @userId;";
-            
+            string query = @"DELETE FROM Users WHERE UserID = @userId;";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -415,7 +494,7 @@ namespace DVLD.Data
         public static bool DeleteByPersonId(int personId)
         {
             string query = @"DELETE FROM Users WHERE PersonId = @personId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -437,14 +516,14 @@ namespace DVLD.Data
         public static bool DeleteByUsername(string username)
         {
             string query = "DELETE FROM Users WHERE LOWER(UserName) = LOWER(@username);";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@username", username);
-                    
+
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;
                 }

@@ -8,8 +8,23 @@ using DVLD.Core.Exceptions;
 
 namespace DVLD.Business
 {
-    public class UserService
+    public static class UserService
     {
+        public static int Add(User user)
+        {
+            UserValidator.AddNewValidator(user);
+
+            try
+            {
+                return UserRepository.Add(user);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while saving new user.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static bool Login(string username, string password)
         {
             // Check username existance.
@@ -122,6 +137,38 @@ namespace DVLD.Business
 
         }
 
+        public static string GetPassword(int userId)
+        {
+            if (userId <= 0)
+                return null;
+
+            try
+            {
+                return UserRepository.GetPassword(userId);
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while reading user password by user id.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool ChangePassword(int userId, string newPassword)
+        {
+            if (userId < 0 || string.IsNullOrWhiteSpace(newPassword))
+                return false;
+
+            try
+            {
+                return UserRepository.ChangePassword(userId, newPassword);
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while changing user password by user id.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static DataTable GetAll()
         {
             try
@@ -131,6 +178,19 @@ namespace DVLD.Business
             catch(Exception ex)
             {
                 AppLogger.LogError("BLL: Error while reading all users.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static DataTable GetAllWithDetails()
+        {
+            try
+            {
+                return UserRepository.GetAllWithDetails();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while reading all users with details.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
@@ -152,6 +212,38 @@ namespace DVLD.Business
 
         }
 
+        public static bool ExistsByPersonId(int personId)
+        {
+            if (personId < 1)
+                return false;
+
+            try
+            {
+                return UserRepository.ExistsByPersonId(personId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while checking user existence by person Id.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool ExistsByUsername(string username, int excludedUserId = -1)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
+            
+            try
+            {
+                return UserRepository.ExistsByUsername(username, excludedUserId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while checking if username is used.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static bool IsActive(int userId)
         {
             if (userId < 1)
@@ -167,32 +259,17 @@ namespace DVLD.Business
             }
         }
 
-        public static bool IsUsernameUsed(string username, int excludedUserId = -1)
+        public static bool Update(User user)
         {
-            if (string.IsNullOrWhiteSpace(username))
-                return false;
-            try
-            {
-                return UserRepository.ExistsForUsername(username, excludedUserId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while checking if username is used.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
+            UserValidator.UpdateValidator(user);
 
-        public static bool IsPersonUsed(int personId, int excludedUserId = -1)
-        {
-            if (personId < 1)
-                return false;
             try
             {
-                return UserRepository.ExistsForPerson(personId, excludedUserId);
+                return UserRepository.Update(user);
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("BLL: Error while checking if person is used.");
+                AppLogger.LogError($"BLL: Error while updating user with Id: {user.UserId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
@@ -209,42 +286,8 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while deleting user with Id = {userId}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+                throw new Exception("Cannot delete user because there is data related to it.", ex);
             }
-        }
-
-        public static bool DeleteByPersonId(int personId)
-        {
-            if (personId < 1)
-                return false;
-
-            try
-            {
-                return UserRepository.DeleteByPersonId(personId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while deleting user with person Id = {personId}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-
-        }
-
-        public static bool DeleteByUsername(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-                return false;
-
-            try
-            {
-                return UserRepository.DeleteByUsername(username);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while deleting user with username = {username}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-
         }
     }
 }
