@@ -44,6 +44,7 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.chkRememberMe = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -130,7 +131,6 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(228, 34);
             this.txtUsername.TabIndex = 0;
-            this.txtUsername.Text = "mohamedragheb";
             // 
             // label7
             // 
@@ -158,7 +158,6 @@
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(228, 34);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "123456";
             // 
             // pictureBox4
             // 
@@ -215,12 +214,26 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // chkRememberMe
+            // 
+            this.chkRememberMe.AutoSize = true;
+            this.chkRememberMe.Checked = true;
+            this.chkRememberMe.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRememberMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkRememberMe.Location = new System.Drawing.Point(687, 285);
+            this.chkRememberMe.Name = "chkRememberMe";
+            this.chkRememberMe.Size = new System.Drawing.Size(162, 29);
+            this.chkRememberMe.TabIndex = 13;
+            this.chkRememberMe.Text = "Remember Me";
+            this.chkRememberMe.UseVisualStyleBackColor = true;
+            // 
             // frmLogin
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 569);
+            this.Controls.Add(this.chkRememberMe);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.btnLogin);
@@ -244,6 +257,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.Load += new System.EventHandler(this.frmLogin_Load);
@@ -274,6 +288,7 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.CheckBox chkRememberMe;
     }
 }
 

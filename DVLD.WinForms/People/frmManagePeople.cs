@@ -21,17 +21,16 @@ namespace DVLD.WinForms
             dgvPeople.AutoGenerateColumns = false;
             cbFilterBy.SelectedIndex = 0;
             LoadDataGridView();
-            UpdateLabelCount();
         }
 
         private void LoadDataGridView()
         {
-            DataTable people = PersonBusiness.GetAllWithDateParts();
+            DataTable people = PersonService.GetAllWithDateParts();
             people.CaseSensitive = cbMatchCase.Checked;
             dgvPeople.DataSource = people;
         }
 
-        private void UpdateLabelCount()
+        public void UpdateLabelCount(object sender, EventArgs e)
         {
             lblCount.Text = dgvPeople.RowCount.ToString();
         }
@@ -55,7 +54,6 @@ namespace DVLD.WinForms
                 {
                     if (string.IsNullOrEmpty(txtSortValue.Text.Trim()))
                         ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = string.Empty;
-                    UpdateLabelCount();
                 }
 
                 if (cbFilterBy.SelectedIndex == 8)
@@ -118,7 +116,6 @@ namespace DVLD.WinForms
             {
                 if (string.IsNullOrEmpty(txtSortValue.Text.Trim()))
                     ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = string.Empty;
-                UpdateLabelCount();
                 return;
             }
 
@@ -133,15 +130,12 @@ namespace DVLD.WinForms
             {
                 ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, txtFilterValue.Text.Trim());
             }
-
-            UpdateLabelCount();
         }
 
         private void dtpDateOfBirth_ValueChanged(object sender, EventArgs e)
         {
             string filter = string.Format("[DateOfBirth] = '{0:yyyy-MM-dd}'", dtpDateOfBirth.Value);
             ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = filter;
-            UpdateLabelCount();
         }
 
         private void cbMatchCase_CheckedChanged(object sender, EventArgs e)
@@ -165,7 +159,6 @@ namespace DVLD.WinForms
             if (string.IsNullOrEmpty(txtSortValue.Text.Trim()))
             {
                 ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = string.Empty;
-                UpdateLabelCount();
                 return;
             }
 
@@ -184,8 +177,6 @@ namespace DVLD.WinForms
                 string filter = string.Format("[BirthYear] = {0}", txtSortValue.Text.Trim());
                 ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = filter;
             }
-           
-            UpdateLabelCount();
         }
 
         private void RadioButtonSort_CheckedChanged(object sender, EventArgs e)
@@ -227,7 +218,7 @@ namespace DVLD.WinForms
 
             try
             {
-                if (!PersonBusiness.Delete(personID))
+                if (!PersonService.Delete(personID))
                 {
                     MessageBox.Show("Person does not exist.",
                                     "Failed",
@@ -237,7 +228,6 @@ namespace DVLD.WinForms
                 }
 
                 LoadDataGridView();
-                UpdateLabelCount();
                 selectedRowIndex = -1;
 
                 MessageBox.Show("Person has been deleted successfully.",

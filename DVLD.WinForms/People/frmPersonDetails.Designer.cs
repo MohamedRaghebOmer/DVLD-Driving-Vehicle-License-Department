@@ -50,15 +50,16 @@
             this.ctrlPersonDetails1.Location = new System.Drawing.Point(2, 55);
             this.ctrlPersonDetails1.Margin = new System.Windows.Forms.Padding(4);
             this.ctrlPersonDetails1.Name = "ctrlPersonDetails1";
-            this.ctrlPersonDetails1.PersonID = 0;
-            this.ctrlPersonDetails1.Size = new System.Drawing.Size(944, 304);
+            this.ctrlPersonDetails1.NationalNo = "";
+            this.ctrlPersonDetails1.PersonID = -1;
+            this.ctrlPersonDetails1.Size = new System.Drawing.Size(918, 325);
             this.ctrlPersonDetails1.TabIndex = 3;
             // 
             // frmPersonDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 366);
+            this.ClientSize = new System.Drawing.Size(924, 387);
             this.Controls.Add(this.ctrlPersonDetails1);
             this.Controls.Add(this.lblFormlabel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

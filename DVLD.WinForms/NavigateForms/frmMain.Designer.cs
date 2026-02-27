@@ -34,7 +34,11 @@
             this.btnPeople = new System.Windows.Forms.ToolStripButton();
             this.btnDrivers = new System.Windows.Forms.ToolStripButton();
             this.btnUsers = new System.Windows.Forms.ToolStripButton();
-            this.btnAccountSettings = new System.Windows.Forms.ToolStripButton();
+            this.btnAccountSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.currToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +75,6 @@
             this.btnApplications.Name = "btnApplications";
             this.btnApplications.Size = new System.Drawing.Size(180, 70);
             this.btnApplications.Text = "Applications";
-            this.btnApplications.Click += new System.EventHandler(this.btnApplications_Click);
             // 
             // btnPeople
             // 
@@ -99,7 +102,6 @@
             this.btnDrivers.Name = "btnDrivers";
             this.btnDrivers.Size = new System.Drawing.Size(140, 70);
             this.btnDrivers.Text = "Drivers";
-            this.btnDrivers.Click += new System.EventHandler(this.btnDrivers_Click);
             // 
             // btnUsers
             // 
@@ -113,10 +115,16 @@
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(130, 70);
             this.btnUsers.Text = "Users";
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             // 
             // btnAccountSettings
             // 
             this.btnAccountSettings.AutoSize = false;
+            this.btnAccountSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currToolStripMenuItem,
+            this.changePasswordToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.signOutToolStripMenuItem});
             this.btnAccountSettings.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAccountSettings.ForeColor = System.Drawing.Color.Black;
             this.btnAccountSettings.Image = global::DVLD.WinForms.Properties.Resources.Settings64;
@@ -124,8 +132,45 @@
             this.btnAccountSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnAccountSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAccountSettings.Name = "btnAccountSettings";
-            this.btnAccountSettings.Size = new System.Drawing.Size(222, 75);
+            this.btnAccountSettings.Size = new System.Drawing.Size(227, 75);
             this.btnAccountSettings.Text = "Account Settings";
+            // 
+            // currToolStripMenuItem
+            // 
+            this.currToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.information32;
+            this.currToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.currToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.currToolStripMenuItem.Name = "currToolStripMenuItem";
+            this.currToolStripMenuItem.Size = new System.Drawing.Size(246, 38);
+            this.currToolStripMenuItem.Text = "Current User Info";
+            this.currToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.currToolStripMenuItem.Click += new System.EventHandler(this.currToolStripMenuItem_Click);
+            // 
+            // changePasswordToolStripMenuItem
+            // 
+            this.changePasswordToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.ResetPassword32;
+            this.changePasswordToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(246, 38);
+            this.changePasswordToolStripMenuItem.Text = "Change Password";
+            this.changePasswordToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(243, 6);
+            // 
+            // signOutToolStripMenuItem
+            // 
+            this.signOutToolStripMenuItem.Image = global::DVLD.WinForms.Properties.Resources.SingOut32;
+            this.signOutToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.signOutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
+            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(246, 38);
+            this.signOutToolStripMenuItem.Text = "Sign Out";
+            this.signOutToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -153,6 +198,10 @@
         private System.Windows.Forms.ToolStripButton btnUsers;
         private System.Windows.Forms.ToolStripButton btnPeople;
         private System.Windows.Forms.ToolStripButton btnDrivers;
-        private System.Windows.Forms.ToolStripButton btnAccountSettings;
+        private System.Windows.Forms.ToolStripDropDownButton btnAccountSettings;
+        private System.Windows.Forms.ToolStripMenuItem currToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
     }
 }

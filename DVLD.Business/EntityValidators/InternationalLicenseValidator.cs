@@ -10,13 +10,13 @@ namespace DVLD.Business.EntityValidators
         // This method is used to validate data integrity of the entity
         public static void EnsureForeignKeysExist(InternationalLicense license)
         {
-            if (!ApplicationData.Exists(license.ApplicationID))
+            if (!ApplicationRepository.Exists(license.ApplicationID))
                 throw new BusinessException("The application does not exist.");
 
-            if (!DriverData.Exists(license.DriverID))
+            if (!DriverRepository.Exists(license.DriverID))
                 throw new BusinessException("The driver does not exist.");
 
-            if (!LicenseData.Exists(license.IssuedUsingLocalLicenseID))
+            if (!LicenseRepository.Exists(license.IssuedUsingLocalLicenseID))
                 throw new BusinessException("The local license used does not exist.");
         }
 
@@ -24,15 +24,15 @@ namespace DVLD.Business.EntityValidators
         {
             Core.Validators.InternationalLicenseValidator.Validate(license);
             EnsureForeignKeysExist(license);
-            Application application = ApplicationData.GetById(license.ApplicationID);
-            License localLicense = LicenseData.GetById(license.IssuedUsingLocalLicenseID);
+            Application application = ApplicationRepository.GetById(license.ApplicationID);
+            License localLicense = LicenseRepository.GetById(license.IssuedUsingLocalLicenseID);
 
             // Check if the driver already has an international license.
-            if (InternationalLicenseData.ExistsForDirver(localLicense.DriverId, true, true))
+            if (InternationalLicenseRepository.ExistsForDirver(localLicense.DriverId, true, true))
                 throw new BusinessException("The driver already has an active international license.");
 
             // Check if the application already associated with another international license.
-            if (InternationalLicenseData.ExistsForApplication(license.ApplicationID))
+            if (InternationalLicenseRepository.ExistsForApplication(license.ApplicationID))
                 throw new BusinessException("The application is already associated with existing international license.");
 
             // Check application type and status.
@@ -40,12 +40,12 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Invalid application.");
 
             // Check if the application fees are not completely paid.
-            decimal applicationTypeFees = ApplicationTypeData.GetFees(ApplicationType.NewInternationalLicense);
+            decimal applicationTypeFees = ApplicationTypeRepository.GetFees(ApplicationType.NewInternationalLicense);
             if (application.PaidFees < applicationTypeFees)
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
             // Check if the local license belongs to the applicant.
-            if (DriverData.GetById(DriverData.GetIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
+            if (DriverRepository.GetById(DriverRepository.GetIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
                 throw new BusinessException("The local license does not belong to the applicant.");
 
             // Check if the local license is a class 3 license.
@@ -53,7 +53,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("The local license must be a class 3 license.");
 
             // LocalLicense must be Active and not expired
-            if (localLicense.IsActive != true || LicenseData.IsExpired(localLicense.LicenseID))
+            if (localLicense.IsActive != true || LicenseRepository.IsExpired(localLicense.LicenseID))
                 throw new BusinessException("The local license must be active and not expired.");
 
             // LocalLicense must belong to the Driver.
@@ -61,7 +61,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("The local license must belong to the driver.");
 
             // Check if the local license is not detained.
-            if (DetainedLicenseData.IsDetained(localLicense.LicenseID))
+            if (DetainedLicenseRepository.IsDetained(localLicense.LicenseID))
                 throw new BusinessException("The local license is detained.");
         }
     }

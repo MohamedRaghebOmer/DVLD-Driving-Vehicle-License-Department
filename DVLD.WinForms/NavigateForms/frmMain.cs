@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DVLD.WinForms.Users;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using DVLD.Core.Logging;
 
 namespace DVLD.WinForms
 {
@@ -18,14 +20,28 @@ namespace DVLD.WinForms
             frm.ShowDialog();
         }
 
-        private void btnDrivers_Click(object sender, EventArgs e)
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Application.Restart();
+            Environment.Exit(0);
         }
 
-        private void btnApplications_Click(object sender, EventArgs e)
+        private void btnUsers_Click(object sender, EventArgs e)
         {
+            Form frm = new frmManageUsers();
+            frm.ShowDialog();
+        }
 
+        private void currToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmUserInfo(LoggedInUserInfo.UserId);
+            frm.ShowDialog();
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmChangeUserPassword(LoggedInUserInfo.UserId);
+            frm.ShowDialog();
         }
     }
 }

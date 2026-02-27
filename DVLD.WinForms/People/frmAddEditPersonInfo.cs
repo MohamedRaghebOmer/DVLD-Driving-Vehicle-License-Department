@@ -1,19 +1,12 @@
-﻿using DVLD.Core.DTOs.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms
 {
     public partial class frmAddEditPersonInfo : Form
     {
+        public event Action<int> OnAddNew;
+
         private enum FormMode { Add, Update };
         private FormMode _mode = FormMode.Add;
         private int _personId;
@@ -54,7 +47,7 @@ namespace DVLD.WinForms
             }
             else
             {
-                lblFormlabel.Text = "Add Person";
+                lblFormlabel.Text = "Add New Person";
                 lblPersonID.Text = "N/A";
             }
         }
@@ -66,6 +59,7 @@ namespace DVLD.WinForms
             if (newPersonId > 0)
             {
                 MessageBox.Show("Person has been added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                OnAddNew?.Invoke(newPersonId);
                 this.Close();
             }
             else

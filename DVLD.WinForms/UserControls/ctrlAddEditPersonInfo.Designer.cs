@@ -274,21 +274,29 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(401, 394);
+            this.btnCancel.Image = global::DVLD.WinForms.Properties.Resources.Close32;
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.Location = new System.Drawing.Point(398, 394);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(111, 48);
+            this.btnCancel.Size = new System.Drawing.Size(138, 51);
             this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(565, 394);
+            this.btnSave.Image = global::DVLD.WinForms.Properties.Resources.Save32;
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSave.Location = new System.Drawing.Point(542, 394);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(111, 48);
+            this.btnSave.Size = new System.Drawing.Size(138, 51);
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Save";
+            this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -491,7 +499,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ctrlAddEditPersonInfo";
-            this.Size = new System.Drawing.Size(1079, 444);
+            this.Size = new System.Drawing.Size(1079, 460);
             this.Load += new System.EventHandler(this.ctrlAddEditPersonInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbCountry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPhone)).EndInit();

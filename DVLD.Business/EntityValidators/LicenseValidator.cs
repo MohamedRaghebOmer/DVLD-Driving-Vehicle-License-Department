@@ -13,26 +13,26 @@ namespace DVLD.Business.EntityValidators
             
 
             // Check if application exists.
-            if (!ApplicationData.Exists(license.ApplicationId))
+            if (!ApplicationRepository.Exists(license.ApplicationId))
                 throw new BusinessException("Application does not exist.");
             
             // Check if driver exists.
-            if (!DriverData.Exists(license.DriverId))
+            if (!DriverRepository.Exists(license.DriverId))
                 throw new BusinessException("Driver does not exist.");
 
 
 
             // Check if driver already has license with the same type.
-            if (LicenseData.ExistsForDriver(license.DriverId, license.LicenseClass))
+            if (LicenseRepository.ExistsForDriver(license.DriverId, license.LicenseClass))
                 throw new BusinessException("Driver already has an license with the same type.");
 
             // Check if the application already associated with another license.
-            if (LicenseData.ExistsForApplication(license.ApplicationId))
+            if (LicenseRepository.ExistsForApplication(license.ApplicationId))
                 throw new BusinessException("License for the application already exists.");
 
 
             // Check if the application is completed.
-            ApplicationStatus applicationStatus = ApplicationData.GetById(license.ApplicationId).ApplicationStatus;
+            ApplicationStatus applicationStatus = ApplicationRepository.GetById(license.ApplicationId).ApplicationStatus;
 
             if (applicationStatus == ApplicationStatus.Completed)
                 throw new BusinessException("License already exists for the completed application.");
@@ -42,7 +42,7 @@ namespace DVLD.Business.EntityValidators
 
 
             // Check if the application type is valid.
-            ApplicationType applicationType = ApplicationData.GetById(license.ApplicationId).ApplicationTypeID;
+            ApplicationType applicationType = ApplicationRepository.GetById(license.ApplicationId).ApplicationTypeID;
 
             if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
                 throw new BusinessException("Invalid application type.");
@@ -52,16 +52,16 @@ namespace DVLD.Business.EntityValidators
 
 
             // Check if the driver has passed all three tests.
-            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationData.GetByApplicationId(license.ApplicationId);
+            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationRepository.GetByApplicationId(license.ApplicationId);
             _ = localDrivingLicenseApplication
                 ?? throw new BusinessException("Local driving license application does not exist.");
             
-            if (!TestData.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationID))
+            if (!TestRepository.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationID))
                 throw new BusinessException("Driver has not passed all three tests.");
 
 
             // Check if the license class fees are paid.
-            decimal licenseClassFees = LicenseClassData.GetFees(license.LicenseClass);
+            decimal licenseClassFees = LicenseClassRepository.GetFees(license.LicenseClass);
             if (license.PaidFees != licenseClassFees)
                 throw new BusinessException($"Paid fees must be {licenseClassFees} for this license class.");
         }

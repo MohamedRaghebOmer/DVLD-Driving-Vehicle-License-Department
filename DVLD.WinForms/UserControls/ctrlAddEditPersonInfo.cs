@@ -8,11 +8,13 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Properties;
 using System.Data;
+using DVLD.Core.Helpers;
 
 namespace DVLD.WinForms
 {
     public partial class ctrlAddEditPersonInfo : UserControl
     {
+        public delegate void OnPersonSelected(int personId);
         public event Action<int> OnAddNew;
         public event Action<bool> OnUpdate;
         public event Action OnCancel;
@@ -89,7 +91,7 @@ namespace DVLD.WinForms
 
         private void LoadCountries_comboBox()
         {
-            DataTable dtCountries = CountryBusiness.GetAllNames();
+            DataTable dtCountries = CountryService.GetAllNames();
             if (dtCountries != null && dtCountries.Rows.Count > 0)
             {
                 cbCountry.DataSource = dtCountries;
@@ -105,7 +107,7 @@ namespace DVLD.WinForms
 
         private void LoadPersonInfo()
         {
-            person = PersonBusiness.GetById(PersonID);
+            person = PersonService.GetById(PersonID);
 
             if (person == null)
             {
@@ -133,7 +135,7 @@ namespace DVLD.WinForms
             _selectedImageTempPath = null;
             _imageRemoved = false;
 
-            string fullImagePath = PersonBusiness.GetImagePath(person.ImagePath);
+            string fullImagePath = PersonService.GetImagePathByFileName(person.ImagePath);
 
             if (!string.IsNullOrEmpty(fullImagePath) && File.Exists(fullImagePath))
             {
@@ -221,11 +223,11 @@ namespace DVLD.WinForms
 
                 if (isUpdate)
                 {
-                    success = PersonBusiness.Update(person);
+                    success = PersonService.Update(person);
                 }
                 else
                 {
-                    newId = PersonBusiness.Add(person);
+                    newId = PersonService.Add(person);
                     success = newId > 0;
 
                     if (success)
@@ -275,7 +277,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullPath = PersonBusiness.GetImagePath(newImageFileName);
+                string fullPath = PersonService.GetImagePathByFileName(newImageFileName);
                 if (File.Exists(fullPath))
                     File.Delete(fullPath);
             }
@@ -300,7 +302,7 @@ namespace DVLD.WinForms
 
             try
             {
-                string fullOldPath = PersonBusiness.GetImagePath(oldImageFileName);
+                string fullOldPath = PersonService.GetImagePathByFileName(oldImageFileName);
 
                 if (!string.IsNullOrEmpty(fullOldPath) &&
                     File.Exists(fullOldPath))
@@ -325,7 +327,7 @@ namespace DVLD.WinForms
             if (person != null && txtNationalNumber.Text == person.NationalNumber)
                 return;
 
-            if (PersonBusiness.IsNationalNoUsed(txtNationalNumber.Text, PersonID))
+            if (PersonService.Exists(txtNationalNumber.Text, PersonID))
             {
                 errorProvider1.SetError(txtNationalNumber, "National number already exists.");
                 txtNationalNumber.Focus();
@@ -345,7 +347,7 @@ namespace DVLD.WinForms
             if (person != null && txtPhone.Text == person.Phone)
                 return;
 
-            if (PersonBusiness.IsPhoneUsed(txtPhone.Text, PersonID))
+            if (PersonService.IsPhoneUsed(txtPhone.Text, PersonID))
             {
                 errorProvider1.SetError(txtPhone, "Phone number already exists.");
                 txtPhone.Focus();
@@ -381,7 +383,7 @@ namespace DVLD.WinForms
                 return;
             }
 
-            if (PersonBusiness.IsEmailUsed(txtEmail.Text, PersonID))
+            if (PersonService.IsEmailUsed(txtEmail.Text, PersonID))
             {
                 errorProvider1.SetError(txtEmail, "Email already exists.");
                 txtEmail.Focus();
@@ -511,12 +513,13 @@ namespace DVLD.WinForms
             if (string.IsNullOrEmpty(_selectedImageTempPath) || !File.Exists(_selectedImageTempPath))
                 return null;
 
-            string dvldFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DVLD");
-            if (!Directory.Exists(dvldFolder))
-                Directory.CreateDirectory(dvldFolder);
+            string imagesFolderPath = PathHelper.ImagesFolderPath;
+
+            if (!Directory.Exists(imagesFolderPath))
+                Directory.CreateDirectory(imagesFolderPath);
 
             string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(_selectedImageTempPath);
-            string destinationPath = Path.Combine(dvldFolder, newFileName);
+            string destinationPath = Path.Combine(imagesFolderPath, newFileName);
 
             try
             {
