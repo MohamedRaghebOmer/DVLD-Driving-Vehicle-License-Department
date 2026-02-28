@@ -3,12 +3,76 @@ using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace DVLD.Data
 {
     public static class ApplicationTypeRepository
     {
+        public static DataTable GetAll()
+        {
+            string query = @"SELECT ApplicationTypes.* FROM ApplicationTypes;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(reader);
+                            return dt;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching all application types.", ex);
+                throw;
+            }
+        }
+
+        public static DataTable GetTitleAndFees(ApplicationType applicationType)
+        {
+            string query = @"SELECT ApplicationTypeTitle, ApplicationFees
+                            FROM ApplicationTypes WHERE ApplicationTypeID = @id";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@id", (int)applicationType);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching application type and fees.", ex);
+                throw;
+            }
+        }
+
         public static decimal GetFees(ApplicationType applicationType)
         {
             string query = "SELECT Fees FROM ApplicationTypes WHERE ApplicationTypeId = @ApplicationTypeId;";
@@ -35,35 +99,6 @@ namespace DVLD.Data
             }
         }
 
-        public static List<string> GetAllApplicationTypeTitles()
-        {
-            string query = "SELECT ApplicationTypeTitle FROM ApplicationTypes;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        List<string> titles = new List<string>();
-                        while (reader.Read())
-                        {
-                            titles.Add(reader["ApplicationTypeTitle"].ToString());
-                        }
-                        return titles;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("DAL: Error while retrieving from ApplicationTypes.", ex);
-                throw;
-            }
-        }
-
         public static bool UpdateFees(ApplicationType applicationType, decimal newFees)
         {
             string query = "UPDATE ApplicationTypes SET Fees = @Fees WHERE ApplicationTypeId = @ApplicationTypeId;";
@@ -80,6 +115,35 @@ namespace DVLD.Data
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0; // Return true if the update was successful
                 }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while updating fees for application type {applicationType}.", ex);
+                throw;
+            }
+        }
+
+        public static bool Update(ApplicationType applicationType, string newTitle,
+            decimal newFees)
+        {
+            string query = @"UPDATE ApplicationTypes
+                            SET 
+                            ApplicationTypeTitle = @newTitle,
+                            ApplicationFees = @newFees
+                            WHERE ApplicationTypeID = @id;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@newTitle", newTitle);
+                    com.Parameters.AddWithValue("@newFees", newFees);
+                    com.Parameters.AddWithValue("@id", (int)applicationType);
+                    con.Open();
+                    return com.ExecuteNonQuery() > 0;
+                }
+
             }
             catch (Exception ex)
             {

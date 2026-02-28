@@ -1,4 +1,5 @@
 ﻿using DVLD.Core.Logging;
+using DVLD.WinForms.NavigateForms;
 using DVLD.WinForms.Users;
 using System;
 using System.Windows.Forms;
@@ -42,9 +43,10 @@ namespace DVLD.WinForms
             frm.ShowDialog();
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Form frm = new frmManageApplicationTypes();
+            frm.ShowDialog();
         }
     }
 }
