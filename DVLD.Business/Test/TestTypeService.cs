@@ -23,6 +23,19 @@ namespace DVLD.Business
 
         }
 
+        public static DataTable Get(TestType testType)
+        {
+            try
+            {
+                return TestTypeRepository.Get(testType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while trying to get test type.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static decimal GetTestTypeFees(TestType testType)
         {
             if (!Enum.IsDefined(typeof(TestType), testType))
@@ -54,6 +67,27 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while updating fees for test type with id = {(int)testType}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool Update(TestType testType, string newTitle,
+            string newDescription, decimal newFees)
+        {
+            if (string.IsNullOrWhiteSpace(newTitle))
+                throw new BusinessException("Test Type Title must be at least 1 character.");
+
+            if (newFees < 0)
+                throw new BusinessException("Fees must be positive.");
+
+            try
+            {
+                return TestTypeRepository.Update(testType, newTitle,
+                    newDescription, newFees);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while updating test type with id = {(int)testType}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

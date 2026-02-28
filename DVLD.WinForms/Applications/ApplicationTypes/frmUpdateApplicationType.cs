@@ -1,15 +1,15 @@
-﻿using System;
+﻿using DVLD.Business;
+using DVLD.Core.DTOs.Enums;
+using System;
 using System.Data;
 using System.Windows.Forms;
-using DVLD.Business;
-using DVLD.Core.DTOs.Enums;
 
 namespace DVLD.WinForms.Applications
 {
     public partial class frmUpdateApplicationType : Form
     {
         private ApplicationType _applicationType;
-        
+
         public frmUpdateApplicationType(ApplicationType applicationType)
         {
             InitializeComponent();

@@ -2,10 +2,8 @@
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
 
 namespace DVLD.Data
 {
@@ -34,7 +32,7 @@ namespace DVLD.Data
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while fetching all application types.", ex);
                 throw;
@@ -66,7 +64,7 @@ namespace DVLD.Data
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while fetching application type and fees.", ex);
                 throw;

@@ -50,17 +50,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applications\frmManageApplicationTypes.cs">
+    <Compile Include="Applications\ApplicationTypes\frmManageApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\frmManageApplicationTypes.Designer.cs">
+    <Compile Include="Applications\ApplicationTypes\frmManageApplicationTypes.Designer.cs">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Applications\frmUpdateApplicationType.cs">
+    <Compile Include="Applications\ApplicationTypes\frmUpdateApplicationType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\frmUpdateApplicationType.Designer.cs">
+    <Compile Include="Applications\ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Applications\TestTypes\frmManageTestTypes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\TestTypes\frmManageTestTypes.Designer.cs">
+      <DependentUpon>frmManageTestTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Applications\TestTypes\frmUpdateTestType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\TestTypes\frmUpdateTestType.Designer.cs">
+      <DependentUpon>frmUpdateTestType.cs</DependentUpon>
     </Compile>
     <Compile Include="People\frmPersonDetails.cs">
       <SubType>Form</SubType>
@@ -142,11 +154,17 @@
     <Compile Include="Users\frmUserInfo.Designer.cs">
       <DependentUpon>frmUserInfo.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Applications\frmManageApplicationTypes.resx">
+    <EmbeddedResource Include="Applications\ApplicationTypes\frmManageApplicationTypes.resx">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Applications\frmUpdateApplicationType.resx">
+    <EmbeddedResource Include="Applications\ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\TestTypes\frmManageTestTypes.resx">
+      <DependentUpon>frmManageTestTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\TestTypes\frmUpdateTestType.resx">
+      <DependentUpon>frmUpdateTestType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmPersonDetails.resx">
       <DependentUpon>frmPersonDetails.cs</DependentUpon>

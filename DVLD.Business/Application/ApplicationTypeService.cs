@@ -3,7 +3,6 @@ using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 
 namespace DVLD.Business
@@ -33,7 +32,7 @@ namespace DVLD.Business
             {
                 return ApplicationTypeRepository.GetTitleAndFees(applicationType);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while trying to get all application types.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);

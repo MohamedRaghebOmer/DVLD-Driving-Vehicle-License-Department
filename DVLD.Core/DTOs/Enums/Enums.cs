@@ -32,7 +32,8 @@
         ReplacementForLostDrivingLicense = 3,
         ReplacementForDamagedDrivingLicense = 4,
         ReleaseDetainedDrivingLicense = 5,
-        NewInternationalLicense = 6
+        NewInternationalLicense = 6,
+        RetakeTest = 7
     }
 
     public enum ApplicationStatus

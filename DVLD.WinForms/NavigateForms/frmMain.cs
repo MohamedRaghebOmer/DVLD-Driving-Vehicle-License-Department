@@ -1,4 +1,5 @@
 ﻿using DVLD.Core.Logging;
+using DVLD.WinForms.Applications.TestTypes;
 using DVLD.WinForms.NavigateForms;
 using DVLD.WinForms.Users;
 using System;
@@ -46,6 +47,12 @@ namespace DVLD.WinForms
         private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form frm = new frmManageApplicationTypes();
+            frm.ShowDialog();
+        }
+
+        private void manageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmManageTestTypes();
             frm.ShowDialog();
         }
     }
