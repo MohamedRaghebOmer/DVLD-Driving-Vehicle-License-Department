@@ -1,7 +1,7 @@
-﻿using System;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
+using System;
 
 namespace DVLD.Core.Validators
 {
@@ -17,10 +17,10 @@ namespace DVLD.Core.Validators
 
             if (license.DriverId <= 0)
                 throw new ValidationException("DriverId must be a positive integer.");
-            
+
             if (!Enum.IsDefined(typeof(LicenseClass), license.LicenseClass))
                 throw new ValidationException("Invalid LicenseClass value.");
-                     
+
             if (license.PaidFees < 0)
                 throw new ValidationException("PaidFees cannot be negative.");
         }

@@ -1,150 +1,45 @@
 ﻿using System;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Core.DTOs.Entities
 {
     public class DetainedLicense
     {
-        private int _detainId;
-        private int _licenseId;
-        private DateTime _detainDate;
-        private decimal _fineFees;
-        private int _createdByUserId;
-        private bool _isReleased;
-        private DateTime? _releaseDate;
-        private int? _releasedByUserId;
-        private int?_releaseApplicationId;
+        public int DetainID { get; private set; }
 
+        public int LicenseID { get; set; }
 
-        public int DetainID
-        {
-            get => _detainId;
-            internal set
-            {
-                if (value < 0)
-                    throw new ValidationException("Detain ID cannot be negative.");
-                _detainId = value;
-            }
-        }
+        public DateTime DetainDate { get; private set; }
 
-        public int LicenseID
-        {
-            get => _licenseId;
-            
-            set
-            {
-                if (value < 0)
-                    throw new ValidationException("License ID cannot be negative.");
-                _licenseId = value;
-            }
-        }
+        public decimal FineFees { get; set; }
 
-        public DateTime DetainDate
-        {
-            get => _detainDate;
-            
-            private set
-            {
-                if (value > DateTime.Now)
-                    throw new ValidationException("Detain date cannot be in the future.");
-                _detainDate = value;
-            }
-        }
+        public int CreatedByUserID { get; private set; }
 
-        public decimal FineFees
-        {
-            get => _fineFees;
-            
-            set
-            {
-                if (value < 0)
-                    throw new ValidationException("Fine fees cannot be negative.");
-                _fineFees = value;
-            }
-        }
+        public bool IsReleased { get; private set; }
 
-        public int CreatedByUserID
-        {
-            get => _createdByUserId;
-            
-            private set
-            {
-                if (value < 0)
-                    throw new ValidationException("Created by user ID cannot be negative.");
-                _createdByUserId = value;
-            }
-        }
+        public DateTime? ReleaseDate { get; private set; }
 
-        public bool IsReleased
-        {
-            get => _isReleased;
-            private set => _isReleased = value;
-        }
+        public int? ReleasedByUserID { get; private set; }
 
-        public DateTime? ReleaseDate
-        {
-            get => _releaseDate;
-            
-            private set
-            {
-                if (value == null)
-                    _releaseDate = null;
-                else if (value > DateTime.Now)
-                    throw new ValidationException("Release date cannot be in the future.");
-                
-                _releaseDate = value;
-            }
-        }
-
-        public int? ReleasedByUserID
-        {
-            get => _releasedByUserId;
-            
-            private set
-            {
-                if (value == null)
-                    _releaseApplicationId = null;
-                else if (value < 0)
-                    throw new ValidationException("Released by user ID cannot be negative.");
-                _releasedByUserId = value;
-            }
-        }
-
-        public int? ReleaseApplicationID
-        {
-            get => _releaseApplicationId;
-            
-            private set
-            {
-                if (value == null)
-                    _releaseApplicationId = null;
-                else if (value < 0)
-                    throw new ValidationException("Release application ID cannot be negative.");
-                _releaseApplicationId = value;
-            }
-        }
+        public int? ReleaseApplicationID { get; private set; }
 
 
         public DetainedLicense()
         {
-            this._detainId = -1; // Default value indicating not set
-            this._licenseId = -1; // Default value indicating not set
-            this._detainDate =  DateTime.MinValue; // Default value indicating not set
-            this._fineFees = 0; // Default value indicating not set
-            this._createdByUserId = -1; // Default value indicating not set
-            this._isReleased = false; // Default value indicating not set
-            this._releaseDate = null; // Default value indicating not set
-            this._releasedByUserId = null; // Default value indicating not set
-            this._releaseApplicationId = null; // Default value indicating not set
+            this.DetainID = -1; // Default value indicating not set
+            this.LicenseID = -1; // Default value indicating not set
+            this.DetainDate = DateTime.MinValue; // Default value indicating not set
+            this.FineFees = 0; // Default value indicating not set
+            this.CreatedByUserID = -1; // Default value indicating not set
+            this.IsReleased = false; // Default value indicating not set
+            this.ReleaseDate = null; // Default value indicating not set
+            this.ReleasedByUserID = null; // Default value indicating not set
+            this.ReleaseApplicationID = null; // Default value indicating not set
         }
 
-        public DetainedLicense(int licenseId, decimal fineFees) : this()
-        {
-            LicenseID = licenseId;
-            FineFees = fineFees;
-        }
-
-        internal DetainedLicense(int detainId, int licenseId, DateTime detainDate, decimal fineFees, int createdByUserId, bool isReleased, DateTime? releaseDate, int? releasedByUserId, int? releaseApplicationId) : this()
+        internal DetainedLicense(int detainId, int licenseId,
+            DateTime detainDate, decimal fineFees, int createdByUserId,
+            bool isReleased, DateTime? releaseDate, int? releasedByUserId,
+            int? releaseApplicationId) : this()
         {
             DetainID = detainId;
             LicenseID = licenseId;

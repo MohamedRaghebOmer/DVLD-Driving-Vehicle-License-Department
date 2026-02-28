@@ -1,5 +1,4 @@
-﻿using System;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Exceptions;
 
 namespace DVLD.Core.Validators

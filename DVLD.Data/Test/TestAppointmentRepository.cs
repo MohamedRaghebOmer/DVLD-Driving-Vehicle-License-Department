@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -127,7 +127,7 @@ namespace DVLD.Data
                     return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking existence of TestAppointment with ID {testAppointmentId}.", ex);
                 throw;
@@ -149,7 +149,7 @@ namespace DVLD.Data
                     return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while check TestAppointment with ID{testAppointmentId} is locked.", ex);
                 throw;
@@ -159,7 +159,7 @@ namespace DVLD.Data
         public static bool ExistsForApplication(int localDrivingLicenseApplicationId, int excludedId = -1)
         {
             string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestAppointmentID != @excludedId;";
-            
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))
@@ -183,7 +183,7 @@ namespace DVLD.Data
         public static bool ExistsForApplication(TestType testType, int localDrivingLicenseApplicationId)
         {
             string query = @"SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId AND TestTypeID = @testTypeId;";
-            
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))
@@ -207,7 +207,7 @@ namespace DVLD.Data
         public static bool UpdateDate(int testAppointmentId, DateTime newDate)
         {
             string query = @"UPDATE TestAppointments SET AppointmentDate = @newDate WHERE TestAppointmentId = @TestAppointmentId";
-            
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))
@@ -231,7 +231,7 @@ namespace DVLD.Data
         public static bool Lock(int testAppointmentId)
         {
             string query = @"UPDATE TestAppointments SET IsLocked = 1 WHERE TestAppointmentId = @TestAppointmentId";
-            
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))

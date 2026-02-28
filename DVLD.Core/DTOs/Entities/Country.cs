@@ -12,15 +12,14 @@ namespace DVLD.Core.DTOs.Entities
 
         public Country(string countryName)
         {
+            CountryID = -1;
             CountryName = countryName;
         }
 
-        // To use inside DVLD.Data.GetCountryInfoById only
         internal Country(int id, string countryName)
         {
             CountryID = id;
             CountryName = countryName;
         }
     }
-
 }

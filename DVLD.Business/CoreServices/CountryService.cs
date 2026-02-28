@@ -4,13 +4,12 @@ using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 
 namespace DVLD.Business
 {
     public static class CountryService
-    {        
+    {
         public static Country Save(Country country)
         {
             if (country == null)
@@ -51,12 +50,12 @@ namespace DVLD.Business
         {
             if (id <= 0)
                 return null;
-             
+
             try
             {
                 return CountryRepository.Get(id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading country info with Id = {id}");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -133,7 +132,7 @@ namespace DVLD.Business
             {
                 return CountryRepository.Exists(countryId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while checking country with id = {countryId} existance.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -144,7 +143,7 @@ namespace DVLD.Business
         {
             if (string.IsNullOrWhiteSpace(countryName))
                 return false;
-            
+
             try
             {
                 return CountryRepository.Exists(countryName, excludedId);
@@ -155,7 +154,7 @@ namespace DVLD.Business
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
-        
+
         public static bool Delete(int countryId)
         {
             if (countryId < 1)

@@ -1,9 +1,7 @@
-﻿using DVLD.WinForms.Users;
+﻿using DVLD.Core.Logging;
+using DVLD.WinForms.Users;
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
-using DVLD.Core.Logging;
 
 namespace DVLD.WinForms
 {
@@ -42,6 +40,11 @@ namespace DVLD.WinForms
         {
             Form frm = new frmChangeUserPassword(LoggedInUserInfo.UserId);
             frm.ShowDialog();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

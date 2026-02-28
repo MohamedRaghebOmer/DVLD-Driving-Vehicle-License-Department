@@ -1,81 +1,29 @@
-﻿using DVLD.Core.Exceptions;
-
-namespace DVLD.Core.DTOs.Entities
+﻿namespace DVLD.Core.DTOs.Entities
 {
     public class Test
     {
-        private int _testId;
-        private int _testAppointmentId;
-        private bool _testResult;
-        private string _notes;
-        private int _createdByUserId;
+        public int TestID { get; private set; }
 
-        
-        public int TestID
-        {
-            get => _testId;
+        public int TestAppointmentID { get; set; }
 
-            private set
-            {
-                if (value <= 0)
-                    throw new ValidationException("Test Id must be a positive integer.");
-                _testId = value;
-            }
-        }
+        public bool TestResult { get; set; }
 
-        public int TestAppointmentID
-        {
-            get => _testAppointmentId;
+        public string Notes { get; set; }
 
-            set
-            {
-                if (value <= 0)
-                    throw new ValidationException("Tets Appointment Id must be a positive intger.");
-                _testAppointmentId = value;
-            }
-        }
-
-        public bool TestResult
-        {
-            get => _testResult;
-            set => _testResult = value;
-        }
-
-        public string Notes
-        {
-            get => _notes;
-            set => _notes = value;
-        }
-
-        public int CreatedByUserID
-        {
-            get => _createdByUserId;
-
-            private set
-            {
-                if (value <= 0)
-                    throw new ValidationException("User Id must be a positve intger.");
-            }
-        }
+        public int CreatedByUserID { get; private set; }
 
 
         public Test()
         {
-            this._testId = -1;
-            this._testAppointmentId = -1;
-            this._testResult = false;
-            this._notes = string.Empty;
-            this._createdByUserId = -1;
+            this.TestID = -1;
+            this.TestAppointmentID = -1;
+            this.TestResult = false;
+            this.Notes = string.Empty;
+            this.CreatedByUserID = -1;
         }
 
-        public Test(int testAppointmentId, bool testResult, string notes) : this()
-        {
-            TestAppointmentID = testAppointmentId;
-            TestResult = testResult;
-            Notes = notes;
-        }
-
-        internal Test(int testId, int testAppointmentId, bool testResult, string notes, int createdByUserId) : this()
+        internal Test(int testId, int testAppointmentId, bool testResult,
+            string notes, int createdByUserId) : this()
         {
             TestID = testId;
             TestAppointmentID = testAppointmentId;

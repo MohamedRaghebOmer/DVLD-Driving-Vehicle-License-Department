@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -68,12 +68,12 @@ namespace DVLD.Data
                                 Convert.ToDateTime(reader["CreatedDate"])
                             );
                         }
-                        
+
                         return null;
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting from Drivers.", ex);
                 throw;
@@ -108,7 +108,7 @@ namespace DVLD.Data
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting form Drivers.", ex);
                 throw;
@@ -118,7 +118,7 @@ namespace DVLD.Data
         public static int GetIdByPersonId(int personId)
         {
             string query = "SELECT DriverId FROM Drivers WHERE PerosnId = @personId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -126,7 +126,7 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@personId", personId);
                     connection.Open();
-                    
+
                     object result = command.ExecuteScalar();
                     if (result != null && int.TryParse(result.ToString(), out int driverId))
                         return driverId;
@@ -207,14 +207,14 @@ namespace DVLD.Data
                     return null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting all from Drivers.", ex);
                 throw;
             }
         }
 
-        
+
         // --------------------Delete-----------------------------
         public static bool DeleteByDriverId(int driverId)
         {

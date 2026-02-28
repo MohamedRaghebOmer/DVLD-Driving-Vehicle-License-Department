@@ -1,6 +1,6 @@
-﻿using DVLD.Data;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Exceptions;
+using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
@@ -12,9 +12,9 @@ namespace DVLD.Business.EntityValidators
 
             if (!PersonRepository.Exists(driver.PersonId))
                 throw new BusinessException("Person doesn't exists.");
-            
+
             if (DriverRepository.ExistsForPerson(driver.PersonId))
                 throw new BusinessException("The person is already associated with another driver.");
         }
     }
-}   
+}

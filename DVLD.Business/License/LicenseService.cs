@@ -1,11 +1,11 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
-using DVLD.Business.EntityValidators;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -38,9 +38,19 @@ namespace DVLD.Business
 
         private static int GetDriverId(int personId)
         {
-            // If the person is already a driver, return the driver id else add a new driver and return the new driver id
-            int driverId;
-            return (driverId = DriverRepository.GetIdByPersonId(personId)) != -1? driverId : DriverRepository.Add(new Driver(personId));
+            // If the person is already a driver, return the driver id,
+            // else add a new driver and return the new driver id
+
+            int driverId = -1;
+            driverId = DriverRepository.GetIdByPersonId(personId);
+
+            if (driverId == -1)
+                return driverId;
+
+            Driver driver = new Driver();
+            driver.PersonId = personId;
+
+            return DriverRepository.Add(driver);
         }
 
         private static int GetAndDeactivatePreviousLicense(int driverId, LicenseClass licenseClass)

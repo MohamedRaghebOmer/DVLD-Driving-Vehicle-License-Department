@@ -1,8 +1,8 @@
-﻿using System;
-using DVLD.Data;
-using DVLD.Core.Logging;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
-using DVLD.Core.DTOs.Enums;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
 
 namespace DVLD.Business
 {
@@ -93,7 +93,7 @@ namespace DVLD.Business
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
                 throw new ValidationException("Undfined license class.");
-            
+
             if (newFees < 0)
                 throw new ValidationException("new Fees cannot be negative.");
 

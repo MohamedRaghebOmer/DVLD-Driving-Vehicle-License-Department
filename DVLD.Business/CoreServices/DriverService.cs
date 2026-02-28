@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -12,12 +12,12 @@ namespace DVLD.Business
         public static Driver Add(Driver driver)
         {
             DriverValidator.AddNewValidator(driver);
-                
+
             try
             {
                 return (DriverRepository.Add(driver) != -1) ? DriverRepository.GetById(driver.DriverId) : null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while adding a new driver.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -33,7 +33,7 @@ namespace DVLD.Business
             {
                 return DriverRepository.GetById(driverId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while trying to get driver by id.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -62,7 +62,7 @@ namespace DVLD.Business
             {
                 return DriverRepository.GetAll();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while trying to get all drivers.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);

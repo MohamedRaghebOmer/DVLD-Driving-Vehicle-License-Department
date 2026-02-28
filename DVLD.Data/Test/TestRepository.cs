@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -99,7 +99,7 @@ namespace DVLD.Data
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while retrieving all tests.", ex);
                 throw;
@@ -172,7 +172,7 @@ namespace DVLD.Data
                     return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while chekcing TestAppointment existance with ID = {testAppointmentId}.", ex);
                 throw;
@@ -195,7 +195,7 @@ namespace DVLD.Data
                     return command.ExecuteNonQuery() > 0;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while updating Test notes with id = {testId}.", ex);
                 throw;

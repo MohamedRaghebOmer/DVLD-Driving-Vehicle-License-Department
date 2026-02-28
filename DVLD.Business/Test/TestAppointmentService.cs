@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Logging;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Exceptions;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -19,7 +19,7 @@ namespace DVLD.Business
                 int insertedId = TestAppointmentRepository.Add(testAppointment);
                 return TestAppointmentRepository.GetById(insertedId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while creating a new TestAppointment.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -32,7 +32,7 @@ namespace DVLD.Business
             {
                 return TestAppointmentRepository.GetAll();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while trying to get all TestAppointments.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -48,7 +48,7 @@ namespace DVLD.Business
             {
                 return TestAppointmentRepository.GetById(testAppointmentId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while Get Test Appointment wiht id = {testAppointmentId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -62,7 +62,7 @@ namespace DVLD.Business
 
             if (TestAppointmentRepository.GetById(testAppointmentId).AppointmentDate <= DateTime.Now)
                 throw new ValidationException("Can't update date of Test Appointment that has already passed.");
-            
+
             if (newDate < DateTime.Now)
                 throw new ValidationException("Test Appointment date cannot be in the past.");
 

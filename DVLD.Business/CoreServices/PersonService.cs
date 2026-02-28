@@ -68,7 +68,7 @@ namespace DVLD.Business
             {
                 return PersonRepository.GetIdByNationalNo(NationalNo);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading person id with national number = {NationalNo}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);

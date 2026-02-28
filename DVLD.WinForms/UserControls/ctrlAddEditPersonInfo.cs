@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
-using DVLD.Business;
+﻿using DVLD.Business;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
-using DVLD.WinForms.Properties;
-using System.Data;
 using DVLD.Core.Helpers;
+using DVLD.WinForms.Properties;
+using System;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace DVLD.WinForms
 {

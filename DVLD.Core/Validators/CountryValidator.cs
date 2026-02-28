@@ -9,7 +9,7 @@ namespace DVLD.Core.Validators
         {
             if (country == null)
                 throw new ValidationException("Country information cannot be null.");
-           
+
             if (string.IsNullOrWhiteSpace(country.CountryName))
                 throw new ValidationException("Country name is required.");
         }

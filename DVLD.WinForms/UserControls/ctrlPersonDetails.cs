@@ -47,7 +47,7 @@ namespace DVLD.WinForms.UserControls
             set
             {
                 if (string.IsNullOrEmpty(value) || value == _nationalNo && _usingNationalNo) return;
-                
+
                 _nationalNo = value;
                 _usingNationalNo = true;
                 ctrlPersonDetails_Load(null, null);

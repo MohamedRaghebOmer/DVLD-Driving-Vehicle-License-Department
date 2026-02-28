@@ -13,7 +13,7 @@ namespace DVLD.Core.Logging
             using (var writer = new StreamWriter(logFilePath, true))
             {
                 writer.WriteLine($"{DateTime.Now} | ERROR | {message}");
-                
+
                 if (ex != null)
                 {
                     writer.WriteLine($"Exception: {ex.GetType().Name}: {ex.Message}");
