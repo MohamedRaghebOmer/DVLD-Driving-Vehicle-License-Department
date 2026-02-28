@@ -1,10 +1,9 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
-using DVLD.Core.Logging;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
-using DVLD.Core.DTOs.Enums;
-using System.Diagnostics;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -52,7 +51,7 @@ namespace DVLD.Business
             {
                 return TestTypeRepository.UpdateFees(testType, newFees);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while updating fees for test type with id = {(int)testType}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);

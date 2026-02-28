@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Logging;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Exceptions;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -76,10 +76,10 @@ namespace DVLD.Business
                 {
                     if (UserRepository.Update(user))
                         return UserRepository.GetById(user.UserId);
-                    
+
                     return null;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     AppLogger.LogError($"BLL: Error while updating user with Id: {user.UserId}.");
                     throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -96,7 +96,7 @@ namespace DVLD.Business
             {
                 return UserRepository.GetById(userId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while reading user by id.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -146,7 +146,7 @@ namespace DVLD.Business
             {
                 return UserRepository.GetPassword(userId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while reading user password by user id.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -162,7 +162,7 @@ namespace DVLD.Business
             {
                 return UserRepository.ChangePassword(userId, newPassword);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while changing user password by user id.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -175,7 +175,7 @@ namespace DVLD.Business
             {
                 return UserRepository.GetAll();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while reading all users.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -232,7 +232,7 @@ namespace DVLD.Business
         {
             if (string.IsNullOrWhiteSpace(username))
                 return false;
-            
+
             try
             {
                 return UserRepository.ExistsByUsername(username, excludedUserId);

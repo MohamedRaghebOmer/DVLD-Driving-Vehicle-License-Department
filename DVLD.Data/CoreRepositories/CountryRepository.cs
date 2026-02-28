@@ -2,7 +2,6 @@
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -16,14 +15,14 @@ namespace DVLD.Data
             string query = @"INSERT INTO Countries(CountryName)
                             VALUES(@countryName)
                             SELECT SCOPE_IdENTITY();";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@countryName", country.CountryName);
-                    
+
                     connection.Open();
 
                     object result = command.ExecuteScalar();
@@ -34,7 +33,7 @@ namespace DVLD.Data
                     return -1;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while inserting into Countries.", ex);
                 throw;
@@ -55,7 +54,7 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@countryId", countryId);
-                
+
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -67,7 +66,7 @@ namespace DVLD.Data
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting from Countries table.", ex);
                 throw;
@@ -173,7 +172,7 @@ namespace DVLD.Data
                     return command.ExecuteScalar() != null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting from Countries.", ex);
                 throw;
@@ -225,11 +224,11 @@ namespace DVLD.Data
                             return dataTable;
                         }
                     }
-                
+
                     return null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting all from Countries.", ex);
                 throw;
@@ -257,7 +256,7 @@ namespace DVLD.Data
                     return command.ExecuteNonQuery() > 0;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while update from Countries.", ex);
                 throw;
@@ -283,7 +282,7 @@ namespace DVLD.Data
                     return command.ExecuteNonQuery() > 0;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while deleting from Countries.", ex);
                 throw;

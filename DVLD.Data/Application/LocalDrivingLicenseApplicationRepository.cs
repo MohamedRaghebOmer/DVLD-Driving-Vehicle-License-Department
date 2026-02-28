@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -78,7 +78,7 @@ namespace DVLD.Data
                         {
                             return new LocalDrivingLicenseApplication
                             (
-                                localDrivingLicenseApplicationId: Convert.ToInt32(reader["LocalDrivingLicenseApplicationId"]),
+                                localId: Convert.ToInt32(reader["LocalDrivingLicenseApplicationId"]),
                                 applicationId: Convert.ToInt32(reader["ApplicationId"]),
                                 licenseClassId: (LicenseClass)Convert.ToInt32(reader["LicenseClassId"])
                             );
@@ -112,7 +112,7 @@ namespace DVLD.Data
                         {
                             return new LocalDrivingLicenseApplication
                             (
-                                localDrivingLicenseApplicationId: Convert.ToInt32(reader["LocalDrivingLicenseApplicationId"]),
+                                localId: Convert.ToInt32(reader["LocalDrivingLicenseApplicationId"]),
                                 applicationId: Convert.ToInt32(reader["ApplicationId"]),
                                 licenseClassId: (LicenseClass)Convert.ToInt32(reader["LicenseClassId"])
                             );

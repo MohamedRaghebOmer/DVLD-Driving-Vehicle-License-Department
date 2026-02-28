@@ -1,6 +1,5 @@
-﻿using System;
-using DVLD.Core.DTOs.Enums;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Core.DTOs.Enums;
+using System;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -32,8 +31,8 @@ namespace DVLD.Core.DTOs.Entities
             this.IsLocked = false;
         }
 
-        internal TestAppointment(int testAppointmentId, TestType testTypeId, 
-            int localDrivingLicenseApplicationId, DateTime appointmentDate, 
+        internal TestAppointment(int testAppointmentId, TestType testTypeId,
+            int localDrivingLicenseApplicationId, DateTime appointmentDate,
             decimal paidFees, int createdByUserId, bool isLocked) : this()
         {
             TestAppointmentId = testAppointmentId;

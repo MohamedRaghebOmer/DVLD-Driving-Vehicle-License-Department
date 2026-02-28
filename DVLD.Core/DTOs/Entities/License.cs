@@ -1,6 +1,5 @@
-﻿using System;
-using DVLD.Core.DTOs.Enums;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Core.DTOs.Enums;
+using System;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -13,7 +12,7 @@ namespace DVLD.Core.DTOs.Entities
         public int DriverId { get; set; }
 
         public LicenseClass LicenseClass { get; set; }
-        
+
         public DateTime IssueDate { get; private set; }
 
         public DateTime ExpirationDate { get; private set; }
@@ -29,10 +28,10 @@ namespace DVLD.Core.DTOs.Entities
         public int CreatedByUserId { get; private set; }
 
         // Constructor for receiving data from DAL when retrieving a license (LicenseId is included).
-        internal License(int licenseId, int applicationId, int driverId, 
-            LicenseClass licenseClass, DateTime issueDate, 
-            DateTime expirationDate, string notes, decimal paidFees, 
-        bool isActive, IssueReason issueReason, int createdByUserId) : this()
+        internal License(int licenseId, int applicationId, int driverId,
+            LicenseClass licenseClass, DateTime issueDate,
+            DateTime expirationDate, string notes, decimal paidFees,
+        bool isActive, IssueReason issueReason, int createdByUserId)
         {
             LicenseID = licenseId;
             ApplicationId = applicationId;

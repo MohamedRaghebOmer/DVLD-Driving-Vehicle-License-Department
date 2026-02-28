@@ -1,12 +1,12 @@
-﻿using DVLD.Data;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
+using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
     internal class ApplicationValidator
-    {                    
+    {
         public static void AddNewValidator(Application application, LicenseClass licenseClass)
         {
             Core.Validators.ApplicationValidator.Validate(application);

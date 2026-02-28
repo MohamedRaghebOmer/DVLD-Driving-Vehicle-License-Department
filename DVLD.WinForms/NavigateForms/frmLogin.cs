@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using DVLD.Business;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Business;
+using DVLD.Core.Helpers;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using DVLD.Core.Helpers;
+using System.Windows.Forms;
 
 namespace DVLD.WinForms
 {
@@ -118,7 +117,7 @@ namespace DVLD.WinForms
                 byte[] encryptedPassword = ProtectedData.Protect(passwordBytes, null, DataProtectionScope.CurrentUser);
 
                 // Save to file
-                File.WriteAllLines(filePath, new string[] {username, Convert.ToBase64String(encryptedPassword)});
+                File.WriteAllLines(filePath, new string[] { username, Convert.ToBase64String(encryptedPassword) });
             }
             else if (!chkRememberMe.Checked && AreThereRememberedCardinalities())
             {

@@ -10,12 +10,12 @@ namespace DVLD.Business.EntityValidators
         public static void AddNewValidator(License license)
         {
             Core.Validators.LicenseValidator.Validate(license);
-            
+
 
             // Check if application exists.
             if (!ApplicationRepository.Exists(license.ApplicationId))
                 throw new BusinessException("Application does not exist.");
-            
+
             // Check if driver exists.
             if (!DriverRepository.Exists(license.DriverId))
                 throw new BusinessException("Driver does not exist.");
@@ -55,7 +55,7 @@ namespace DVLD.Business.EntityValidators
             LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationRepository.GetByApplicationId(license.ApplicationId);
             _ = localDrivingLicenseApplication
                 ?? throw new BusinessException("Local driving license application does not exist.");
-            
+
             if (!TestRepository.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationID))
                 throw new BusinessException("Driver has not passed all three tests.");
 

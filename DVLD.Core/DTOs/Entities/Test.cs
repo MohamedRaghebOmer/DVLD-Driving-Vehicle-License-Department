@@ -1,6 +1,4 @@
-﻿using DVLD.Core.Exceptions;
-
-namespace DVLD.Core.DTOs.Entities
+﻿namespace DVLD.Core.DTOs.Entities
 {
     public class Test
     {
@@ -24,7 +22,7 @@ namespace DVLD.Core.DTOs.Entities
             this.CreatedByUserID = -1;
         }
 
-        internal Test(int testId, int testAppointmentId, bool testResult, 
+        internal Test(int testId, int testAppointmentId, bool testResult,
             string notes, int createdByUserId) : this()
         {
             TestID = testId;

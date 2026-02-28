@@ -1,8 +1,8 @@
-﻿using System;
-using DVLD.Data;
-using DVLD.Core.Logging;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
-using DVLD.Core.DTOs.Enums;
+using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
 
 namespace DVLD.Business
 {

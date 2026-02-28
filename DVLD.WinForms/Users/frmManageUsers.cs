@@ -17,7 +17,7 @@ namespace DVLD.WinForms.Users
         private void frmManageUsers_Load(object sender, EventArgs e)
         {
             LoadDataGridUsers();
-            SetDefaluts();
+            SetDefaults();
         }
 
         private void LoadDataGridUsers()
@@ -34,7 +34,7 @@ namespace DVLD.WinForms.Users
             dgvUsers.Columns[3].Width = 170;
         }
 
-        private void SetDefaluts()
+        private void SetDefaults()
         {
             cbFilter.SelectedIndex = 0;
         }
@@ -59,6 +59,8 @@ namespace DVLD.WinForms.Users
 
         private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txtFilterValue.Clear();
+
             if (cbFilter.SelectedIndex == 5) // Is Active
             {
                 txtFilterValue.Visible = false;
@@ -183,16 +185,16 @@ namespace DVLD.WinForms.Users
         {
             int selectedUserId = GetSelectedUserId();
             if (MessageBox.Show(
-                $"Are you sure you want to delete user with id = {selectedUserId}?", 
-                "Warring", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) 
+                $"Are you sure you want to delete user with id = {selectedUserId}?",
+                "Warring", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
                 == DialogResult.OK)
             {
                 try
                 {
                     if (UserService.DeleteById(selectedUserId))
                     {
-                        MessageBox.Show("User has been deleted successflly.", 
-                            "Success", MessageBoxButtons.OK, 
+                        MessageBox.Show("User has been deleted successflly.",
+                            "Success", MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
                         LoadDataGridUsers();
                     }
@@ -203,7 +205,7 @@ namespace DVLD.WinForms.Users
                             MessageBoxIcon.Error);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message,
                             "Failed", MessageBoxButtons.OK,
@@ -220,7 +222,7 @@ namespace DVLD.WinForms.Users
 
         private void UnImplementedFeatures_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This feature will be available soon.", "Sorry", 
+            MessageBox.Show("This feature will be available soon.", "Sorry",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

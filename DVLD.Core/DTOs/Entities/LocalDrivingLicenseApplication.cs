@@ -1,6 +1,4 @@
-﻿using System;
-using DVLD.Core.DTOs.Enums;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Core.DTOs.Enums;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -19,7 +17,7 @@ namespace DVLD.Core.DTOs.Entities
             this.LicenseClassID = 0; // Default value indicating not set
         }
 
-        internal LocalDrivingLicenseApplication(int localId, 
+        internal LocalDrivingLicenseApplication(int localId,
             int applicationId, LicenseClass licenseClassId) : this()
         {
             LocalDrivingLicenseApplicationID = localId;

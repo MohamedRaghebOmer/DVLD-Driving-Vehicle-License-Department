@@ -1,20 +1,16 @@
-﻿using DVLD.Core.Exceptions;
-using System;
-using System.Runtime.InteropServices;
-
-namespace DVLD.Core.DTOs.Entities
+﻿namespace DVLD.Core.DTOs.Entities
 {
     public class User
     {
         public int UserId { get; private set; }
 
         public int PersonId { get; set; }
-       
+
         public string Username { get; set; }
 
         public string Password { get; set; }
 
-        public bool IsActive { get; set; }      
+        public bool IsActive { get; set; }
 
         public User()
         {

@@ -1,24 +1,24 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Logging;
-using DVLD.Business.EntityValidators;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
     public static class DetainedLicenseService
-    {                    
+    {
         public static DetainedLicense Add(int licenseId, decimal fineFees)
         {
             DetainedLicenseValidator.DetainNewLicenseValidator(licenseId, fineFees);
-            
+
             try
             {
                 int detainedLicenseId = DetainedLicenseRepository.Add(licenseId, fineFees);
                 return DetainedLicenseRepository.GetByLicenseId(detainedLicenseId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while detaining license with ID " + licenseId + ".");
                 throw new Exception("We encountered a technical issue, please try again later.", ex);
@@ -109,7 +109,7 @@ namespace DVLD.Business
 
             try
             {
-                return DetainedLicenseRepository.Release(licenseId,  applicationId);
+                return DetainedLicenseRepository.Release(licenseId, applicationId);
             }
             catch (Exception ex)
             {

@@ -1,13 +1,13 @@
 ﻿namespace DVLD.Core.DTOs.Enums
 {
     public enum Gender
-    { 
+    {
         Male = 0,
         Female = 1
     }
 
-    public enum LicenseClass 
-    { 
+    public enum LicenseClass
+    {
         Class1_SmallMotorcycle = 1,
         Class2_HeavyMotorcycle = 2,
         Class3_OrdinaryDrivingLicense = 3,
@@ -27,12 +27,12 @@
 
     public enum ApplicationType
     {
-       NewLocalDrivingLicenseService = 1,
-       RenewDrivingLicenseService = 2,
-       ReplacementForLostDrivingLicense = 3,
-       ReplacementForDamagedDrivingLicense = 4,
-       ReleaseDetainedDrivingLicense = 5,
-       NewInternationalLicense = 6
+        NewLocalDrivingLicenseService = 1,
+        RenewDrivingLicenseService = 2,
+        ReplacementForLostDrivingLicense = 3,
+        ReplacementForDamagedDrivingLicense = 4,
+        ReleaseDetainedDrivingLicense = 5,
+        NewInternationalLicense = 6
     }
 
     public enum ApplicationStatus

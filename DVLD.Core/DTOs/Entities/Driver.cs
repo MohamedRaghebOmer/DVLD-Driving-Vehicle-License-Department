@@ -1,5 +1,4 @@
 ﻿using System;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -21,7 +20,7 @@ namespace DVLD.Core.DTOs.Entities
             this.CreatedDate = new DateTime(1900, 1, 1); // Default value for short date
         }
 
-        internal Driver(int driverId, int personId, int createdByUserId, 
+        internal Driver(int driverId, int personId, int createdByUserId,
             DateTime createdDate) : this()
         {
             this.DriverId = driverId;

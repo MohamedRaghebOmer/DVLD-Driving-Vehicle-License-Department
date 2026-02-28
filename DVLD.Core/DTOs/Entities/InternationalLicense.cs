@@ -1,5 +1,4 @@
 ﻿using System;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -22,7 +21,10 @@ namespace DVLD.Core.DTOs.Entities
         public int CreatedByUserID { get; private set; }
 
 
-        internal InternationalLicense(int internationalLicenseId, int applicationId, int driverId, int issuedUsingLocalLicenseId, DateTime issueDate, DateTime expirationDate, bool isActive, int createdByUserId) : this()
+        internal InternationalLicense(int internationalLicenseId,
+            int applicationId, int driverId, int issuedUsingLocalLicenseId,
+            DateTime issueDate, DateTime expirationDate, bool isActive,
+            int createdByUserId)
         {
             InternationalLicenseID = internationalLicenseId;
             ApplicationID = applicationId;

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
-using DVLD.Business.EntityValidators;
-using System.Diagnostics;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {

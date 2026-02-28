@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
+using DVLD.Core.Logging;
+using DVLD.Data.Settings;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using DVLD.Data.Settings;
-using DVLD.Core.Logging;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
 
 namespace DVLD.Data
 {
@@ -33,7 +33,7 @@ namespace DVLD.Data
                     return -1; // Indicate failure
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while inserting into DetainedLicenses", ex);
                 throw;
@@ -223,7 +223,7 @@ namespace DVLD.Data
                     return command.ExecuteNonQuery() > 0;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while releasing detained license.", ex);
                 throw;

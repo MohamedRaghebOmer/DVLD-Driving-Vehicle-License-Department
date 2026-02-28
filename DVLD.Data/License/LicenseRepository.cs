@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -19,7 +19,7 @@ namespace DVLD.Data
                             DATEADD(YEAR, @validityLength, GETDATE()), @notes, @paidFees, @isActive, 
                             @issueReason, @createdByUserID);
                             SELECT SCOPE_IDENTITY();";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -114,7 +114,7 @@ namespace DVLD.Data
             string query = @"SELECT D.PersonID
                             FROM Licenses L
                             INNER JOIN Drivers D ON L.DriverID = D.DriverID
-                            WHERE L.LicenseID = @LicenseID;";   
+                            WHERE L.LicenseID = @LicenseID;";
 
             try
             {
@@ -130,7 +130,7 @@ namespace DVLD.Data
                 }
                 return -1; // Return -1 if the insert operation fails
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while fetching PersonID for LicenseID {licenseId}.", ex);
                 throw;
@@ -311,7 +311,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@personId", personId);
                     command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
                     connection.Open();
-                    return command.ExecuteScalar() != null; 
+                    return command.ExecuteScalar() != null;
                 }
             }
             catch (Exception ex)
@@ -335,7 +335,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@applicantPersonId", personId);
                     command.Parameters.AddWithValue("@licenseClass", (int)licenseClass);
                     connection.Open();
-                    
+
                     return command.ExecuteScalar() != null;
                 }
             }
@@ -411,7 +411,7 @@ namespace DVLD.Data
         public static bool ReactivateLicense(int licenseId)
         {
             string query = "UPDATE Licenses SET IsActive = 1 WHERE LicenseId = @LicenseId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))

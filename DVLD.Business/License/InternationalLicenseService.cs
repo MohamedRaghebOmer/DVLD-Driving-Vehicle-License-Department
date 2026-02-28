@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using DVLD.Data;
+﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
-using DVLD.Business.EntityValidators;
 using DVLD.Core.Logging;
+using DVLD.Data;
+using System;
+using System.Data;
 
 namespace DVLD.Business
 {
@@ -22,25 +22,25 @@ namespace DVLD.Business
 
                 int newInternationalLicenseId = InternationalLicenseRepository.Add(internationalLicense);
                 bool isApplicationCompleted = ApplicationRepository.UpdateApplicationStatus(internationalLicense.ApplicationID, ApplicationStatus.Completed);
-                
+
                 if (newInternationalLicenseId != -1 && isApplicationCompleted)
                     return InternationalLicenseRepository.GetById(newInternationalLicenseId);
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while trying to add new International License.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
-        
+
         public static DataTable GetAll()
         {
             try
             {
                 return InternationalLicenseRepository.GetAll();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while trying to get all International Licenses.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -53,7 +53,7 @@ namespace DVLD.Business
             {
                 return InternationalLicenseRepository.GetById(internationalLicenseId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while trying to get International License with Id {internationalLicenseId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
@@ -66,7 +66,7 @@ namespace DVLD.Business
             {
                 return InternationalLicenseRepository.DeactivateById(internationalLicenseId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while deactivate International License with Id = {internationalLicenseId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);

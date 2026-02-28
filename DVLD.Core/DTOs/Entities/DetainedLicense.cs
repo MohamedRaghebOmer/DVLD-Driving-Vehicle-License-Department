@@ -1,5 +1,4 @@
 ﻿using System;
-using DVLD.Core.Exceptions;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -12,7 +11,7 @@ namespace DVLD.Core.DTOs.Entities
         public DateTime DetainDate { get; private set; }
 
         public decimal FineFees { get; set; }
-        
+
         public int CreatedByUserID { get; private set; }
 
         public bool IsReleased { get; private set; }
@@ -28,7 +27,7 @@ namespace DVLD.Core.DTOs.Entities
         {
             this.DetainID = -1; // Default value indicating not set
             this.LicenseID = -1; // Default value indicating not set
-            this.DetainDate =  DateTime.MinValue; // Default value indicating not set
+            this.DetainDate = DateTime.MinValue; // Default value indicating not set
             this.FineFees = 0; // Default value indicating not set
             this.CreatedByUserID = -1; // Default value indicating not set
             this.IsReleased = false; // Default value indicating not set
@@ -37,9 +36,9 @@ namespace DVLD.Core.DTOs.Entities
             this.ReleaseApplicationID = null; // Default value indicating not set
         }
 
-        internal DetainedLicense(int detainId, int licenseId, 
-            DateTime detainDate, decimal fineFees, int createdByUserId, 
-            bool isReleased, DateTime? releaseDate, int? releasedByUserId, 
+        internal DetainedLicense(int detainId, int licenseId,
+            DateTime detainDate, decimal fineFees, int createdByUserId,
+            bool isReleased, DateTime? releaseDate, int? releasedByUserId,
             int? releaseApplicationId) : this()
         {
             DetainID = detainId;

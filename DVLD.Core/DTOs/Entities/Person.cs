@@ -1,5 +1,5 @@
-﻿using System;
-using DVLD.Core.DTOs.Enums;
+﻿using DVLD.Core.DTOs.Enums;
+using System;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -8,17 +8,17 @@ namespace DVLD.Core.DTOs.Entities
         public int PersonID { get; private set; }
 
         public string NationalNumber { get; set; }
-        
+
         public string FirstName { get; set; }
 
         public string SecondName { get; set; }
-         
+
         public string ThirdName { get; set; }
 
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        
+
         public Gender Gender { get; set; }
 
         public string Address { get; set; }
@@ -26,7 +26,7 @@ namespace DVLD.Core.DTOs.Entities
         public string Phone { get; set; }
 
         public string Email { get; set; }
-        
+
         public int NationalityCountryID { get; set; }
 
         public string ImagePath { get; set; }
@@ -48,8 +48,8 @@ namespace DVLD.Core.DTOs.Entities
             NationalityCountryID = -1;
             ImagePath = string.Empty;
         }
-    
-        internal Person(int personId, string nationalNo,  string firstName, string secondName, string thirdName,
+
+        internal Person(int personId, string nationalNo, string firstName, string secondName, string thirdName,
                       string lastName, DateTime dateOfBirth, Gender gender, string address, string phone,
                       string email, int nationalityCountryId, string imagePath) : this()
         {

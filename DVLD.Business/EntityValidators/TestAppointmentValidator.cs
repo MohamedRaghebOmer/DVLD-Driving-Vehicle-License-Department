@@ -1,7 +1,7 @@
-﻿using DVLD.Data;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
+using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
@@ -27,7 +27,7 @@ namespace DVLD.Business.EntityValidators
             if (TestAppointmentRepository.ExistsForApplication(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
                 throw new BusinessException("A test appointment already exists for the given test type and local driving license application.");
 
-            switch(testAppointment.TestTypeId)
+            switch (testAppointment.TestTypeId)
             {
                 case TestType.WrittenTheoryTest:
                     // Check if a vision test appointment exists for the same local driving license application before scheduling a written theory test appointment
@@ -35,7 +35,7 @@ namespace DVLD.Business.EntityValidators
                         throw new BusinessException("A vision test appointment must be scheduled before scheduling a written theory test appointment.");
 
                     if (testAppointment.PaidFees != 20)
-                        throw new BusinessException("Paid fees must be 20 dollars for a written theory test.");                
+                        throw new BusinessException("Paid fees must be 20 dollars for a written theory test.");
                     break;
 
                 case TestType.VisionTest:

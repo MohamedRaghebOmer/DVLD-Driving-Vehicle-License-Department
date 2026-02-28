@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -32,7 +32,7 @@ namespace DVLD.Data
                     object result = command.ExecuteScalar();
                     if (result != null && int.TryParse(result.ToString(), out int newLicenseId))
                         return newLicenseId;
-                    
+
                     return -1;
                 }
             }
@@ -100,7 +100,7 @@ namespace DVLD.Data
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
                 throw;
@@ -208,7 +208,7 @@ namespace DVLD.Data
         public static bool DeactivateById(int internationalLicenseId)
         {
             string query = @"UPDATE InternationalLicenses SET IsActive = 0 WHERE InternationalLicenseID = @InternationalLicenseID;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -294,4 +294,3 @@ namespace DVLD.Data
         }
     }
 }
-    

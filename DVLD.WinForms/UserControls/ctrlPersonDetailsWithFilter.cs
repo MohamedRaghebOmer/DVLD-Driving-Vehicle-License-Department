@@ -1,12 +1,5 @@
 ﻿using DVLD.Business;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.UserControls
@@ -51,7 +44,7 @@ namespace DVLD.WinForms.UserControls
             {
                 if (!PersonService.Exists(id))
                     id = -1;
-                
+
                 ctrlPersonDetails1.PersonID = id;
             }
             else if (!string.IsNullOrEmpty(txtFilterValue.Text)) // National No

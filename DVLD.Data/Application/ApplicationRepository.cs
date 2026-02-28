@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using DVLD.Core.DTOs.Entities;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -151,16 +151,16 @@ namespace DVLD.Data
                 throw;
             }
         }
-        
+
         public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus, bool autoUpdateLastStatusDate = true)
         {
             string query = @"UPDATE Applications SET ApplicationStatus = @applicationStatus";
-            
+
             if (autoUpdateLastStatusDate)
                 query += ", LastStatusDate = GETDATE()";
-            
+
             query += " WHERE ApplicationID = @applicationId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))

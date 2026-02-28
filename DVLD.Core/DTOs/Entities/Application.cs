@@ -1,6 +1,5 @@
-﻿using System;
-using DVLD.Core.DTOs.Enums;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Core.DTOs.Enums;
+using System;
 
 namespace DVLD.Core.DTOs.Entities
 {
@@ -35,9 +34,9 @@ namespace DVLD.Core.DTOs.Entities
             this.CreatedByUserID = -1; // Default value indicating not set
         }
 
-        internal Application(int applicationId, int applicantPersonId, 
-            DateTime applicationDate, ApplicationType applicationTypeId, 
-            ApplicationStatus applicationStatus, DateTime lastStatusDate, 
+        internal Application(int applicationId, int applicantPersonId,
+            DateTime applicationDate, ApplicationType applicationTypeId,
+            ApplicationStatus applicationStatus, DateTime lastStatusDate,
             decimal paidFees, int createdByUserId) : this()
         {
             ApplicationID = applicationId;

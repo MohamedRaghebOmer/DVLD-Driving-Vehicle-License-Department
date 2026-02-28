@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
-using System.IO;
-using System.Windows.Forms;
-using DVLD.Business;
+﻿using DVLD.Business;
 using DVLD.WinForms.People;
+using System;
+using System.Data;
+using System.Windows.Forms;
 
 namespace DVLD.WinForms
 {
@@ -72,10 +71,10 @@ namespace DVLD.WinForms
                 txtFilterValue.Visible = true;
                 txtFilterValue.Clear();
                 txtFilterValue.Focus();
-                
+
                 if (string.IsNullOrEmpty(txtSortValue.Text.Trim()))
                     ((DataTable)dgvPeople.DataSource).DefaultView.RowFilter = string.Empty;
-                
+
                 if (cbFilterBy.SelectedIndex == 1 || cbFilterBy.SelectedIndex == 10)
                     cbMatchCase.Visible = false;
                 else
@@ -243,7 +242,7 @@ namespace DVLD.WinForms
                                 MessageBoxIcon.Error);
             }
         }
-        
+
         private void dgvPeople_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

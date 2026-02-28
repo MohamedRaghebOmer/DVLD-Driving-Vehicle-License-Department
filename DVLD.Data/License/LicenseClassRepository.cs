@@ -1,10 +1,8 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
+using System;
+using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
@@ -13,7 +11,7 @@ namespace DVLD.Data
         public static int GetMinimumAllowedAge(LicenseClass licenseClass)
         {
             string query = "SELECT MinimumAllowedAge FROM LicenseClasses WHERE LicenseClassId = @LicenseClassId;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
@@ -22,7 +20,7 @@ namespace DVLD.Data
                     command.Parameters.AddWithValue("@LicenseClassId", (int)licenseClass);
                     connection.Open();
                     object result = command.ExecuteScalar();
-                    
+
                     if (result != null && int.TryParse(result.ToString(), out int minimumAge))
                         return minimumAge;
                 }

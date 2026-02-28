@@ -24,7 +24,7 @@ namespace DVLD.Business.EntityValidators
             if (user.UserId < 1)
                 throw new BusinessException($"User With Id = {user.UserId} does not exist.");
 
-            if (UserRepository.ExistsByPersonId(user.PersonId, user.UserId)) 
+            if (UserRepository.ExistsByPersonId(user.PersonId, user.UserId))
                 throw new BusinessException("The person is already associated with another user.");
 
             if (UserRepository.ExistsByUsername(user.Username, user.UserId))

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DVLD.Core.DTOs.Enums;
+using DVLD.Core.Logging;
+using DVLD.Data.Settings;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using DVLD.Data.Settings;
-using DVLD.Core.Logging;
-using DVLD.Core.DTOs.Enums;
 
 namespace DVLD.Data
 {

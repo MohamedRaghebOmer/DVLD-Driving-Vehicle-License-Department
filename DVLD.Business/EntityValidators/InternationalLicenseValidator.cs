@@ -1,7 +1,7 @@
-﻿using DVLD.Data;
-using DVLD.Core.DTOs.Entities;
-using DVLD.Core.Exceptions;
+﻿using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
+using DVLD.Core.Exceptions;
+using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
