@@ -3,11 +3,56 @@ using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace DVLD.Business
 {
     public static class ApplicationTypeService
     {
+        public static bool Update(ApplicationType applicationType,
+            string newTitle, decimal newFees)
+        {
+            if (string.IsNullOrWhiteSpace(newTitle) || newFees < 0)
+                return false;
+
+            try
+            {
+                return ApplicationTypeRepository.Update(applicationType, newTitle, newFees);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get all application types.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static DataTable GetTitleAndFees(ApplicationType applicationType)
+        {
+            try
+            {
+                return ApplicationTypeRepository.GetTitleAndFees(applicationType);
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get all application types.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static DataTable GetAll()
+        {
+            try
+            {
+                return ApplicationTypeRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get all application types.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static decimal GetFees(ApplicationType applicationType)
         {
             try
@@ -17,20 +62,6 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while getting fees for application type {applicationType}.", ex);
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
-
-        public static string[] GetAllApplicationTypeTitles()
-        {
-            try
-            {
-                var titles = ApplicationTypeRepository.GetAllApplicationTypeTitles();
-                return titles.ToArray();
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while fetching all application type titles.", ex);
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
