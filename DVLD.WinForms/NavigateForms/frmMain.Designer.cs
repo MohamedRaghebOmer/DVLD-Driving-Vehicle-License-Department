@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnApplications = new System.Windows.Forms.ToolStripButton();
             this.btnPeople = new System.Windows.Forms.ToolStripButton();
             this.btnDrivers = new System.Windows.Forms.ToolStripButton();
             this.btnUsers = new System.Windows.Forms.ToolStripButton();
@@ -39,6 +38,12 @@
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnApplications = new System.Windows.Forms.ToolStripDropDownButton();
+            this.drivingLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageApplicationTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,19 +67,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(1378, 80);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnApplications
-            // 
-            this.btnApplications.AutoSize = false;
-            this.btnApplications.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApplications.ForeColor = System.Drawing.Color.Black;
-            this.btnApplications.Image = global::DVLD.WinForms.Properties.Resources.Application64;
-            this.btnApplications.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplications.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnApplications.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnApplications.Name = "btnApplications";
-            this.btnApplications.Size = new System.Drawing.Size(180, 70);
-            this.btnApplications.Text = "Applications";
             // 
             // btnPeople
             // 
@@ -172,6 +164,55 @@
             this.signOutToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
+            // btnApplications
+            // 
+            this.btnApplications.AutoSize = false;
+            this.btnApplications.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.drivingLToolStripMenuItem,
+            this.manageToolStripMenuItem,
+            this.deToolStripMenuItem,
+            this.manageApplicationTypesToolStripMenuItem,
+            this.manageToolStripMenuItem1});
+            this.btnApplications.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplications.ForeColor = System.Drawing.Color.Black;
+            this.btnApplications.Image = global::DVLD.WinForms.Properties.Resources.Application64;
+            this.btnApplications.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApplications.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnApplications.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnApplications.Name = "btnApplications";
+            this.btnApplications.Size = new System.Drawing.Size(180, 70);
+            this.btnApplications.Text = "Applications";
+            // 
+            // drivingLToolStripMenuItem
+            // 
+            this.drivingLToolStripMenuItem.Name = "drivingLToolStripMenuItem";
+            this.drivingLToolStripMenuItem.Size = new System.Drawing.Size(306, 28);
+            this.drivingLToolStripMenuItem.Text = "Driving License Service";
+            // 
+            // manageToolStripMenuItem
+            // 
+            this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(306, 28);
+            this.manageToolStripMenuItem.Text = "Manage Applications";
+            // 
+            // deToolStripMenuItem
+            // 
+            this.deToolStripMenuItem.Name = "deToolStripMenuItem";
+            this.deToolStripMenuItem.Size = new System.Drawing.Size(306, 28);
+            this.deToolStripMenuItem.Text = "Detain Licenses";
+            // 
+            // manageApplicationTypesToolStripMenuItem
+            // 
+            this.manageApplicationTypesToolStripMenuItem.Name = "manageApplicationTypesToolStripMenuItem";
+            this.manageApplicationTypesToolStripMenuItem.Size = new System.Drawing.Size(306, 28);
+            this.manageApplicationTypesToolStripMenuItem.Text = "Manage Application Types";
+            // 
+            // manageToolStripMenuItem1
+            // 
+            this.manageToolStripMenuItem1.Name = "manageToolStripMenuItem1";
+            this.manageToolStripMenuItem1.Size = new System.Drawing.Size(306, 28);
+            this.manageToolStripMenuItem1.Text = "Manage Test Types";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
@@ -185,6 +226,7 @@
             this.Name = "frmMain";
             this.Text = "Main";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -194,7 +236,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnApplications;
         private System.Windows.Forms.ToolStripButton btnUsers;
         private System.Windows.Forms.ToolStripButton btnPeople;
         private System.Windows.Forms.ToolStripButton btnDrivers;
@@ -203,5 +244,11 @@
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton btnApplications;
+        private System.Windows.Forms.ToolStripMenuItem drivingLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageApplicationTypesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem1;
     }
 }

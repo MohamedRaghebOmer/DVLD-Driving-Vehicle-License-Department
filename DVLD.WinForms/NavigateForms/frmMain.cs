@@ -41,5 +41,10 @@ namespace DVLD.WinForms
             Form frm = new frmChangeUserPassword(LoggedInUserInfo.UserId);
             frm.ShowDialog();
         }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
