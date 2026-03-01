@@ -9,31 +9,6 @@ namespace DVLD.Data
 {
     public static class TestTypeRepository
     {
-        public static decimal GetTestTypeFees(TestType testType)
-        {
-            string query = "SELECT TestTypeFees FROM TestTypes WHERE TestTypeID = @id;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", (int)testType);
-                    connection.Open();
-
-                    object result = command.ExecuteScalar();
-                    if (result != null && decimal.TryParse(result.ToString(), out decimal fees))
-                        return fees;
-                    return -1; // Return -1 if fees not found or parsing fails
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while retrieving TestTypeFees for TestTypeId = {(int)testType}.", ex);
-                throw;
-            }
-        }
-
         public static DataTable Get(TestType testType)
         {
             string query = @"SELECT * FROM TestTypes
@@ -94,31 +69,6 @@ namespace DVLD.Data
                 AppLogger.LogError("DAL: Error while retrieving all TestTypes.", ex);
                 throw;
             }
-        }
-
-        public static bool UpdateFees(TestType testType, decimal newFees)
-        {
-            string query = @"UPDATE TestTypes SET TestTypeFees = @fees WHERE TestTypeId = @id;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@fees", newFees);
-                    command.Parameters.AddWithValue("@id", (int)testType);
-
-                    connection.Open();
-
-                    return command.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DLL: Error while updating TestTypes where TestTypeId = {(int)testType}.", ex);
-                throw;
-            }
-
         }
 
         public static bool Update(TestType testType, string newTitle,
