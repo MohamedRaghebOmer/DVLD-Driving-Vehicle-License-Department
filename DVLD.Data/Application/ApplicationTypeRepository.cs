@@ -73,7 +73,7 @@ namespace DVLD.Data
 
         public static decimal GetFees(ApplicationType applicationType)
         {
-            string query = "SELECT Fees FROM ApplicationTypes WHERE ApplicationTypeId = @ApplicationTypeId;";
+            string query = "SELECT ApplicationFees FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeId;";
 
             try
             {

@@ -3,11 +3,25 @@ using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
+using System.Data;
 
 namespace DVLD.Business
 {
     public static class LicenseClassService
     {
+        public static DataTable GetAll()
+        {
+            try
+            {
+                return LicenseClassRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while getting all license classes.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
         public static int GetMinimumAllowedAge(LicenseClass licenseClass)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))

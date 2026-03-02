@@ -62,6 +62,12 @@
     <Compile Include="Applications\ApplicationTypes\frmUpdateApplicationType.Designer.cs">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\ManageApplications\frmManageLocalDrivingLicenseApplications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\ManageApplications\frmManageLocalDrivingLicenseApplications.Designer.cs">
+      <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
+    </Compile>
     <Compile Include="Applications\TestTypes\frmManageTestTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,12 @@
     </Compile>
     <Compile Include="Applications\TestTypes\frmUpdateTestType.Designer.cs">
       <DependentUpon>frmUpdateTestType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Applications\Driving License\frmNewLocalDrivingLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\Driving License\frmNewLocalDrivingLicenseApplication.Designer.cs">
+      <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </Compile>
     <Compile Include="People\frmPersonDetails.cs">
       <SubType>Form</SubType>
@@ -160,6 +172,12 @@
     <EmbeddedResource Include="Applications\ApplicationTypes\frmUpdateApplicationType.resx">
       <DependentUpon>frmUpdateApplicationType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Applications\Driving License\frmNewLocalDrivingLicenseApplication.resx">
+      <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ManageApplications\frmManageLocalDrivingLicenseApplications.resx">
+      <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Applications\TestTypes\frmManageTestTypes.resx">
       <DependentUpon>frmManageTestTypes.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +256,30 @@
       <Project>{050d587f-fa29-46ec-b1fa-1542933b3715}</Project>
       <Name>DVLD.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\512px\JobApplication512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\PlusSign32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px\NewSign64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\Details32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\Pen32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\Delete32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\Calendar32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32px\Clock32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

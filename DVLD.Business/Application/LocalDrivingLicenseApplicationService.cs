@@ -71,5 +71,18 @@ namespace DVLD.Business
                 throw;
             }
         }
+
+        public static DataTable GetAllWithDetails()
+        {
+            try
+            {
+                return LocalDrivingLicenseApplicationRepository.GetAllWithDetails();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("Business: Error while retrieving all local driving license applications with details.", ex);
+                throw;
+            }
+        }
     }
 }

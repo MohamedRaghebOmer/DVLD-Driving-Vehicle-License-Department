@@ -2,12 +2,38 @@
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DVLD.Data
 {
     public static class LicenseClassRepository
     {
+        public static DataTable GetAll()
+        {
+            string query = @"SELECT * FROM LicenseClasses;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        DataTable dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        return dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from LicenseClasses", ex);
+                throw;
+            }
+        }
+
         public static int GetMinimumAllowedAge(LicenseClass licenseClass)
         {
             string query = "SELECT MinimumAllowedAge FROM LicenseClasses WHERE LicenseClassId = @LicenseClassId;";

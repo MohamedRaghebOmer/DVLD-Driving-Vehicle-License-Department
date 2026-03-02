@@ -32,8 +32,10 @@
             this.formLabel = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
+            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
             this.btnNext = new System.Windows.Forms.Button();
             this.tpLoginIfo = new System.Windows.Forms.TabPage();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtConfirm = new System.Windows.Forms.TextBox();
@@ -46,8 +48,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
-            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginIfo.SuspendLayout();
@@ -88,6 +88,17 @@
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
             // 
+            // ctrlPersonDetailsWithFilter1
+            // 
+            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = false;
+            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
+            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
+            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
+            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
+            this.ctrlPersonDetailsWithFilter1.TabIndex = 1;
+            // 
             // btnNext
             // 
             this.btnNext.Image = global::DVLD.WinForms.Properties.Resources.RightArrow32;
@@ -120,6 +131,17 @@
             this.tpLoginIfo.TabIndex = 1;
             this.tpLoginIfo.Text = "Login Info";
             this.tpLoginIfo.UseVisualStyleBackColor = true;
+            // 
+            // chkShowPassword
+            // 
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Location = new System.Drawing.Point(668, 206);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(175, 29);
+            this.chkShowPassword.TabIndex = 7;
+            this.chkShowPassword.Text = "Show Password";
+            this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
             // 
             // chkIsActive
             // 
@@ -244,28 +266,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // ctrlPersonDetailsWithFilter1
-            // 
-            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = false;
-            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
-            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
-            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
-            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
-            this.ctrlPersonDetailsWithFilter1.TabIndex = 1;
-            // 
-            // chkShowPassword
-            // 
-            this.chkShowPassword.AutoSize = true;
-            this.chkShowPassword.Location = new System.Drawing.Point(668, 206);
-            this.chkShowPassword.Name = "chkShowPassword";
-            this.chkShowPassword.Size = new System.Drawing.Size(175, 29);
-            this.chkShowPassword.TabIndex = 7;
-            this.chkShowPassword.Text = "Show Password";
-            this.chkShowPassword.UseVisualStyleBackColor = true;
-            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
             // 
             // frmAddEditUserInfo
             // 

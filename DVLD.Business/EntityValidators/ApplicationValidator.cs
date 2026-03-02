@@ -5,7 +5,7 @@ using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
-    internal class ApplicationValidator
+    internal static class ApplicationValidator
     {
         public static void AddNewValidator(Application application, LicenseClass licenseClass)
         {
@@ -18,10 +18,6 @@ namespace DVLD.Business.EntityValidators
             // Check if the person already has an application with the same type.
             if (LocalDrivingLicenseApplicationRepository.ExistsForPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
-
-            // Check if the ApplicationFees is not payed completely.
-            if (application.PaidFees < ApplicationTypeRepository.GetFees(application.ApplicationTypeID))
-                throw new BusinessException("Application fees are not payed completely.");
 
             bool doesApplicantHaveLicense = LicenseRepository.ExistsForDriver(DriverRepository.GetIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (application.ApplicationTypeID == ApplicationType.NewLocalDrivingLicenseService)

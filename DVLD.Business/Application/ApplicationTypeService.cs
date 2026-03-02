@@ -50,5 +50,18 @@ namespace DVLD.Business
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
+
+        public static decimal GetFees(ApplicationType applicationType)
+        {
+            try
+            {
+                return ApplicationTypeRepository.GetFees(applicationType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get all application types.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
     }
 }
