@@ -90,7 +90,7 @@ namespace DVLD.WinForms
 
         private void LoadCountries_comboBox()
         {
-            DataTable dtCountries = CountryService.GetAllNames();
+            DataTable dtCountries = CountryService.GetAll();
             if (dtCountries != null && dtCountries.Rows.Count > 0)
             {
                 cbCountry.DataSource = dtCountries;

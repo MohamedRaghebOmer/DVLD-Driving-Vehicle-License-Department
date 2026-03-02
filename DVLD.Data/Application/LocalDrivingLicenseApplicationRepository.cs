@@ -154,8 +154,8 @@ namespace DVLD.Data
         public static bool ExistsForPerson(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
         {
             string query = @"SELECT 1 FROM LocalDrivingLicenseApplications ldl
-                            INNER JOIN Applications a ON ldl.ApplicationId = a.ApplicationId
-                            WHERE a.PersonId = @PersonId AND ldl.LicenseClassId = @LicenseClassId AND a.ApplicationStatus = @Status AND a.ApplicationTypeID = @applicationType;";
+                            INNER JOIN Applications a ON ldl.ApplicationID = a.ApplicationID
+                            WHERE a.ApplicantPersonID = @PersonId AND ldl.LicenseClassID = @LicenseClassID AND a.ApplicationStatus = @Status AND a.ApplicationTypeID = @applicationType;";
 
             try
             {
@@ -163,7 +163,7 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@PersonId", personId);
-                    command.Parameters.AddWithValue("@LicenseClassId", (int)licenseClass);
+                    command.Parameters.AddWithValue("@LicenseClassID", (int)licenseClass);
                     command.Parameters.AddWithValue("@Status", status);
                     command.Parameters.AddWithValue("@applicationType", (int)applicationType);
                     connection.Open();
@@ -173,6 +173,31 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while checking if a person has a new application for a specific license class in LocalDrivingLicenseApplications table.", ex);
+                throw;
+            }
+        }
+
+        public static DataTable GetAllWithDetails()
+        {
+            string query = @"SELECT * FROM LocalDrivingLicenseApplications_View;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        DataTable dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        return dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving data from LocalDrivingLicenseApplications_View table.", ex);
                 throw;
             }
         }

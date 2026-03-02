@@ -47,8 +47,8 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.AddNewUser512;
-            this.pictureBox1.Location = new System.Drawing.Point(290, 12);
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.Shapes512;
+            this.pictureBox1.Location = new System.Drawing.Point(304, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(222, 200);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -60,7 +60,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(243, 215);
+            this.label1.Location = new System.Drawing.Point(257, 215);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(401, 38);
             this.label1.TabIndex = 1;

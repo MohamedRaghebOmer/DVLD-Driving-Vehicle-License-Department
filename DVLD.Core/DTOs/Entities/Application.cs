@@ -17,7 +17,7 @@ namespace DVLD.Core.DTOs.Entities
 
         public DateTime LastStatusDate { get; private set; }
 
-        public decimal PaidFees { get; set; }
+        public decimal PaidFees { get; private set; }
 
         public int CreatedByUserID { get; private set; }
 

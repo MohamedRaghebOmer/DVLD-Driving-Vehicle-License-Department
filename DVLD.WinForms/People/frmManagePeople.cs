@@ -281,5 +281,10 @@ namespace DVLD.WinForms
             frm.ShowDialog();
             LoadDataGridView();
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -12,8 +12,28 @@ namespace DVLD.Data
     {
         public static int Add(Application application)
         {
-            string query = @"INSERT INTO Applications (ApplicantPersonId, GETDATE(), ApplicationTypeId, 1, GETDATE(), PaidFees, CreatedByUserId)
-                            VALUES (@ApplicantPersonId, @ApplicationDate, @ApplicationTypeId, @ApplicationStatus, @LastStatusDate, @PaidFees, @CreatedByUserId);
+            string query = @"INSERT INTO [dbo].[Applications]
+                            (
+                                [ApplicantPersonID],
+                                [ApplicationDate],
+                                [ApplicationTypeID],
+                                [ApplicationStatus],
+                                [LastStatusDate],
+                                [PaidFees],
+                                [CreatedByUserID]
+                            )
+                            VALUES
+                            (
+                                @ApplicantPersonID,
+                                GETDATE(),
+                                @ApplicationTypeID,
+                                1,
+                                GETDATE(),
+                                (SELECT ApplicationFees 
+                                 FROM ApplicationTypes 
+                                 WHERE ApplicationTypeID = @ApplicationTypeID),
+                                @CreatedByUserID
+                            );
                             SELECT SCOPE_IDENTITY();";
 
             try
@@ -21,10 +41,9 @@ namespace DVLD.Data
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicantPersonId", application.ApplicantPersonID);
-                    command.Parameters.AddWithValue("@ApplicationTypeId", (int)application.ApplicationTypeID);
-                    command.Parameters.AddWithValue("@PaidFees", application.PaidFees);
-                    command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
+                    command.Parameters.AddWithValue("@ApplicantPersonID", application.ApplicantPersonID);
+                    command.Parameters.AddWithValue("@ApplicationTypeID", (int)application.ApplicationTypeID);
+                    command.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
                     connection.Open();
 
                     object result = command.ExecuteScalar();
@@ -36,7 +55,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Error while insertin into Applications table.", ex);
+                AppLogger.LogError("DAL: Error while inserting application into Applications table.", ex);
                 throw;
             }
         }
@@ -175,6 +194,68 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while updating application status in Applications table.", ex);
+                throw;
+            }
+        }
+
+        public static bool Cancel(int localDrivingLicenseApplicationId)
+        {
+            string query = @"UPDATE A
+                            SET
+                                A.ApplicationStatus = 2,
+                                A.LastStatusDate = GETDATE()
+                            FROM Applications A
+                            INNER JOIN LocalDrivingLicenseApplications L
+                                ON L.ApplicationID = A.ApplicationID
+                            WHERE L.LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@localDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while cancelling application in Applications table.", ex);
+                throw;
+            }
+        }
+
+        public static bool Delete(int localDrivingLicenseApplicationId)
+        {
+            string query = @"BEGIN TRANSACTION;
+                            DECLARE @ApplicationID INT;
+
+                            SELECT @ApplicationID = ApplicationID
+                            FROM LocalDrivingLicenseApplications
+                            WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId;
+
+                            DELETE FROM LocalDrivingLicenseApplications
+                            WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId;
+
+                            DELETE FROM Applications
+                            WHERE ApplicationID = @ApplicationID;
+
+                            COMMIT;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@localDrivingLicenseApplicationId", localDrivingLicenseApplicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while deleting application from Applications table.", ex);
                 throw;
             }
         }

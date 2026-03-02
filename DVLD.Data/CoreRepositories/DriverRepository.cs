@@ -117,7 +117,7 @@ namespace DVLD.Data
 
         public static int GetIdByPersonId(int personId)
         {
-            string query = "SELECT DriverId FROM Drivers WHERE PerosnId = @personId;";
+            string query = "SELECT DriverID FROM Drivers WHERE PersonID = @personId;";
 
             try
             {

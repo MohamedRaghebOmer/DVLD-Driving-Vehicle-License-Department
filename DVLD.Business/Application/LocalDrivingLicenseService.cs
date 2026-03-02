@@ -8,12 +8,12 @@ using System.Data;
 
 namespace DVLD.Business
 {
-    public static class LocalDrivingLicenseService
+    public static class ApplicationService
     {
-        // This method take the object application as a prameter to avoid 
+        // This method take the object application as a parameter to avoid 
         // validation on the application id to make sure that the application
         // with the id given is existed, and other validations
-        public static Application AddNew(Application application, LicenseClass licenseClass)
+        public static int Add(Application application, LicenseClass licenseClass)
         {
             ApplicationValidator.AddNewValidator(application, licenseClass);
 
@@ -22,14 +22,17 @@ namespace DVLD.Business
                 // Insert the application into the database and get the new ApplicationId
                 int newApplicationId = ApplicationRepository.Add(application);
 
-                var local = new LocalDrivingLicenseApplication();
-                local.ApplicationID = newApplicationId;
-                local.LicenseClassID = licenseClass;
+                var local = new LocalDrivingLicenseApplication
+                {
+                    ApplicationID = newApplicationId,
+                    LicenseClassID = licenseClass
+                };
 
                 int newLocalId = LocalDrivingLicenseApplicationRepository.Add(local);
-                if (newApplicationId != -1 && newLocalId != -1)
-                    return ApplicationRepository.GetById(newApplicationId);
-                return null;
+                if (newLocalId > 0 && newApplicationId > 0)
+                    return newApplicationId;
+                else
+                    return -1;
             }
             catch (Exception ex)
             {
@@ -95,6 +98,38 @@ namespace DVLD.Business
             {
                 AppLogger.LogError("BLL: Error while checking if application exists", ex);
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool Cancel(int applicationId)
+        {
+            if (applicationId <= 0)
+                return false;
+
+            try
+            {
+                return ApplicationRepository.Cancel(applicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while canceling application", ex);
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool Delete(int applicationId)
+        {
+            if (applicationId <= 0)
+                return false;
+
+            try
+            {
+                return ApplicationRepository.Delete(applicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while deleting application", ex);
+                throw new Exception("The application could not be deleted because there is related data associated with it.", ex);
             }
         }
     }

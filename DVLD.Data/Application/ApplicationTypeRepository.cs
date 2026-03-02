@@ -73,7 +73,7 @@ namespace DVLD.Data
 
         public static decimal GetFees(ApplicationType applicationType)
         {
-            string query = "SELECT Fees FROM ApplicationTypes WHERE ApplicationTypeId = @ApplicationTypeId;";
+            string query = "SELECT ApplicationFees FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeId;";
 
             try
             {
@@ -93,30 +93,6 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while fetching fees for application type {applicationType}.", ex);
-                throw;
-            }
-        }
-
-        public static bool UpdateFees(ApplicationType applicationType, decimal newFees)
-        {
-            string query = "UPDATE ApplicationTypes SET Fees = @Fees WHERE ApplicationTypeId = @ApplicationTypeId;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@Fees", newFees);
-                    command.Parameters.AddWithValue("@ApplicationTypeId", (int)applicationType);
-                    connection.Open();
-
-                    int rowsAffected = command.ExecuteNonQuery();
-                    return rowsAffected > 0; // Return true if the update was successful
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while updating fees for application type {applicationType}.", ex);
                 throw;
             }
         }

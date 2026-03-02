@@ -234,7 +234,7 @@ namespace DVLD.Data
 
         public static bool Exists(int personId)
         {
-            string query = "SELECT 1 FROM People WHERE PersonId = @personId;";
+            string query = "SELECT 1 FROM People WHERE PersonID = @personId;";
 
             try
             {

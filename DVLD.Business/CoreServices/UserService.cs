@@ -43,50 +43,6 @@ namespace DVLD.Business
             return true;
         }
 
-        public static User Save(User user)
-        {
-            if (user == null)
-                throw new ValidationException("User cannot be empty.");
-
-            // Add new 
-            if (user.UserId == -1)
-            {
-                UserValidator.AddNewValidator(user);
-
-                try
-                {
-                    int newUserId = UserRepository.Add(user);
-                    if (newUserId != -1)
-                    {
-                        return UserRepository.GetById(newUserId);
-                    }
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    AppLogger.LogError("BLL: Error while adding a new user.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
-            }
-            else // Update
-            {
-                UserValidator.UpdateValidator(user);
-
-                try
-                {
-                    if (UserRepository.Update(user))
-                        return UserRepository.GetById(user.UserId);
-
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    AppLogger.LogError($"BLL: Error while updating user with Id: {user.UserId}.");
-                    throw new Exception("We encountered a technical issue. Please try again later.", ex);
-                }
-            }
-        }
-
         public static User GetById(int userId)
         {
             if (userId < 1)
@@ -101,40 +57,6 @@ namespace DVLD.Business
                 AppLogger.LogError("BLL: Error while reading user by id.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
-        }
-
-        public static User GetByPersonId(int personId)
-        {
-            if (personId < 1)
-                return null;
-
-            try
-            {
-                return UserRepository.GetByPersonId(personId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while reading user by person id.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-
-        }
-
-        public static User GetByUsername(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-                return null;
-
-            try
-            {
-                return UserRepository.GetByUsername(username);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while reading user by name.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-
         }
 
         public static string GetPassword(int userId)
@@ -169,19 +91,6 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAll()
-        {
-            try
-            {
-                return UserRepository.GetAll();
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while reading all users.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
-
         public static DataTable GetAllWithDetails()
         {
             try
@@ -193,23 +102,6 @@ namespace DVLD.Business
                 AppLogger.LogError("BLL: Error while reading all users with details.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
-        }
-
-        public static bool Exists(int userId)
-        {
-            if (userId < 1)
-                return false;
-
-            try
-            {
-                return UserRepository.Exists(userId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while checking user existence by Id.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-
         }
 
         public static bool ExistsByPersonId(int personId)
@@ -240,21 +132,6 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while checking if username is used.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
-
-        public static bool IsActive(int userId)
-        {
-            if (userId < 1)
-                return false;
-            try
-            {
-                return UserRepository.IsActive(userId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while checking if user is active.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
