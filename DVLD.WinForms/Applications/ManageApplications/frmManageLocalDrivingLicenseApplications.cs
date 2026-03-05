@@ -1,5 +1,7 @@
 ﻿using DVLD.Business;
+using DVLD.Core.DTOs.Enums;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 
@@ -211,6 +213,13 @@ namespace DVLD.WinForms.Applications.ManageApplications
             return (int)dgvApplications.Rows[_selectedRowIndex].Cells[0].Value;
         }
 
+        private string GetSelectedNationalNo()
+        {
+            if (_selectedRowIndex < 0)
+                return string.Empty;
+            return (string)dgvApplications.Rows[_selectedRowIndex].Cells[2].Value;
+        }
+
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show($@"Are you sure do you want to delete
@@ -239,6 +248,16 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
             }
 
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            string selectedNationalNo = GetSelectedNationalNo();
+
+            //if (TestService.HasPassed(selectedNationalNo, TestType.VisionTest))
+            //{
+
+            //}
         }
     }
 }

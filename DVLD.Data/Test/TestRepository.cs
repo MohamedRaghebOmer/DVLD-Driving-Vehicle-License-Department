@@ -1,4 +1,5 @@
 ﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
@@ -157,7 +158,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForTestAppointment(int testAppointmentId)
+        public static bool ExistsByTestAppointment(int testAppointmentId)
         {
             string query = "SELECT 1 FROM Tests WHERE TestAppointmentID = @appointmentId;";
 
@@ -201,5 +202,6 @@ namespace DVLD.Data
                 throw;
             }
         }
+           
     }
 }

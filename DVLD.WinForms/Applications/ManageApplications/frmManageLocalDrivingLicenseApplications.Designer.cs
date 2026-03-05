@@ -49,7 +49,6 @@
             this.issuDrivingLicenseFirstTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripSeparator();
             this.showPersonoLicenseHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -159,7 +158,8 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(5, 5);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showApplicatinDetailsToolStripMenuItem,
             this.toolStripSeparator1,
@@ -172,10 +172,10 @@
             this.issuDrivingLicenseFirstTimeToolStripMenuItem,
             this.toolStripSeparator4,
             this.showToolStripMenuItem,
-            this.toolStripComboBox1,
             this.showPersonoLicenseHistoryToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(309, 366);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(309, 332);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // showApplicatinDetailsToolStripMenuItem
             // 
@@ -254,11 +254,6 @@
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
             this.showToolStripMenuItem.Size = new System.Drawing.Size(308, 38);
             this.showToolStripMenuItem.Text = "Show License";
-            // 
-            // toolStripComboBox1
-            // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(305, 6);
             // 
             // showPersonoLicenseHistoryToolStripMenuItem
             // 
@@ -463,7 +458,6 @@
         private System.Windows.Forms.ToolStripMenuItem issuDrivingLicenseFirstTimeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripComboBox1;
         private System.Windows.Forms.ToolStripMenuItem showPersonoLicenseHistoryToolStripMenuItem;
     }
 }

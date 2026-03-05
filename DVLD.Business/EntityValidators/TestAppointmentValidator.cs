@@ -5,20 +5,33 @@ using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
-    internal class TestAppointmentValidator
+    internal static class TestAppointmentValidator
     {
         public static void AddNewValidator(TestAppointment testAppointment)
         {
             Core.Validators.TestAppointmentValidator.Validate(testAppointment);
-            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationRepository.GetById(testAppointment.LocalDrivingLicenseApplicationId);
-            Application application = ApplicationRepository.GetById(localDrivingLicenseApplication.ApplicationID);
+
+            LocalDrivingLicenseApplication localDrivingLicenseApplication =
+                LocalDrivingLicenseApplicationRepository.GetById(
+                    testAppointment.LocalDrivingLicenseApplicationId);
+
+            Application application =
+                ApplicationRepository.GetById(
+                    localDrivingLicenseApplication.ApplicationID);
 
             // Check if the local driving license application exists
-            if (!LocalDrivingLicenseApplicationRepository.ExistsForApplication(testAppointment.LocalDrivingLicenseApplicationId))
+            if (localDrivingLicenseApplication == null)
                 throw new BusinessException("The specified local driving license application does not exist.");
 
-            if (application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense || application.ApplicationTypeID == ApplicationType.ReleaseDetainedDrivingLicense)
+            if (application.ApplicationTypeID ==
+                ApplicationType.ReplacementForLostDrivingLicense ||
+                application.ApplicationTypeID ==
+                ApplicationType.ReplacementForLostDrivingLicense ||
+                application.ApplicationTypeID ==
+                ApplicationType.ReleaseDetainedDrivingLicense)
+            {
                 throw new BusinessException("This application type does not need a Test to be completed.");
+            }
 
             if (application.ApplicationTypeID == ApplicationType.RenewDrivingLicenseService && testAppointment.TestTypeId != TestType.VisionTest)
                 throw new BusinessException("This test type is not required for this application type.");

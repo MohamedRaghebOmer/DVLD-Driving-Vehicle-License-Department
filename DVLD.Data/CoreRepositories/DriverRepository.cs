@@ -183,9 +183,9 @@ namespace DVLD.Data
             }
         }
 
-        public static DataTable GetAll()
+        public static DataTable GetDriversView()
         {
-            string query = "SELECT * FROM Drivers;";
+            string query = "SELECT * FROM Drivers_View;";
 
             try
             {
@@ -209,7 +209,7 @@ namespace DVLD.Data
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("DAL: Error while selecting all from Drivers.", ex);
+                AppLogger.LogError("DAL: Error while selecting all from Drivers_View.", ex);
                 throw;
             }
         }

@@ -271,6 +271,7 @@
             this.btnDrivers.Name = "btnDrivers";
             this.btnDrivers.Size = new System.Drawing.Size(140, 70);
             this.btnDrivers.Text = "Drivers";
+            this.btnDrivers.Click += new System.EventHandler(this.btnDrivers_Click);
             // 
             // btnUsers
             // 

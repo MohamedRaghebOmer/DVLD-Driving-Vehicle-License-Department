@@ -86,6 +86,12 @@
     <Compile Include="Applications\Driving License\frmNewLocalDrivingLicenseApplication.Designer.cs">
       <DependentUpon>frmNewLocalDrivingLicenseApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="CoreForms\frmDrivers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CoreForms\frmDrivers.Designer.cs">
+      <DependentUpon>frmDrivers.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\frmPersonDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,16 +110,16 @@
     <Compile Include="People\frmAddEditPersonInfo.Designer.cs">
       <DependentUpon>frmAddEditPersonInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="NavigateForms\frmLogin.cs">
+    <Compile Include="CoreForms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NavigateForms\frmLogin.Designer.cs">
+    <Compile Include="CoreForms\frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="NavigateForms\frmMain.cs">
+    <Compile Include="CoreForms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NavigateForms\frmMain.Designer.cs">
+    <Compile Include="CoreForms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="People\frmManagePeople.cs">
@@ -184,6 +190,9 @@
     <EmbeddedResource Include="Applications\TestTypes\frmUpdateTestType.resx">
       <DependentUpon>frmUpdateTestType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CoreForms\frmDrivers.resx">
+      <DependentUpon>frmDrivers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="People\frmPersonDetails.resx">
       <DependentUpon>frmPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,10 +202,10 @@
     <EmbeddedResource Include="People\frmAddEditPersonInfo.resx">
       <DependentUpon>frmAddEditPersonInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NavigateForms\frmLogin.resx">
+    <EmbeddedResource Include="CoreForms\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NavigateForms\frmMain.resx">
+    <EmbeddedResource Include="CoreForms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\frmManagePeople.resx">
@@ -280,6 +289,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\32px\Clock32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\512px\Driver512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

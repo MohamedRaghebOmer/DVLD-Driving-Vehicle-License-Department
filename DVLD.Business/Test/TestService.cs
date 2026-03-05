@@ -1,5 +1,6 @@
 ﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
@@ -69,6 +70,23 @@ namespace DVLD.Business
                 AppLogger.LogError($"BLL: Error while updating notes for Test with ID = {testId}.", ex);
                 throw new Exception("An error occurred while updating the test notes. Please try again later.", ex);
             }
+        }
+
+        public static bool HasPassed(string NationalNo, TestType testType)
+        {
+            return false;   
+            //if (string.IsNullOrWhiteSpace(NationalNo))
+            //    return false;
+
+            //try
+            //{
+            //    return TestRepository.HasPassed();
+            //}
+            //catch(Exception ex)
+            //{
+            //    AppLogger.LogError($"BLL: Error while checking if the person with national no = {NationalNo} has passed test type wit id {(int)testType}.", ex);
+            //    throw new Exception("An error occurred while updating the test notes. Please try again later.", ex);
+            //}
         }
     }
 }
