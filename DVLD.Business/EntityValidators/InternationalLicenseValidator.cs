@@ -28,7 +28,7 @@ namespace DVLD.Business.EntityValidators
             License localLicense = LicenseRepository.GetById(license.IssuedUsingLocalLicenseID);
 
             // Check if the driver already has an international license.
-            if (InternationalLicenseRepository.ExistsForDirver(localLicense.DriverId, true, true))
+            if (InternationalLicenseRepository.ExistsForDriver(localLicense.DriverId, true, true))
                 throw new BusinessException("The driver already has an active international license.");
 
             // Check if the application already associated with another international license.

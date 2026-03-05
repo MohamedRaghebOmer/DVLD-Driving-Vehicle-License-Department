@@ -1,7 +1,6 @@
 ﻿using DVLD.Business;
 using System;
 using System.Data;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.CoreForms
@@ -162,7 +161,7 @@ namespace DVLD.WinForms.CoreForms
 
         private void chkMatchCase_CheckedChanged(object sender, EventArgs e)
         {
-            ((DataTable)dgvDrivers.DataSource).CaseSensitive = 
+            ((DataTable)dgvDrivers.DataSource).CaseSensitive =
                 chkMatchCase.Checked;
         }
     }

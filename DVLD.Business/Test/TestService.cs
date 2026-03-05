@@ -74,7 +74,7 @@ namespace DVLD.Business
 
         public static bool HasPassed(string NationalNo, TestType testType)
         {
-            return false;   
+            return false;
             //if (string.IsNullOrWhiteSpace(NationalNo))
             //    return false;
 

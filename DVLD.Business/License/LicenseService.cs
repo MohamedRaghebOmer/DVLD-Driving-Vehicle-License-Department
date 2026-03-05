@@ -139,6 +139,38 @@ namespace DVLD.Business
             }
         }
 
+        public static DataTable GetLicenseHistory(int driverId)
+        {
+            if (driverId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistory(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for DriverID {driverId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static DataTable GetLicenseHistory(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistory(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for NationalNo {nationalNo}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
         public static bool DeactivateLicense(int licenseId)
         {
             if (licenseId <= 0)

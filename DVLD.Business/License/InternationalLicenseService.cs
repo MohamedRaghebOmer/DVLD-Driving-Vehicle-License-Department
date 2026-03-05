@@ -17,7 +17,7 @@ namespace DVLD.Business
             try
             {
                 // Check if the driver has active and expired International License
-                if (InternationalLicenseRepository.ExistsForDirver(internationalLicense.DriverID, true, false))
+                if (InternationalLicenseRepository.ExistsForDriver(internationalLicense.DriverID, true, false))
                     InternationalLicenseRepository.DeactivateByDriverId(internationalLicense.DriverID);
 
                 int newInternationalLicenseId = InternationalLicenseRepository.Add(internationalLicense);
@@ -60,7 +60,39 @@ namespace DVLD.Business
             }
         }
 
-        public static bool Deactive(int internationalLicenseId)
+        public static DataTable GetLicenseHistory(int driverId)
+        {
+            if (driverId <= 0)
+                return null;
+
+            try
+            {
+                return InternationalLicenseRepository.GetLicenseHistory(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get International License history for driver with Id {driverId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static DataTable GetLicenseHistory(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            try
+            {
+                return InternationalLicenseRepository.GetLicenseHistory(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get International License history for driver with Id {nationalNo}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static bool InActivate(int internationalLicenseId)
         {
             try
             {

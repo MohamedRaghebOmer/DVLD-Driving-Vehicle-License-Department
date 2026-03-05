@@ -173,6 +173,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cards512 {
+            get {
+                object obj = ResourceManager.GetObject("Cards512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Clock32 {
             get {
                 object obj = ResourceManager.GetObject("Clock32", resourceCulture);
@@ -256,6 +266,26 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap Enter32 {
             get {
                 object obj = ResourceManager.GetObject("Enter32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Eye24 {
+            get {
+                object obj = ResourceManager.GetObject("Eye24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Eye512 {
+            get {
+                object obj = ResourceManager.GetObject("Eye512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -513,6 +543,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Plus32 {
+            get {
+                object obj = ResourceManager.GetObject("Plus32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Plus512 {
             get {
                 object obj = ResourceManager.GetObject("Plus512", resourceCulture);
@@ -733,6 +773,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Traffic24 {
+            get {
+                object obj = ResourceManager.GetObject("Traffic24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UsernameBox72 {
             get {
                 object obj = ResourceManager.GetObject("UsernameBox72", resourceCulture);
@@ -766,6 +816,26 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap WomanWithQuestionMark72 {
             get {
                 object obj = ResourceManager.GetObject("WomanWithQuestionMark72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WrittenTest24 {
+            get {
+                object obj = ResourceManager.GetObject("WrittenTest24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WrittenTest512 {
+            get {
+                object obj = ResourceManager.GetObject("WrittenTest512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

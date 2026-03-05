@@ -1,5 +1,4 @@
 ﻿using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
@@ -202,6 +201,6 @@ namespace DVLD.Data
                 throw;
             }
         }
-           
+
     }
 }

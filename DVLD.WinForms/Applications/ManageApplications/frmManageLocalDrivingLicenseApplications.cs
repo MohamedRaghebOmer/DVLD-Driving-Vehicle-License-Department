@@ -1,5 +1,4 @@
 ﻿using DVLD.Business;
-using DVLD.Core.DTOs.Enums;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -100,7 +99,8 @@ namespace DVLD.WinForms.Applications.ManageApplications
                 (cbFilterBy.SelectedIndex == 4 && cbStatus.SelectedIndex == 0)
                 || (txtFilterValue.Visible && string.IsNullOrEmpty(txtFilterValue.Text)))
             {
-                ((DataTable)dgvApplications.DataSource).DefaultView.RowFilter = string.Empty;
+                ((DataTable)dgvApplications.DataSource).
+                    DefaultView.RowFilter = string.Empty;
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace DVLD.WinForms.Applications.ManageApplications
             }
             else if (cbFilterBy.SelectedIndex != 4) // National No || Full Name || Class Name
             {
-                dt.DefaultView.RowFilter = string.Format("{0} LIKE '%{1}%'",
+                dt.DefaultView.RowFilter = string.Format("{0} LIKE '{1}%'",
                     filterColumn, txtFilterValue.Text);
             }
             else // Status
@@ -158,17 +158,8 @@ namespace DVLD.WinForms.Applications.ManageApplications
 
         private void chkMatchCase_CheckedChanged(object sender, EventArgs e)
         {
-            DataTable dt = (DataTable)dgvApplications.DataSource;
-
-            if (dt == null)
-                return;
-
-            dt.CaseSensitive = chkMatchCase.Checked;
-        }
-
-        private void btnFilter_Click(object sender, EventArgs e)
-        {
-            ApplyRowFiltering();
+            ((DataTable)dgvApplications.DataSource).CaseSensitive =
+                chkMatchCase.Checked;
         }
 
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -258,6 +249,12 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             //{
 
             //}
+        }
+
+        private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmLicenseHistory(GetSelectedNationalNo());
+            frm.ShowDialog();
         }
     }
 }
