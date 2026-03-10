@@ -68,6 +68,36 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            string query = @"SELECT * FROM InternationalLicenses WHERE DriverID IN (SELECT DriverID FROM Drivers WHERE PersonID = @PersonID);";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personId);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license history for PersonID {personId}.", ex);
+                throw;
+            }
+        }
+
         public static InternationalLicense GetById(int licenseID)
         {
             string query = @"SELECT * FROM InternationalLicenses WHERE LicenseID = @LicenseID;";

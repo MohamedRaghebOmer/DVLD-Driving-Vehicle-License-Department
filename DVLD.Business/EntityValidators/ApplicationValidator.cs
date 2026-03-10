@@ -16,16 +16,16 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException("Applicant person does not exist.");
 
             // Check if the person already has an application with the same type.
-            if (LocalDrivingLicenseApplicationRepository.ExistsForPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
+            if (LocalDrivingLicenseApplicationRepository.ExistsByPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
-            bool doesApplicantHaveLicense = LicenseRepository.ExistsForDriver(DriverRepository.GetIdByPersonId(application.ApplicantPersonID), licenseClass);
+            bool doesApplicantHaveLicense = LicenseRepository.ExistsByDriver(DriverRepository.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (application.ApplicationTypeID == ApplicationType.NewLocalDrivingLicenseService)
             {
                 if (doesApplicantHaveLicense)
                     throw new BusinessException("The applicant already has a driving license from this class.");
             }
-            else
+            else if (application.ApplicationTypeID != ApplicationType.RetakeTest) // Renew, Replace, Release
             {
                 if (!doesApplicantHaveLicense)
                     throw new BusinessException("The applicant does not have a driving license from this class.");
@@ -36,8 +36,11 @@ namespace DVLD.Business.EntityValidators
                 if (LicenseRepository.IsExpired(application.ApplicantPersonID, licenseClass))
                     throw new BusinessException("The license is expired.");
 
-                if (DetainedLicenseRepository.IsDetained(application.ApplicantPersonID, licenseClass))
+                if (DetainedLicenseRepository.IsDetained(application.ApplicantPersonID, licenseClass)
+                    && application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense)
+                {
                     throw new BusinessException("The license is detained.");
+                }
             }
         }
 

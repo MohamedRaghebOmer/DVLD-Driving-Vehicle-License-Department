@@ -1,4 +1,7 @@
 ﻿using DVLD.Business;
+using DVLD.Core.DTOs.Enums;
+using DVLD.WinForms.Licenses;
+using DVLD.WinForms.NavigateForms;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -164,7 +167,7 @@ namespace DVLD.WinForms.Applications.ManageApplications
 
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int selectedId = GetSelectedApplicationId();
+            int selectedId = GetSelectedLocalApplicationId();
 
             if (MessageBox.Show($@"Are you sure do you want to cancel
         application with id = {selectedId}?", "Warning",
@@ -197,7 +200,7 @@ namespace DVLD.WinForms.Applications.ManageApplications
             }
         }
 
-        private int GetSelectedApplicationId()
+        private int GetSelectedLocalApplicationId()
         {
             if (_selectedRowIndex < 0)
                 return -1;
@@ -214,12 +217,12 @@ namespace DVLD.WinForms.Applications.ManageApplications
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show($@"Are you sure do you want to delete
-        application with id = {GetSelectedApplicationId()}?", "Warning",
+        application with id = {GetSelectedLocalApplicationId()}?", "Warning",
 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
                 {
-                    if (ApplicationService.Delete(GetSelectedApplicationId()))
+                    if (ApplicationService.Delete(GetSelectedLocalApplicationId()))
                     {
                         MessageBox.Show("Application deleted successfully.",
                             "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -243,17 +246,124 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            string selectedNationalNo = GetSelectedNationalNo();
+            if (_selectedRowIndex < 0 || _selectedRowIndex > dgvApplications.Rows.Count)
+            {
+                e.Cancel = true;
+                return;
+            }
 
-            //if (TestService.HasPassed(selectedNationalNo, TestType.VisionTest))
-            //{
+            ApplicationStatus selectedStatus = GetSelectedApplicationStatus();
 
-            //}
+            switch (selectedStatus)
+            {
+                case ApplicationStatus.Completed:
+                    contextMenuStrip1.Items["showLicenseToolStripMenuItem"].Enabled = true;
+                    contextMenuStrip1.Items["editAppToolStripMenuItem"].Enabled = false;
+                    contextMenuStrip1.Items["deleteApplicationToolStripMenuItem"].Enabled = false;
+                    contextMenuStrip1.Items["cancelApplicationToolStripMenuItem"].Enabled = false;
+                    contextMenuStrip1.Items["scheduleTestsToolStripMenuItem"].Enabled = false;
+                    contextMenuStrip1.Items["issueDrivingLicenseFirstTimeToolStripMenuItem"].Enabled = false;
+
+                    break;
+
+                case ApplicationStatus.Canceled:
+                    editAppToolStripMenuItem.Enabled = false;
+                    deleteApplicationToolStripMenuItem.Enabled = true;
+                    cancelApplicationToolStripMenuItem.Enabled = false;
+                    scheduleTestsToolStripMenuItem.Enabled = false;
+                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                    showLicenseToolStripMenuItem.Enabled = false;
+                    break;
+
+                case ApplicationStatus.New:
+                    editAppToolStripMenuItem.Enabled = true;
+                    deleteApplicationToolStripMenuItem.Enabled = true;
+                    cancelApplicationToolStripMenuItem.Enabled = true;
+
+                    int numberOfCompetedTests = GetSelectedNumOfCompletedTests();
+
+                    switch (numberOfCompetedTests)
+                    {
+                        case 3:
+                            scheduleTestsToolStripMenuItem.Enabled = false;
+                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
+                            break;
+
+                        case 2:
+                        case 1:
+                            scheduleTestsToolStripMenuItem.Enabled = true;
+                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+
+                            int selectedNationalNo = GetSelectedLocalApplicationId();
+                            bool hasPassedVisionTest = TestService.HasPassed(selectedNationalNo, TestType.VisionTest);
+                            bool hasPassedWrittenTest = TestService.HasPassed(selectedNationalNo, TestType.WrittenTheoryTest);
+                            bool hasPassedStreetTest = TestService.HasPassed(selectedNationalNo, TestType.PracticalStreetTest);
+
+                            scheduleVisionTestToolStripMenuItem.Enabled = !hasPassedVisionTest;
+                            scheduleWrittenTestToolStripMenuItem.Enabled = !hasPassedWrittenTest;
+                            scheduleStreetTestToolStripMenuItem.Enabled = !hasPassedStreetTest;
+                            break;
+
+                        case 0:
+                            scheduleTestsToolStripMenuItem.Enabled = true;
+                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                            scheduleVisionTestToolStripMenuItem.Enabled = true;
+                            scheduleWrittenTestToolStripMenuItem.Enabled = true;
+                            scheduleStreetTestToolStripMenuItem.Enabled = true;
+                            break;
+                    }
+
+                    break;
+            }
+        }
+
+        private int GetSelectedNumOfCompletedTests()
+        {
+            return Convert.ToInt32(dgvApplications.Rows[_selectedRowIndex].Cells[5].Value);
+        }
+
+        private ApplicationStatus GetSelectedApplicationStatus()
+        {
+            switch (dgvApplications.Rows[_selectedRowIndex].Cells[6].Value.
+                ToString().Trim())
+            {
+                case "New":
+                    return ApplicationStatus.New;
+
+                case "Canceled":
+                    return ApplicationStatus.Canceled;
+
+                case "Completed":
+                    return ApplicationStatus.Completed;
+
+                default:
+                    return ApplicationStatus.New;
+            }
+        }
+
+        private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmLicenseInfo(GetSelectedNationalNo());
+            frm.ShowDialog();
+        }
+
+        private void btnAddNewLocalApp_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmNewLocalDrivingLicenseApplication();
+            frm.ShowDialog();
         }
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form frm = new frmLicenseHistory(GetSelectedNationalNo());
+            Form frm = new frmLicensesHistory(GetSelectedNationalNo());
+            frm.ShowDialog();
+        }
+
+        private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmApplicationInfo
+                (GetSelectedLocalApplicationId(), 
+                frmApplicationInfo.LoadType.UsingLocalApplicationId);
             frm.ShowDialog();
         }
     }

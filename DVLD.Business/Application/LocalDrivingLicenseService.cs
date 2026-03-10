@@ -88,6 +88,23 @@ namespace DVLD.Business
             }
         }
 
+        public static Application GetByLocalAppId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return null;
+
+            try
+            {
+                return ApplicationRepository.GetByLocalAppId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving application by local application id = {localAppId}.", ex);
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+
+        }
+
         public static bool Exists(int applicationId)
         {
             try

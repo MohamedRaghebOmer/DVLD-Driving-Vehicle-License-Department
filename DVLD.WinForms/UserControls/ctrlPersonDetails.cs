@@ -4,15 +4,19 @@ using DVLD.WinForms.Properties;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Permissions;
 using System.Windows.Forms;
+using DVLD.Core.Helpers;
 
 namespace DVLD.WinForms.UserControls
 {
     public partial class ctrlPersonDetails : UserControl
     {
-        private int _personID = -1;
+        private int _id = -1;
         private string _nationalNo = string.Empty;
-        private bool _usingNationalNo = false;
+
+        private enum LoadType { UsingPersonId, UsingNationalNo, UsingDriverId};
+        private LoadType _loadType = LoadType.UsingPersonId;
 
         public ctrlPersonDetails()
         {
@@ -28,28 +32,67 @@ namespace DVLD.WinForms.UserControls
 
         public int PersonID
         {
-            get => _personID;
+            get
+            {
+                if (_loadType == LoadType.UsingPersonId)
+                    return _id;
+                else
+                    return -1;
+            }
             set
             {
-                if (value == _personID && !_usingNationalNo) return;
+                if (value == _id && _loadType == LoadType.UsingPersonId)
+                    return;
 
                 if (value <= 0) SetDefaults();
 
-                _personID = value;
-                _usingNationalNo = false;
+                _id = value;
+                _loadType = LoadType.UsingPersonId;
+                ctrlPersonDetails_Load(null, null);
+            }
+        }
+
+        public int DriverID
+        {
+            get
+            {
+                if (_loadType == LoadType.UsingDriverId)
+                    return _id;
+                else
+                    return -1;
+            }
+            set
+            {
+                if (value == _id && _loadType == LoadType.UsingDriverId)
+                    return;
+
+                if (value <= 0) SetDefaults();
+
+                _id = value;
+                _loadType = LoadType.UsingDriverId;
                 ctrlPersonDetails_Load(null, null);
             }
         }
 
         public string NationalNo
         {
-            get => _nationalNo;
+            get
+            {
+                if (_loadType == LoadType.UsingNationalNo)
+                    return _nationalNo;
+                else
+                    return string.Empty;
+            }
             set
             {
-                if (string.IsNullOrEmpty(value) || value == _nationalNo && _usingNationalNo) return;
+                if (string.IsNullOrEmpty(value) ||
+                    (value == _nationalNo && _loadType == LoadType.UsingNationalNo))
+                {
+                    return;
+                }
 
                 _nationalNo = value;
-                _usingNationalNo = true;
+                _loadType = LoadType.UsingNationalNo;
                 ctrlPersonDetails_Load(null, null);
             }
         }
@@ -73,13 +116,17 @@ namespace DVLD.WinForms.UserControls
         {
             Person person = null;
 
-            if (_usingNationalNo && !string.IsNullOrEmpty(_nationalNo))
+            if (!string.IsNullOrEmpty(NationalNo))
             {
                 person = PersonService.GetByNationalNo(_nationalNo);
             }
-            else if (!_usingNationalNo && _personID > 0)
+            else if (PersonID > 0) // get property auto validate on load type
             {
-                person = PersonService.GetById(_personID);
+                person = PersonService.GetById(_id);
+            }
+            else if (DriverID > 0)
+            {
+                person = PersonService.GetByDriverId(_id);
             }
 
             if (person == null) return;
@@ -112,20 +159,14 @@ namespace DVLD.WinForms.UserControls
             lblPhone.Text = person.Phone;
             lblCountry.Text = CountryService.GetName(person.NationalityCountryID) ?? string.Empty;
 
-            LoadPersonImage();
+            if (!string.IsNullOrEmpty(person.ImagePath))
+                LoadPersonImage(Path.Combine(PathHelper.ImagesFolderPath, person.ImagePath));
         }
 
-        private void LoadPersonImage()
+        private void LoadPersonImage(string imagePath)
         {
             try
             {
-                string imagePath = string.Empty;
-
-                if (_usingNationalNo)
-                    imagePath = PersonService.GetImagePathByNationalNo(_nationalNo);
-                else
-                    imagePath = PersonService.GetImagePathByPersonId(_personID);
-
                 if (string.IsNullOrWhiteSpace(imagePath) || !File.Exists(imagePath))
                     return;
 
@@ -151,17 +192,17 @@ namespace DVLD.WinForms.UserControls
 
         private void lblEditPersonInfo_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!_usingNationalNo && _personID > 0)
+            if (PersonID > 0)
             {
-                using (Form frm = new frmAddEditPersonInfo(_personID))
+                using (Form frm = new frmAddEditPersonInfo(PersonID))
                 {
                     frm.ShowDialog();
                     ctrlPersonDetails_Load(null, null);
                 }
             }
-            else if (_usingNationalNo && !string.IsNullOrEmpty(_nationalNo))
+            else if (!string.IsNullOrEmpty(NationalNo))
             {
-                int id = PersonService.GetIdByNationalNo(_nationalNo);
+                int id = PersonService.GetIdByNationalNo(NationalNo);
                 if (id < 1) return;
                 using (Form frm = new frmAddEditPersonInfo(id))
                 {

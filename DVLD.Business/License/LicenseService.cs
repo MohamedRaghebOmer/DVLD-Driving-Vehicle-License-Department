@@ -42,7 +42,7 @@ namespace DVLD.Business
             // else add a new driver and return the new driver id
 
             int driverId = -1;
-            driverId = DriverRepository.GetIdByPersonId(personId);
+            driverId = DriverRepository.GetDriverIdByPersonId(personId);
 
             if (driverId == -1)
                 return driverId;
@@ -139,14 +139,30 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetLicenseHistory(int driverId)
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            if (personId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistoryByPersonId(personId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for PersonID {personId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static DataTable GetLicenseHistoryByDriverId(int driverId)
         {
             if (driverId <= 0)
                 return null;
 
             try
             {
-                return LicenseRepository.GetLicenseHistory(driverId);
+                return LicenseRepository.GetLicenseHistoryByDriverId(driverId);
             }
             catch (Exception ex)
             {
@@ -155,20 +171,69 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetLicenseHistory(string nationalNo)
+        public static DataTable GetLicenseHistoryByNationalNo(string nationalNo)
         {
             if (string.IsNullOrEmpty(nationalNo))
                 return null;
 
             try
             {
-                return LicenseRepository.GetLicenseHistory(nationalNo);
+                return LicenseRepository.GetLicenseHistoryByNationalNo(nationalNo);
             }
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while getting license history for NationalNo {nationalNo}.", ex);
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
+        }
+
+        public static License GetByNationalNo(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByNationalNo(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license with NationalNo {nationalNo}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static License GetByApplicationId(int applicationId)
+        {
+            if (applicationId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByApplicationId(applicationId);
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license by application id = {applicationId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static License GetByLocalApplicationId(int localApplicationId)
+        {
+            if (localApplicationId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByLocalApplicationId(localApplicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license by local application id = {localApplicationId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+
         }
 
         public static bool DeactivateLicense(int licenseId)

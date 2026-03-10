@@ -151,7 +151,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForPerson(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
+        public static bool ExistsByPerson(int personId, LicenseClass licenseClass, ApplicationType applicationType, ApplicationStatus status)
         {
             string query = @"SELECT 1 FROM LocalDrivingLicenseApplications ldl
                             INNER JOIN Applications a ON ldl.ApplicationID = a.ApplicationID

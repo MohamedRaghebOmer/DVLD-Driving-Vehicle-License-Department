@@ -1,4 +1,5 @@
 ﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
@@ -153,6 +154,42 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while checking if license for local driving license application ID {localDrivingLicenseApplicationId} has passed three tests.", ex);
+                throw;
+            }
+        }
+
+        public static bool HasPassed(int localApplicationId, TestType testType)
+        {
+            string query = @"SELECT 
+                            IIF(EXISTS
+                            (
+                                SELECT 1 
+                                FROM Tests t
+                                INNER JOIN TestAppointments ta
+                                    ON t.TestAppointmentID = ta.TestAppointmentID
+                                WHERE ta.TestTypeID = @TestTypeID 
+                                AND ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                AND t.TestResult = 1
+                            ),1,0) AS Result;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@TestTypeID", (int)testType);
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localApplicationId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null)
+                        return Convert.ToBoolean(result);
+                    return false; // Return false if the application does not exist or if the value is invalid
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while checking if license for local driving license application ID {localApplicationId} has passed {testType} test.", ex);
                 throw;
             }
         }

@@ -23,7 +23,7 @@ namespace DVLD.Business.EntityValidators
 
 
             // Check if driver already has license with the same type.
-            if (LicenseRepository.ExistsForDriver(license.DriverId, license.LicenseClass))
+            if (LicenseRepository.ExistsByDriver(license.DriverId, license.LicenseClass))
                 throw new BusinessException("Driver already has an license with the same type.");
 
             // Check if the application already associated with another license.
@@ -37,7 +37,7 @@ namespace DVLD.Business.EntityValidators
             if (applicationStatus == ApplicationStatus.Completed)
                 throw new BusinessException("License already exists for the completed application.");
 
-            if (applicationStatus == ApplicationStatus.Cancelled)
+            if (applicationStatus == ApplicationStatus.Canceled)
                 throw new BusinessException("Can't add license for a canceled application.");
 
 

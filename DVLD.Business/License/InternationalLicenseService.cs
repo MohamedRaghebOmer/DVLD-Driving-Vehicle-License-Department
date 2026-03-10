@@ -47,6 +47,22 @@ namespace DVLD.Business
             }
         }
 
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            if (personId <= 0)
+                return null;
+
+            try
+            {
+                return InternationalLicenseRepository.GetLicenseHistory(personId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get International License history for person with Id {personId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static InternationalLicense GetById(int internationalLicenseId)
         {
             try
@@ -60,7 +76,7 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetLicenseHistory(int driverId)
+        public static DataTable GetLicenseHistoryByDriverId(int driverId)
         {
             if (driverId <= 0)
                 return null;
@@ -76,7 +92,7 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetLicenseHistory(string nationalNo)
+        public static DataTable GetLicenseHistoryByNationalNo(string nationalNo)
         {
             if (string.IsNullOrEmpty(nationalNo))
                 return null;

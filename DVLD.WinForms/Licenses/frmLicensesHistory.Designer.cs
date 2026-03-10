@@ -1,6 +1,6 @@
 ﻿namespace DVLD.WinForms.Applications.ManageApplications
 {
-    partial class frmLicenseHistory
+    partial class frmLicensesHistory
     {
         /// <summary>
         /// Required designer variable.

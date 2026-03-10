@@ -125,6 +125,49 @@ namespace DVLD.Data
             }
         }
 
+        public static Application GetByLocalAppId(int localAppId)
+        {
+            string query = @"SELECT * FROM Applications a
+                            INNER JOIN LocalDrivingLicenseApplications l
+                                ON a.ApplicationID = l.ApplicationID
+                            WHERE l.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Application
+                            (
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                applicantPersonId: Convert.ToInt32(reader["ApplicantPersonID"]),
+                                applicationDate: Convert.ToDateTime(reader["ApplicationDate"]),
+                                applicationTypeId: (ApplicationType)Convert.ToInt32(reader["ApplicationTypeID"]),
+                                applicationStatus: (ApplicationStatus)Convert.ToInt32(reader["ApplicationStatus"]),
+                                lastStatusDate: Convert.ToDateTime(reader["LastStatusDate"]),
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving application from Applications table.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int applicationId)
         {
             string query = @"SELECT 1 FROM Applications WHERE ApplicationID = @id;";

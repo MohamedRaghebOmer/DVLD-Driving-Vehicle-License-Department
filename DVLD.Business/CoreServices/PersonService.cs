@@ -6,6 +6,7 @@ using DVLD.Data;
 using System;
 using System.Data;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD.Business
 {
@@ -39,6 +40,22 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading person with Id = {personId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static Person GetByDriverId(int driverId)
+        {
+            if (driverId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByDriverId(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with driver id = {driverId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
@@ -87,25 +104,45 @@ namespace DVLD.Business
             return Path.Combine(PathHelper.ImagesFolderPath, fileName);
         }
 
-        public static string GetImagePathByNationalNo(string nationalNo)
-        {
-            if (string.IsNullOrEmpty(nationalNo))
-                return null;
-
-            string fileName = PersonRepository.GetImagePathByNationalNo(nationalNo);
-
-            if (fileName == null)
-                return null;
-
-            return Path.Combine(PathHelper.ImagesFolderPath, fileName);
-        }
-
         public static string GetImagePathByFileName(string imageFileName)
         {
             if (string.IsNullOrEmpty(imageFileName))
                 return null;
 
             return Path.Combine(PathHelper.ImagesFolderPath, imageFileName);
+        }
+
+        public static Person GetByApplicationId(int applicationId)
+        {
+            if (applicationId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByApplicationId(applicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with application id = {applicationId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static Person GetByLocalApplicationId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByLocalApplicationId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with local application id = {localAppId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+
         }
 
         public static DataTable GetAllWithDateParts()

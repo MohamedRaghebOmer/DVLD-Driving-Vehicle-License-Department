@@ -39,7 +39,7 @@
     public enum ApplicationStatus
     {
         New = 1,
-        Cancelled = 2,
+        Canceled = 2,
         Completed = 3,
     }
 

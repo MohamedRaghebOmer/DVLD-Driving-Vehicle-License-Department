@@ -72,21 +72,20 @@ namespace DVLD.Business
             }
         }
 
-        public static bool HasPassed(string NationalNo, TestType testType)
+        public static bool HasPassed(int localApplicationId, TestType testType)
         {
-            return false;
-            //if (string.IsNullOrWhiteSpace(NationalNo))
-            //    return false;
+            if (localApplicationId <= 0)
+                return false;
 
-            //try
-            //{
-            //    return TestRepository.HasPassed();
-            //}
-            //catch(Exception ex)
-            //{
-            //    AppLogger.LogError($"BLL: Error while checking if the person with national no = {NationalNo} has passed test type wit id {(int)testType}.", ex);
-            //    throw new Exception("An error occurred while updating the test notes. Please try again later.", ex);
-            //}
+            try
+            {
+                return TestRepository.HasPassed(localApplicationId, testType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while checking if the person with local application Id = {localApplicationId} has passed test type wit id {(int)testType}.", ex);
+                throw new Exception("An error occurred while updating the test notes. Please try again later.", ex);
+            }
         }
     }
 }
