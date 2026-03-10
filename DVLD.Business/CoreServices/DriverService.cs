@@ -76,7 +76,7 @@ namespace DVLD.Business
 
             try
             {
-                return DriverRepository.ExistsForPerson(personId, excludedDriverId);
+                return DriverRepository.ExistsByPersonId(personId, excludedDriverId);
             }
             catch (Exception ex)
             {

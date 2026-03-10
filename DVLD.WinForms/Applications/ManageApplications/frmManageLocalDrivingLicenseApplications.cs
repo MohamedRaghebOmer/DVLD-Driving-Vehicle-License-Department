@@ -343,7 +343,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form frm = new frmLicenseInfo(GetSelectedNationalNo());
+            Form frm = new frmLicenseInfo(GetSelectedLocalApplicationId(), frmLicenseInfo.LoadType.UsingLocalApplicationId);
             frm.ShowDialog();
         }
 
@@ -362,9 +362,16 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
         private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form frm = new frmApplicationInfo
-                (GetSelectedLocalApplicationId(), 
+                (GetSelectedLocalApplicationId(),
                 frmApplicationInfo.LoadType.UsingLocalApplicationId);
             frm.ShowDialog();
+        }
+
+        private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmIssueDrivingLicense(GetSelectedLocalApplicationId());
+            frm.ShowDialog();
+            LoadDataGridApplications();
         }
     }
 }

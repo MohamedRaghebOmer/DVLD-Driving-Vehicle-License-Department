@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.Applications.ManageApplications
@@ -13,7 +6,7 @@ namespace DVLD.WinForms.Applications.ManageApplications
     public partial class frmApplicationInfo : Form
     {
         private int _applicationId = -1, _localApplicationId = -1;
-        
+
         public enum LoadType { UsingApplicationId, UsingLocalApplicationId };
         private LoadType _loadType = LoadType.UsingApplicationId;
 

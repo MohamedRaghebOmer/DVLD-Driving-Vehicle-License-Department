@@ -1,12 +1,11 @@
 ﻿using DVLD.Business;
 using DVLD.Core.DTOs.Entities;
+using DVLD.Core.Helpers;
 using DVLD.WinForms.Properties;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Security.Permissions;
 using System.Windows.Forms;
-using DVLD.Core.Helpers;
 
 namespace DVLD.WinForms.UserControls
 {
@@ -15,7 +14,7 @@ namespace DVLD.WinForms.UserControls
         private int _id = -1;
         private string _nationalNo = string.Empty;
 
-        private enum LoadType { UsingPersonId, UsingNationalNo, UsingDriverId};
+        private enum LoadType { UsingPersonId, UsingNationalNo, UsingDriverId };
         private LoadType _loadType = LoadType.UsingPersonId;
 
         public ctrlPersonDetails()

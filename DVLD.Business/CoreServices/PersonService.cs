@@ -6,7 +6,6 @@ using DVLD.Data;
 using System;
 using System.Data;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD.Business
 {

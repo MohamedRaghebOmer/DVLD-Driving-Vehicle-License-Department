@@ -62,7 +62,7 @@ namespace DVLD.Data
 
         public static LocalDrivingLicenseApplication GetById(int localDrivingLicenseApplicationId)
         {
-            string query = @"SELECT * FROM LocalDrivingLicenseApplications WHERE LocalDrivingLicenseApplicationId = @LocalDrivingLicenseApplicationId";
+            string query = @"SELECT * FROM LocalDrivingLicenseApplications WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationId";
 
             try
             {
@@ -126,6 +126,31 @@ namespace DVLD.Data
                 AppLogger.LogError("DAL: Error while retrieving a specific record from LocalDrivingLicenseApplications table by ApplicationId.", ex);
                 throw;
             }
+        }
+
+        public static bool Exists(int localAppId)
+        {
+            const string query = @"SELECT 1
+                                   FROM LocalDrivingLicenseApplications l
+                                   WHERE l.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    connection.Open();
+
+                    return command.ExecuteScalar() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving a specific record from LocalDrivingLicenseApplications table by LocalDrivingLicenseApplicationID.", ex);
+                throw;
+            }
+
         }
 
         public static bool ExistsForApplication(int applicationId, int excludedId = -1)

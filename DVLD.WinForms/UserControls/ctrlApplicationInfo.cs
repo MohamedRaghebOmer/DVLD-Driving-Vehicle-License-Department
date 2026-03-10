@@ -1,9 +1,6 @@
 ﻿using DVLD.Business;
-using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
-using DVLD.WinForms.Applications.ManageApplications;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
+using DVLD.WinForms.Licenses;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.UserControls
@@ -21,7 +18,7 @@ namespace DVLD.WinForms.UserControls
             InitializeComponent();
         }
 
-        public int ApplicationId 
+        public int ApplicationId
         {
             get
             {
@@ -74,13 +71,21 @@ namespace DVLD.WinForms.UserControls
                 application = ApplicationService.GetByLocalAppId(LocalApplicationId);
             }
 
-            if (application == null) return;
+            if (application == null)
+            {
+                lblShowLicenseInfo.Enabled = false;
+                return;
+            }
 
             #region Set control labels
 
             var localApp = LocalDrivingLicenseApplicationService.
                 GetByApplicationId(application.ApplicationID);
 
+            if (application.ApplicationStatus != ApplicationStatus.Completed)
+                lblShowLicenseInfo.Enabled = false;
+
+            lblPassedTests.Text = TestService.GetNumOfPassedTests(localApp.LocalDrivingLicenseApplicationID).ToString() + "/3";
             lblLocalAppId.Text = localApp.LocalDrivingLicenseApplicationID.ToString();
             lblLicenseClass.Text = LicenseClassService.GetLicenseClassName(localApp.LicenseClassID);
             lblApplicationId.Text = application.ApplicationID.ToString();
@@ -125,34 +130,14 @@ namespace DVLD.WinForms.UserControls
             lblCreatedByUserId.Text = application.CreatedByUserID.ToString();
 
             #endregion
-
-            if (application.ApplicationStatus == ApplicationStatus.Completed
-                && application.ApplicationTypeID != ApplicationType.RetakeTest)
-            {
-                ctrlLicenseInfo1.LocalApplicationId = LocalApplicationId;
-            }
-            else
-            {
-                ctrlLicenseInfo1.Enabled = false;
-            }
         }
 
-        private void lblShowHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Form frm = new frmLicensesHistory(application.ApplicantPersonID, frmLicensesHistory.LoadType.UsingPersonId);
+            Form frm = new frmLicenseInfo(application.ApplicationID, frmLicenseInfo.LoadType.UsingApplicationId);
             frm.ShowDialog();
         }
 
-        private void lblShowPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Form frm = new frmAddEditPersonInfo(application.ApplicantPersonID);
-            frm.ShowDialog();
-        }
-
-        private void lblShowLicensesHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Form frm = new frmLicensesHistory(application.ApplicantPersonID, frmLicensesHistory.LoadType.UsingPersonId);
-            frm.ShowDialog();
-        }
+        public override void Refresh() => LoadControlInfo(); //Refresh
     }
 }

@@ -3,9 +3,7 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Applications.ManageApplications;
 using DVLD.WinForms.People;
-using System;
 using System.Drawing;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.UserControls
@@ -17,9 +15,9 @@ namespace DVLD.WinForms.UserControls
         private string _nationalNo = string.Empty;
 
         private enum LoadType
-        { 
-            UsingLicenseId, 
-            UsingNationalNo, 
+        {
+            UsingLicenseId,
+            UsingNationalNo,
             UsingApplicationId,
             UsingLocalApplicationId
         }

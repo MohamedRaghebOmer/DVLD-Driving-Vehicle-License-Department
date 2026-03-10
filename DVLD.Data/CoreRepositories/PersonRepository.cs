@@ -228,10 +228,10 @@ namespace DVLD.Data
 
         public static Person GetByApplicationId(int applicationId)
         {
-            string query = @"SELECT * FROM People
-                            INNER JOIN Applications
-                                ON People.PersonID = Applications.PersonID
-                            WHERE Applications.ApplicationID = @ApplicationID;";
+            string query = @"SELECT * FROM People p
+                            INNER JOIN Applications a
+                                ON p.PersonID = a.ApplicantPersonID
+                            WHERE a.ApplicationID = @ApplicationID;";
 
             try
             {

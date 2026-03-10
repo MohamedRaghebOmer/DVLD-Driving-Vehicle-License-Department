@@ -12,9 +12,9 @@ namespace DVLD.Data
         // -----------------------Create-------------------------
         public static int Add(Driver driver)
         {
-            string query = @"INSERT INTO Drivers (PersonId, CreatedByUserId, CreatedDate)
-                    VALUES (@PersonId, @CreatedByUserId, GETDATE());
-                    SELECT SCOPE_IdENTITY();";
+            string query = @"INSERT INTO Drivers (PersonID, CreatedByUserID, CreatedDate)
+                    VALUES (@PersonId, @CreatedByUserID, GETDATE());
+                    SELECT SCOPE_IDENTITY();";
 
             try
             {
@@ -26,7 +26,7 @@ namespace DVLD.Data
                     DateTime smallDateTimeValue = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
 
                     command.Parameters.AddWithValue("@PersonId", driver.PersonId);
-                    command.Parameters.AddWithValue("@CreatedByUserId", LoggedInUserInfo.UserId);
+                    command.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
                     connection.Open();
 
                     object result = command.ExecuteScalar();
@@ -140,9 +140,9 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForPerson(int personId, int excludedDriverId = -1)
+        public static bool ExistsByPersonId(int personId, int excludedDriverId = -1)
         {
-            string query = "SELECT 1 FROM Drivers WHERE PerosnId = @personId AND DriverId != excludedDriverId;";
+            string query = "SELECT 1 FROM Drivers WHERE PersonId = @personId AND DriverId != excludedDriverId;";
 
             try
             {

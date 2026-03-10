@@ -5,21 +5,49 @@ using DVLD.Data.Settings;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO.Compression;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD.Data
 {
     public static class LicenseRepository
     {
-        public static int Add(License license, IssueReason issueReason, int driverId, int validityLength)
+        public static int Add(License license)
         {
-            string query = @"INSERT INTO Licenses (ApplicationID, DriverID, LicenseClass, 
-                            IssueDate, ExpirationDate, Notes, PaidFees, IsActive, IssueReason, 
-                            CreatedByUserID) 
-                            VALUES (@applicationID, @driverID, @licenseClass, GETDATE(),
-                            DATEADD(YEAR, @validityLength, GETDATE()), @notes, @paidFees, @isActive, 
-                            @issueReason, @createdByUserID);
+            string query = @"DECLARE @ValidityLength INT;
+                            DECLARE @ClassFees MONEY;
+                            
+                            SELECT 
+                                @ValidityLength = DefaultValidityLength,
+                                @ClassFees = ClassFees
+                            FROM LicenseClasses
+                            WHERE LicenseClassID = @licenseClass;
+                            
+                            INSERT INTO Licenses
+                            (
+                                ApplicationID,
+                                DriverID,
+                                LicenseClass,
+                                IssueDate,
+                                ExpirationDate,
+                                Notes,
+                                PaidFees,
+                                IsActive,
+                                IssueReason,
+                                CreatedByUserID
+                            )
+                            VALUES
+                            (
+                                @applicationID,
+                                @driverID,
+                                @licenseClass,
+                                GETDATE(),
+                                DATEADD(YEAR, @ValidityLength, GETDATE()),
+                                @notes,
+                                @ClassFees,
+                                1,
+                                @issueReason,
+                                @createdByUserID
+                            );
+                            
                             SELECT SCOPE_IDENTITY();";
 
             try
@@ -28,13 +56,10 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@applicationID", license.ApplicationId);
-                    command.Parameters.AddWithValue("@driverID", driverId);
+                    command.Parameters.AddWithValue("@driverID", license.DriverId);
                     command.Parameters.AddWithValue("@licenseClass", (int)license.LicenseClass);
-                    command.Parameters.AddWithValue("@validityLength", validityLength);
                     command.Parameters.AddWithValue("@notes", license.Notes ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@paidFees", license.PaidFees);
-                    command.Parameters.AddWithValue("@isActive", license.IsActive);
-                    command.Parameters.AddWithValue("@issueReason", (int)issueReason);
+                    command.Parameters.AddWithValue("@issueReason", (int)license.IssueReason);
                     command.Parameters.AddWithValue("@createdByUserID", LoggedInUserInfo.UserId);
                     connection.Open();
 
@@ -375,7 +400,7 @@ namespace DVLD.Data
             try
             {
                 using (var con = new SqlConnection(DataSettings.connectionString))
-                using (var com = new SqlCommand (query, con))
+                using (var com = new SqlCommand(query, con))
                 {
                     com.Parameters.AddWithValue("@ApplicationID", applicationId);
                     con.Open();
@@ -411,7 +436,7 @@ namespace DVLD.Data
             }
         }
 
-        public  static License GetByLocalApplicationId(int localApplicationId)
+        public static License GetByLocalApplicationId(int localApplicationId)
         {
             const string query = @"SELECT * FROM Licenses l
                             INNER JOIN Applications a
@@ -426,7 +451,7 @@ namespace DVLD.Data
                 using (var con = new SqlConnection(DataSettings.connectionString))
                 using (var com = new SqlCommand(query, con))
                 {
-                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", 
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID",
                         localApplicationId);
                     con.Open();
 
@@ -461,7 +486,7 @@ namespace DVLD.Data
             }
 
         }
-        
+
         public static bool Exists(int licenseId)
         {
             string query = @"SELECT 1 FROM Licenses WHERE LicenseID = @licenseId;";

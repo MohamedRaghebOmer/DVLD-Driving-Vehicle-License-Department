@@ -36,7 +36,7 @@
             // 
             this.btnClose.Image = global::DVLD.WinForms.Properties.Resources.Close32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(859, 659);
+            this.btnClose.Location = new System.Drawing.Point(848, 309);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(130, 51);
             this.btnClose.TabIndex = 14;
@@ -51,17 +51,17 @@
             this.ctrlApplicationInfo1.ApplicationId = -1;
             this.ctrlApplicationInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ctrlApplicationInfo1.LocalApplicationId = -1;
-            this.ctrlApplicationInfo1.Location = new System.Drawing.Point(8, 14);
+            this.ctrlApplicationInfo1.Location = new System.Drawing.Point(0, 0);
             this.ctrlApplicationInfo1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlApplicationInfo1.Name = "ctrlApplicationInfo1";
-            this.ctrlApplicationInfo1.Size = new System.Drawing.Size(986, 639);
+            this.ctrlApplicationInfo1.Size = new System.Drawing.Size(986, 301);
             this.ctrlApplicationInfo1.TabIndex = 15;
             // 
             // frmApplicationInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 722);
+            this.ClientSize = new System.Drawing.Size(1002, 370);
             this.Controls.Add(this.ctrlApplicationInfo1);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

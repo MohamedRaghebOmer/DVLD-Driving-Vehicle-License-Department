@@ -109,33 +109,28 @@ namespace DVLD.Data
 
         public static bool HasPassedThreeTests(int localDrivingLicenseApplicationId)
         {
-            string query = @"SELECT CAST(CASE 
-                            -- Condition 1: Check if the application exists
-                            WHEN EXISTS (
-                                SELECT 1 
-                                FROM dbo.LocalDrivingLicenseApplications 
-                                WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
-                            )
-                            -- Condition 2: Check if there are exactly 3 locked TestAppointments
-                            AND (
-                                SELECT COUNT(*) 
-                                FROM dbo.TestAppointments 
-                                WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
-                                AND IsLocked = 1
-                            ) = 3
-                            -- Condition 3: Check if all 3 corresponding tests were passed (TestResult = 1)
-                            -- We do this by ensuring the count of Passed Tests associated with Locked Appointments is also 3
-                            AND (
-                                SELECT COUNT(*) 
-                                FROM dbo.Tests T
-                                INNER JOIN dbo.TestAppointments TA ON T.TestAppointmentID = TA.TestAppointmentID
-                                WHERE TA.LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
-                                AND TA.IsLocked = 1 
-                                AND T.TestResult = 1
-                            ) = 3
-                            THEN 1 
-                            ELSE 0 
-                        END AS BIT) AS HasPassed;";
+            string query = @"SELECT 
+                            CAST(
+                              CASE 
+                                WHEN EXISTS (
+                                  SELECT 1 
+                                  FROM dbo.LocalDrivingLicenseApplications L
+                                  WHERE L.LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
+                                )
+                                AND (
+                                  SELECT COUNT(DISTINCT TA.TestTypeID)
+                                  FROM dbo.TestAppointments TA
+                                  INNER JOIN dbo.Tests T ON T.TestAppointmentID = TA.TestAppointmentID
+                                  WHERE TA.LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationID
+                                    AND TA.IsLocked = 1
+                                    AND T.TestResult = 1
+                                ) = (
+                                  SELECT COUNT(*) 
+                                  FROM dbo.TestTypes TT
+                                )
+                              THEN 1 ELSE 0
+                              END
+                            AS BIT) AS HasPassed;";
 
             try
             {
@@ -192,6 +187,41 @@ namespace DVLD.Data
                 AppLogger.LogError($"DAL: Error while checking if license for local driving license application ID {localApplicationId} has passed {testType} test.", ex);
                 throw;
             }
+        }
+
+        public static int GetNumOfPassedTests(int localAppId)
+        {
+            string query = @"SELECT COUNT(*)
+                            FROM Tests t
+                            INNER JOIN TestAppointments ta
+                            	ON t.TestAppointmentID = ta.TestAppointmentID
+                            INNER JOIN LocalDrivingLicenseApplications ld
+                            	ON ta.LocalDrivingLicenseApplicationID = ld.LocalDrivingLicenseApplicationID
+                            WHERE ld.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                            AND t.TestResult = 1;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int num))
+                        return num;
+
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while retrieving number of passed test Tests with LocalDrivingLicenseApplicationId = {localAppId}.", ex);
+                throw;
+            }
+
         }
 
         public static bool ExistsByTestAppointment(int testAppointmentId)

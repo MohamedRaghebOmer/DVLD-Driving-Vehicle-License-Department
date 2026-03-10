@@ -56,6 +56,23 @@ namespace DVLD.Business
             }
         }
 
+        public static int GetNumOfPassedTests(int localAppId)
+        {
+            if (localAppId <= 0)
+                return -1;
+
+            try
+            {
+                return TestRepository.GetNumOfPassedTests(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving number of passed test Tests with LocalDrivingLicenseApplicationId = {localAppId}.", ex);
+                throw new Exception("An error occurred while retrieving the tests. Please try again later.", ex);
+            }
+
+        }
+
         public static bool UpdateNotes(int testId, string newNotes)
         {
             if (testId <= 0)

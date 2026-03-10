@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gbApplicationBasicInfo = new System.Windows.Forms.GroupBox();
+            this.lblShowLicenseInfo = new System.Windows.Forms.LinkLabel();
             this.lblLocalAppId = new System.Windows.Forms.Label();
             this.lblLicenseClass = new System.Windows.Forms.Label();
             this.lable1 = new System.Windows.Forms.Label();
@@ -49,12 +50,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ctrlLicenseInfo1 = new DVLD.WinForms.UserControls.ctrlLicenseInfo();
+            this.lblPassedTests = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.gbApplicationBasicInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbApplicationBasicInfo
             // 
+            this.gbApplicationBasicInfo.Controls.Add(this.lblPassedTests);
+            this.gbApplicationBasicInfo.Controls.Add(this.label10);
+            this.gbApplicationBasicInfo.Controls.Add(this.lblShowLicenseInfo);
             this.gbApplicationBasicInfo.Controls.Add(this.lblLocalAppId);
             this.gbApplicationBasicInfo.Controls.Add(this.lblLicenseClass);
             this.gbApplicationBasicInfo.Controls.Add(this.lable1);
@@ -77,10 +82,21 @@
             this.gbApplicationBasicInfo.Controls.Add(this.label1);
             this.gbApplicationBasicInfo.Location = new System.Drawing.Point(7, 3);
             this.gbApplicationBasicInfo.Name = "gbApplicationBasicInfo";
-            this.gbApplicationBasicInfo.Size = new System.Drawing.Size(970, 227);
+            this.gbApplicationBasicInfo.Size = new System.Drawing.Size(970, 295);
             this.gbApplicationBasicInfo.TabIndex = 0;
             this.gbApplicationBasicInfo.TabStop = false;
             this.gbApplicationBasicInfo.Text = "Application Basic Info";
+            // 
+            // lblShowLicenseInfo
+            // 
+            this.lblShowLicenseInfo.AutoSize = true;
+            this.lblShowLicenseInfo.Location = new System.Drawing.Point(399, 256);
+            this.lblShowLicenseInfo.Name = "lblShowLicenseInfo";
+            this.lblShowLicenseInfo.Size = new System.Drawing.Size(172, 25);
+            this.lblShowLicenseInfo.TabIndex = 1;
+            this.lblShowLicenseInfo.TabStop = true;
+            this.lblShowLicenseInfo.Text = "Show License Info";
+            this.lblShowLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblShowLicenseInfo_LinkClicked);
             // 
             // lblLocalAppId
             // 
@@ -272,29 +288,34 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Application Id:";
             // 
-            // ctrlLicenseInfo1
+            // lblPassedTests
             // 
-            this.ctrlLicenseInfo1.ApplicationId = -1;
-            this.ctrlLicenseInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlLicenseInfo1.LicenseId = -1;
-            this.ctrlLicenseInfo1.LocalApplicationId = -1;
-            this.ctrlLicenseInfo1.Location = new System.Drawing.Point(5, 238);
-            this.ctrlLicenseInfo1.Margin = new System.Windows.Forms.Padding(5);
-            this.ctrlLicenseInfo1.Name = "ctrlLicenseInfo1";
-            this.ctrlLicenseInfo1.NationalNo = "";
-            this.ctrlLicenseInfo1.Size = new System.Drawing.Size(978, 400);
-            this.ctrlLicenseInfo1.TabIndex = 3;
+            this.lblPassedTests.AutoSize = true;
+            this.lblPassedTests.Location = new System.Drawing.Point(189, 223);
+            this.lblPassedTests.Name = "lblPassedTests";
+            this.lblPassedTests.Size = new System.Drawing.Size(45, 25);
+            this.lblPassedTests.TabIndex = 23;
+            this.lblPassedTests.Text = "???";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 223);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(151, 25);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "Passed Tests:";
             // 
             // ctrlApplicationInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ctrlLicenseInfo1);
             this.Controls.Add(this.gbApplicationBasicInfo);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ctrlApplicationInfo";
-            this.Size = new System.Drawing.Size(986, 641);
+            this.Size = new System.Drawing.Size(986, 301);
             this.gbApplicationBasicInfo.ResumeLayout(false);
             this.gbApplicationBasicInfo.PerformLayout();
             this.ResumeLayout(false);
@@ -324,6 +345,8 @@
         private System.Windows.Forms.Label lblLicenseClass;
         private System.Windows.Forms.Label lable1;
         private System.Windows.Forms.Label label12;
-        private ctrlLicenseInfo ctrlLicenseInfo1;
+        private System.Windows.Forms.LinkLabel lblShowLicenseInfo;
+        private System.Windows.Forms.Label lblPassedTests;
+        private System.Windows.Forms.Label label10;
     }
 }

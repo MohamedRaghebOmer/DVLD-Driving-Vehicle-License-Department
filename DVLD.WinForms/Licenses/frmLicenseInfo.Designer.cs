@@ -39,7 +39,7 @@
             // 
             this.btnClose.Image = global::DVLD.WinForms.Properties.Resources.Close32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(852, 664);
+            this.btnClose.Location = new System.Drawing.Point(854, 675);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(138, 51);
             this.btnClose.TabIndex = 7;
@@ -87,7 +87,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 727);
+            this.ClientSize = new System.Drawing.Size(1011, 745);
             this.Controls.Add(this.ctrlLicenseInfo1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);

@@ -21,7 +21,7 @@ namespace DVLD.Business
                     InternationalLicenseRepository.DeactivateByDriverId(internationalLicense.DriverID);
 
                 int newInternationalLicenseId = InternationalLicenseRepository.Add(internationalLicense);
-                bool isApplicationCompleted = ApplicationRepository.UpdateApplicationStatus(internationalLicense.ApplicationID, ApplicationStatus.Completed);
+                bool isApplicationCompleted = ApplicationRepository.UpdateAppStatusByAppId(internationalLicense.ApplicationID, ApplicationStatus.Completed);
 
                 if (newInternationalLicenseId != -1 && isApplicationCompleted)
                     return InternationalLicenseRepository.GetById(newInternationalLicenseId);

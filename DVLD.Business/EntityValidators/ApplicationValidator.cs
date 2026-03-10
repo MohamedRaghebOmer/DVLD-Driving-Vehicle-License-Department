@@ -2,11 +2,22 @@
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Data;
+using System;
 
 namespace DVLD.Business.EntityValidators
 {
     internal static class ApplicationValidator
     {
+        private static bool IsAgeAllowed(DateTime dateOfBirth, int minAge)
+        {
+            int age = DateTime.Now.Year - dateOfBirth.Year;
+
+            if (DateTime.Now.Date < dateOfBirth.AddYears(age))
+                age--;
+
+            return age >= minAge;
+        }
+
         public static void AddNewValidator(Application application, LicenseClass licenseClass)
         {
             Core.Validators.ApplicationValidator.Validate(application);
@@ -14,6 +25,14 @@ namespace DVLD.Business.EntityValidators
             // Check if the person exists.
             if (!PersonRepository.Exists(application.ApplicantPersonID))
                 throw new BusinessException("Applicant person does not exist.");
+
+
+            Person person = PersonRepository.GetById(application.ApplicantPersonID);
+            int minAllowedAge = LicenseClassRepository.GetMinimumAllowedAge(licenseClass);
+
+            // Check if the person is older than the minimum allowed age.
+            if (!IsAgeAllowed(person.DateOfBirth, minAllowedAge))
+                throw new BusinessException($"The applicant must be at least {minAllowedAge} years old.");
 
             // Check if the person already has an application with the same type.
             if (LocalDrivingLicenseApplicationRepository.ExistsByPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
