@@ -18,7 +18,7 @@ namespace DVLD.Business.EntityValidators
             return age >= minAge;
         }
 
-        public static void AddNewValidator(Application application, LicenseClass licenseClass)
+        public static void ValidateNewLocalDrivingLicenseApp(Application application, LicenseClass licenseClass)
         {
             Core.Validators.ApplicationValidator.Validate(application);
 
@@ -38,6 +38,7 @@ namespace DVLD.Business.EntityValidators
             if (LocalDrivingLicenseApplicationRepository.ExistsByPerson(application.ApplicantPersonID, licenseClass, application.ApplicationTypeID, ApplicationStatus.New))
                 throw new BusinessException("There is already an uncompleted application of the same type.");
 
+            // Check if the person already has a driving license from this class.
             bool doesApplicantHaveLicense = LicenseRepository.ExistsByDriver(DriverRepository.GetDriverIdByPersonId(application.ApplicantPersonID), licenseClass);
             if (application.ApplicationTypeID == ApplicationType.NewLocalDrivingLicenseService)
             {
@@ -61,6 +62,15 @@ namespace DVLD.Business.EntityValidators
                     throw new BusinessException("The license is detained.");
                 }
             }
+        }
+
+        public static void ValidateNewRetakeTestApplication(Application application)
+        {
+            Core.Validators.ApplicationValidator.Validate(application);
+
+            // Check if the person exists.
+            if (!PersonRepository.Exists(application.ApplicantPersonID))
+                throw new BusinessException("Applicant person does not exist.");
         }
 
         //public static void NewInternationalLicenseValidator(Application application)

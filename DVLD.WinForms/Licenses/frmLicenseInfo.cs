@@ -5,7 +5,6 @@ namespace DVLD.WinForms.Licenses
 {
     public partial class frmLicenseInfo : Form
     {
-        private int _licenseId = -1, _applicationId = -1, _localApplicationId = -1;
         public enum LoadType
         {
             UsingLicenseId,
@@ -18,7 +17,6 @@ namespace DVLD.WinForms.Licenses
         {
             InitializeComponent();
 
-            this._licenseId = _Id;
             _loadType = loadType;
 
             switch (_loadType)

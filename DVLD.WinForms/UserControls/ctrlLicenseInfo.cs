@@ -180,6 +180,8 @@ namespace DVLD.WinForms.UserControls
 
             if (!string.IsNullOrWhiteSpace(person.ImagePath))
             {
+                pbDriverImage.Image?.Dispose();
+
                 pbDriverImage.Image =
                 Image.FromFile(PersonService.GetImagePathByFileName(person.ImagePath));
             }

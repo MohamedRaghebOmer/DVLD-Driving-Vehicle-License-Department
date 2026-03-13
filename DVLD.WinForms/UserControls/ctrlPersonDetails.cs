@@ -5,6 +5,7 @@ using DVLD.WinForms.Properties;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.UserControls
@@ -14,8 +15,14 @@ namespace DVLD.WinForms.UserControls
         private int _id = -1;
         private string _nationalNo = string.Empty;
 
-        private enum LoadType { UsingPersonId, UsingNationalNo, UsingDriverId };
+        public enum LoadType { UsingPersonId, UsingNationalNo, UsingDriverId };
         private LoadType _loadType = LoadType.UsingPersonId;
+
+        public LoadType ctrlLoadType
+        {
+            get { return _loadType; }
+            private set { _loadType = value; }
+        }
 
         public ctrlPersonDetails()
         {
@@ -27,7 +34,6 @@ namespace DVLD.WinForms.UserControls
             SetDefaults();
             SetValues();
         }
-
 
         public int PersonID
         {
@@ -128,11 +134,16 @@ namespace DVLD.WinForms.UserControls
                 person = PersonService.GetByDriverId(_id);
             }
 
-            if (person == null) return;
+            if (person == null)
+            {
+                SetDefaults();
+                _nationalNo = string.Empty;
+                _id = -1;
+                return;
+            }
 
             // Gender handling
-            bool isMale = person.Gender == 0;
-            if (isMale)
+            if (person.Gender == 0) // Male
             {
                 lblGender.Text = "Male";
                 pbGender.Image = Resources.MaleSign512;

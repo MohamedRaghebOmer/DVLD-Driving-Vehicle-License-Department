@@ -43,6 +43,22 @@ namespace DVLD.Business
             }
         }
 
+        public static bool IsRetakeAppByLocalAppId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return false;
+
+            try
+            {
+                return LocalDrivingLicenseApplicationRepository.IsRetakeAppByLocalAppId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"Business: Error while checking if local driving license application with Local Application ID {localAppId} is a retake application.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int localDrivingLicenseApplicationId, int excludedId = -1)
         {
             if (localDrivingLicenseApplicationId <= 0)

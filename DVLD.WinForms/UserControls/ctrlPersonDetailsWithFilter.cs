@@ -18,6 +18,17 @@ namespace DVLD.WinForms.UserControls
             set { ctrlPersonDetails1.PersonID = value; }
         }
 
+        public string NationalNo
+        {
+            get { return ctrlPersonDetails1.NationalNo; }
+            set { ctrlPersonDetails1.NationalNo = value; }
+        }
+
+        public ctrlPersonDetails.LoadType LoadType
+        {
+            get { return ctrlPersonDetails1.ctrlLoadType; }
+        }
+
         public bool GroupBoxFilterVisible
         {
             get { return gbFilter.Visible; }
@@ -43,9 +54,9 @@ namespace DVLD.WinForms.UserControls
                 int.TryParse(txtFilterValue.Text, out int id))
             {
                 if (!PersonService.Exists(id))
-                    id = -1;
-
-                ctrlPersonDetails1.PersonID = id;
+                    ctrlPersonDetails1.PersonID = -1;
+                else
+                    ctrlPersonDetails1.PersonID = id;
             }
             else if (!string.IsNullOrEmpty(txtFilterValue.Text)) // National No
             {
@@ -66,7 +77,8 @@ namespace DVLD.WinForms.UserControls
             {
                 ctrlPersonDetails1.PersonID = id;
                 txtFilterValue.Text = id.ToString();
-            }; frm.ShowDialog();
+            }; 
+            frm.ShowDialog();
         }
     }
 }

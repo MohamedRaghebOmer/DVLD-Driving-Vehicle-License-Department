@@ -5,10 +5,7 @@ namespace DVLD.WinForms.Applications.ManageApplications
 {
     public partial class frmApplicationInfo : Form
     {
-        private int _applicationId = -1, _localApplicationId = -1;
-
         public enum LoadType { UsingApplicationId, UsingLocalApplicationId };
-        private LoadType _loadType = LoadType.UsingApplicationId;
 
         public frmApplicationInfo(int Id, LoadType loadType)
         {

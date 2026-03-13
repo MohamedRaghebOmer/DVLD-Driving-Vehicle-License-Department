@@ -42,6 +42,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.cancelApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.scheduleTestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -169,6 +170,7 @@
             this.toolStripSeparator1,
             this.editAppToolStripMenuItem,
             this.deleteApplicationToolStripMenuItem,
+            this.toolStripSeparator6,
             this.cancelApplicationToolStripMenuItem,
             this.toolStripSeparator3,
             this.scheduleTestsToolStripMenuItem,
@@ -179,7 +181,7 @@
             this.toolStripSeparator5,
             this.showPersonLicenseHistoryToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(309, 366);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(309, 344);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // showApplicationDetailsToolStripMenuItem
@@ -214,6 +216,11 @@
             this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(308, 38);
             this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
             this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(305, 6);
             // 
             // cancelApplicationToolStripMenuItem
             // 
@@ -250,7 +257,9 @@
             this.scheduleVisionTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.scheduleVisionTestToolStripMenuItem.Name = "scheduleVisionTestToolStripMenuItem";
             this.scheduleVisionTestToolStripMenuItem.Size = new System.Drawing.Size(247, 38);
+            this.scheduleVisionTestToolStripMenuItem.Tag = "1";
             this.scheduleVisionTestToolStripMenuItem.Text = "Sechdule Vision Test";
+            this.scheduleVisionTestToolStripMenuItem.Click += new System.EventHandler(this.ShowTestAppointmentsForm);
             // 
             // scheduleWrittenTestToolStripMenuItem
             // 
@@ -259,7 +268,9 @@
             this.scheduleWrittenTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.scheduleWrittenTestToolStripMenuItem.Name = "scheduleWrittenTestToolStripMenuItem";
             this.scheduleWrittenTestToolStripMenuItem.Size = new System.Drawing.Size(247, 38);
+            this.scheduleWrittenTestToolStripMenuItem.Tag = "2";
             this.scheduleWrittenTestToolStripMenuItem.Text = "Schedule Written Test";
+            this.scheduleWrittenTestToolStripMenuItem.Click += new System.EventHandler(this.ShowTestAppointmentsForm);
             // 
             // scheduleStreetTestToolStripMenuItem
             // 
@@ -268,7 +279,9 @@
             this.scheduleStreetTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.scheduleStreetTestToolStripMenuItem.Name = "scheduleStreetTestToolStripMenuItem";
             this.scheduleStreetTestToolStripMenuItem.Size = new System.Drawing.Size(247, 38);
+            this.scheduleStreetTestToolStripMenuItem.Tag = "3";
             this.scheduleStreetTestToolStripMenuItem.Text = "Schedule Street Test";
+            this.scheduleStreetTestToolStripMenuItem.Click += new System.EventHandler(this.ShowTestAppointmentsForm);
             // 
             // toolStripSeparator2
             // 
@@ -515,5 +528,6 @@
         private System.Windows.Forms.ToolStripMenuItem scheduleVisionTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scheduleStreetTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scheduleWrittenTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }

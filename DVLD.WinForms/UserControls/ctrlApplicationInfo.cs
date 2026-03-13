@@ -129,11 +129,18 @@ namespace DVLD.WinForms.UserControls
             lblLastStatusDate.Text = application.LastStatusDate.ToString("dd/MM/yyyy");
             lblCreatedByUserId.Text = application.CreatedByUserID.ToString();
 
+            if (application.ApplicationStatus == ApplicationStatus.Completed)
+                lblShowLicenseInfo.Enabled = true;
+
             #endregion
         }
 
         private void lblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (application == null
+                || application.ApplicationID <= 0
+                || application.ApplicationStatus != ApplicationStatus.Completed) return;
+
             Form frm = new frmLicenseInfo(application.ApplicationID, frmLicenseInfo.LoadType.UsingApplicationId);
             frm.ShowDialog();
         }

@@ -91,6 +91,22 @@ namespace DVLD.Business
             }
         }
 
+        public static int GetPersonIdByLocalApplicationId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return -1;
+
+            try
+            {
+                return PersonRepository.GetPersonIdByLocalApplicationId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person id with local application id = {localAppId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static string GetImagePathByPersonId(int personId)
         {
             if (personId < 1) return null;
@@ -153,6 +169,22 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading all people with date parts.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static string GetFullNameByAppId(int appId)
+        {
+            if (appId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetFullNameByAppId(appId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person full name with application id = {appId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

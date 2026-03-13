@@ -244,9 +244,12 @@
             // 
             // pbDriverImage
             // 
+            this.pbDriverImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbDriverImage.Image = global::DVLD.WinForms.Properties.Resources.ManWithQuestionMark72;
             this.pbDriverImage.Location = new System.Drawing.Point(729, 76);
             this.pbDriverImage.Name = "pbDriverImage";
             this.pbDriverImage.Size = new System.Drawing.Size(230, 217);
+            this.pbDriverImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbDriverImage.TabIndex = 13;
             this.pbDriverImage.TabStop = false;
             // 

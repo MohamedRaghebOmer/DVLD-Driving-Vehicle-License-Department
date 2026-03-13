@@ -107,6 +107,40 @@ namespace DVLD.Data
             }
         }
 
+        public static bool IsPassedByLocalAppId(int localDrivingLicenseApplicationId, TestType testType)
+        {
+            string query = @"SELECT 
+                            IIF(EXISTS
+                            (
+                                SELECT 1 
+                                FROM Tests t
+                                INNER JOIN TestAppointments ta
+                                    ON t.TestAppointmentID = ta.TestAppointmentID
+                                WHERE ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                AND ta.TestTypeID = @TestTypeID
+                                AND t.TestResult = 1
+                            ),1,0) AS Result;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationId);
+                    command.Parameters.AddWithValue("@TestTypeID", testType);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    return Convert.ToBoolean(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving Test by ID.", ex);
+                throw;
+            }
+        }
+
         public static bool HasPassedThreeTests(int localDrivingLicenseApplicationId)
         {
             string query = @"SELECT 
@@ -222,6 +256,42 @@ namespace DVLD.Data
                 throw;
             }
 
+        }
+
+        public static int GetNumOfFailedTestsByLocalAppId(int localAppId, TestType testType)
+        {
+            string query = @"SELECT COUNT(*)
+                            FROM Tests t
+                            INNER JOIN TestAppointments ta
+                            	ON t.TestAppointmentID = ta.TestAppointmentID
+                            INNER JOIN LocalDrivingLicenseApplications ld
+                            	ON ta.LocalDrivingLicenseApplicationID = ld.LocalDrivingLicenseApplicationID
+                            WHERE ld.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                            AND ta.TestTypeID = @TestTypeID
+                            AND t.TestResult = 0;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    com.Parameters.AddWithValue("@TestTypeID", (int)testType);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int num))
+                        return num;
+
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while retrieving number of failed test Tests with LocalDrivingLicenseApplicationId = {localAppId}.", ex);
+                throw;
+            }
         }
 
         public static bool ExistsByTestAppointment(int testAppointmentId)

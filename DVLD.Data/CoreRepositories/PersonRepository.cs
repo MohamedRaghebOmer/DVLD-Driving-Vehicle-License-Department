@@ -350,6 +350,72 @@ namespace DVLD.Data
             }
         }
 
+        public static string GetFullNameByAppId(int appId)
+        {
+            string query = @"SELECT p.FirstName + ' ' + p.SecondName + ' ' + p.ThirdName + ' ' + p.LastName AS FullName
+                            FROM People p
+                            INNER JOIN Applications a
+                                ON a.ApplicantPersonID = p.PersonID
+                            WHERE a.ApplicationID = @ApplicationID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", appId);
+                    connection.Open();
+                    
+                    object result = command.ExecuteScalar();
+
+                    if (result != null)
+                        return result.ToString();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
+
+        public static int GetPersonIdByLocalApplicationId(int localAppId)
+        {
+            const string query = @"SELECT p.PersonID
+                        FROM People p
+                        INNER JOIN Applications a
+                        	ON a.ApplicantPersonID = p.PersonID
+                        INNER JOIN LocalDrivingLicenseApplications lc
+                        	ON a.ApplicationID = lc.ApplicationID
+                        WHERE lc.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    con.Open();
+
+                    using (SqlDataReader reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return (int)reader["PersonID"];
+                        }
+                    }
+
+                }
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching person by LocalDrivingLicenseApplicationId = {localAppId},." + ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int personId)
         {
             string query = "SELECT 1 FROM People WHERE PersonID = @personId;";

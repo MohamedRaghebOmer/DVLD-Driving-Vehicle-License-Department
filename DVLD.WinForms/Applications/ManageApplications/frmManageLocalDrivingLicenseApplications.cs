@@ -2,10 +2,12 @@
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Licenses;
 using DVLD.WinForms.NavigateForms;
+using DVLD.WinForms.Tests;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
+using DVLD.WinForms.Applications.ManageApplications;
 
 namespace DVLD.WinForms.Applications.ManageApplications
 {
@@ -224,9 +226,9 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     if (ApplicationService.Delete(GetSelectedLocalApplicationId()))
                     {
+                        LoadDataGridApplications();
                         MessageBox.Show("Application deleted successfully.",
                             "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadDataGridApplications();
                     }
                     else
                     {
@@ -246,7 +248,8 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            if (_selectedRowIndex < 0 || _selectedRowIndex > dgvApplications.Rows.Count)
+            if (_selectedRowIndex < 0
+                || _selectedRowIndex > dgvApplications.Rows.Count)
             {
                 e.Cancel = true;
                 return;
@@ -254,67 +257,67 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
             ApplicationStatus selectedStatus = GetSelectedApplicationStatus();
 
+            ResetMenu();
+
             switch (selectedStatus)
             {
                 case ApplicationStatus.Completed:
-                    contextMenuStrip1.Items["showLicenseToolStripMenuItem"].Enabled = true;
-                    contextMenuStrip1.Items["editAppToolStripMenuItem"].Enabled = false;
-                    contextMenuStrip1.Items["deleteApplicationToolStripMenuItem"].Enabled = false;
-                    contextMenuStrip1.Items["cancelApplicationToolStripMenuItem"].Enabled = false;
-                    contextMenuStrip1.Items["scheduleTestsToolStripMenuItem"].Enabled = false;
-                    contextMenuStrip1.Items["issueDrivingLicenseFirstTimeToolStripMenuItem"].Enabled = false;
-
+                    showLicenseToolStripMenuItem.Enabled = true;
                     break;
 
                 case ApplicationStatus.Canceled:
-                    editAppToolStripMenuItem.Enabled = false;
                     deleteApplicationToolStripMenuItem.Enabled = true;
-                    cancelApplicationToolStripMenuItem.Enabled = false;
-                    scheduleTestsToolStripMenuItem.Enabled = false;
-                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
-                    showLicenseToolStripMenuItem.Enabled = false;
                     break;
 
                 case ApplicationStatus.New:
+
                     editAppToolStripMenuItem.Enabled = true;
                     deleteApplicationToolStripMenuItem.Enabled = true;
                     cancelApplicationToolStripMenuItem.Enabled = true;
 
                     int numberOfCompetedTests = GetSelectedNumOfCompletedTests();
 
-                    switch (numberOfCompetedTests)
+                    if (numberOfCompetedTests == 3)
                     {
-                        case 3:
-                            scheduleTestsToolStripMenuItem.Enabled = false;
-                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
-                            break;
+                        issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
+                    }
+                    else
+                    {
+                        scheduleTestsToolStripMenuItem.Enabled = true;
 
-                        case 2:
-                        case 1:
-                            scheduleTestsToolStripMenuItem.Enabled = true;
-                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                        switch (numberOfCompetedTests)
+                        {
+                            case 0:
+                                scheduleVisionTestToolStripMenuItem.Enabled = true;
+                                break;
 
-                            int selectedNationalNo = GetSelectedLocalApplicationId();
-                            bool hasPassedVisionTest = TestService.HasPassed(selectedNationalNo, TestType.VisionTest);
-                            bool hasPassedWrittenTest = TestService.HasPassed(selectedNationalNo, TestType.WrittenTheoryTest);
-                            bool hasPassedStreetTest = TestService.HasPassed(selectedNationalNo, TestType.PracticalStreetTest);
+                            case 1:
+                                scheduleWrittenTestToolStripMenuItem.Enabled = true;
 
-                            scheduleVisionTestToolStripMenuItem.Enabled = !hasPassedVisionTest;
-                            scheduleWrittenTestToolStripMenuItem.Enabled = !hasPassedWrittenTest;
-                            scheduleStreetTestToolStripMenuItem.Enabled = !hasPassedStreetTest;
-                            break;
+                                break;
 
-                        case 0:
-                            scheduleTestsToolStripMenuItem.Enabled = true;
-                            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
-                            scheduleVisionTestToolStripMenuItem.Enabled = true;
-                            scheduleWrittenTestToolStripMenuItem.Enabled = true;
-                            scheduleStreetTestToolStripMenuItem.Enabled = true;
-                            break;
+                            case 2:
+                                scheduleStreetTestToolStripMenuItem.Enabled = true;
+                                break;
+                        }
                     }
 
                     break;
             }
+        }
+
+        void ResetMenu()
+        {
+            showLicenseToolStripMenuItem.Enabled = false;
+            editAppToolStripMenuItem.Enabled = false;
+            deleteApplicationToolStripMenuItem.Enabled = false;
+            cancelApplicationToolStripMenuItem.Enabled = false;
+            scheduleTestsToolStripMenuItem.Enabled = false;
+            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+
+            scheduleVisionTestToolStripMenuItem.Enabled = false;
+            scheduleWrittenTestToolStripMenuItem.Enabled = false;
+            scheduleStreetTestToolStripMenuItem.Enabled = false;
         }
 
         private int GetSelectedNumOfCompletedTests()
@@ -349,8 +352,16 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 
         private void btnAddNewLocalApp_Click(object sender, EventArgs e)
         {
-            Form frm = new frmNewLocalDrivingLicenseApplication();
+            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
+            frm.OnApplicationAdded += OnApplicationAdded;
             frm.ShowDialog();
+        }
+
+        private void OnApplicationAdded(int id)
+        {
+            MessageBox.Show($"Application added successfully (ID: {id}).",
+            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadDataGridApplications();
         }
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -371,6 +382,31 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
         {
             Form frm = new frmIssueDrivingLicense(GetSelectedLocalApplicationId());
             frm.ShowDialog();
+            LoadDataGridApplications();
+        }
+
+        private void ShowTestAppointmentsForm(object sender, EventArgs e)
+        {
+            int selectedId = GetSelectedLocalApplicationId();
+
+            if (selectedId <= 0)
+                return;
+
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+
+            if (item == null)
+                return;
+
+            if (!int.TryParse(item.Tag.ToString(), out int testTypeId))
+                return;
+
+            var frm = new frmTestAppointmentsInfo(selectedId, (TestType)testTypeId);
+            frm.OnTestPassed += OnTestPassed;
+            frm.ShowDialog();
+        }
+
+        private void OnTestPassed(int obj)
+        {
             LoadDataGridApplications();
         }
     }

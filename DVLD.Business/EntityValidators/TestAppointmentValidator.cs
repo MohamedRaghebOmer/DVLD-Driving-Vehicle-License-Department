@@ -7,65 +7,103 @@ namespace DVLD.Business.EntityValidators
 {
     internal static class TestAppointmentValidator
     {
-        public static void AddNewValidator(TestAppointment testAppointment)
+        private static readonly TestAppointmentValidationContext context = new TestAppointmentValidationContext();
+
+        private class TestAppointmentValidationContext
         {
-            Core.Validators.TestAppointmentValidator.Validate(testAppointment);
+            public TestAppointment TestAppointment;
+            public LocalDrivingLicenseApplication LocalApplication;
+            public Application Application;
+        }
 
-            LocalDrivingLicenseApplication localDrivingLicenseApplication =
-                LocalDrivingLicenseApplicationRepository.GetById(
-                    testAppointment.LocalDrivingLicenseApplicationId);
+        private static void LoadContext(TestAppointment testAppointment)
+        {
+            context.TestAppointment = testAppointment;
 
-            Application application =
-                ApplicationRepository.GetById(
-                    localDrivingLicenseApplication.ApplicationID);
+            context.LocalApplication = LocalDrivingLicenseApplicationRepository.GetById(
+            testAppointment.LocalDrivingLicenseApplicationId);
 
+            if (context.LocalApplication != null)
+                context.Application = ApplicationRepository.GetById(context.LocalApplication.ApplicationID);
+
+        }
+
+        private static void ValidateForeignKeysReferences()
+        {
             // Check if the local driving license application exists
-            if (localDrivingLicenseApplication == null)
+            if (context.LocalApplication == null)
                 throw new BusinessException("The specified local driving license application does not exist.");
 
-            if (application.ApplicationTypeID ==
-                ApplicationType.ReplacementForLostDrivingLicense ||
-                application.ApplicationTypeID ==
-                ApplicationType.ReplacementForLostDrivingLicense ||
-                application.ApplicationTypeID ==
-                ApplicationType.ReleaseDetainedDrivingLicense)
+            // Check if the retake test application exists
+            if (context.TestAppointment.RetakeTestApplicationID != null
+                && !ApplicationRepository.Exists(context.TestAppointment.RetakeTestApplicationID ?? 0))
+                throw new BusinessException("The specified retake test application does not exist.");
+        }
+
+        private static void ValidateForeignKeysRequiredFields()
+        {
+            if (context.Application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense ||
+                context.Application.ApplicationTypeID == ApplicationType.ReplacementForLostDrivingLicense ||
+                context.Application.ApplicationTypeID == ApplicationType.ReleaseDetainedDrivingLicense)
             {
                 throw new BusinessException("This application type does not need a Test to be completed.");
             }
 
-            if (application.ApplicationTypeID == ApplicationType.RenewDrivingLicenseService && testAppointment.TestTypeId != TestType.VisionTest)
-                throw new BusinessException("This test type is not required for this application type.");
-
-            // Check if a test appointment already exists for the given test type and local driving license application
-            if (TestAppointmentRepository.ExistsForApplication(testAppointment.TestTypeId, testAppointment.LocalDrivingLicenseApplicationId))
-                throw new BusinessException("A test appointment already exists for the given test type and local driving license application.");
-
-            switch (testAppointment.TestTypeId)
+            if (context.Application.ApplicationTypeID == ApplicationType.RenewDrivingLicenseService
+                && context.TestAppointment.TestTypeId != TestType.VisionTest)
             {
-                case TestType.WrittenTheoryTest:
-                    // Check if a vision test appointment exists for the same local driving license application before scheduling a written theory test appointment
-                    if (!TestAppointmentRepository.ExistsForApplication(TestType.VisionTest, testAppointment.LocalDrivingLicenseApplicationId))
-                        throw new BusinessException("A vision test appointment must be scheduled before scheduling a written theory test appointment.");
-
-                    if (testAppointment.PaidFees != 20)
-                        throw new BusinessException("Paid fees must be 20 dollars for a written theory test.");
-                    break;
-
-                case TestType.VisionTest:
-                    if (testAppointment.PaidFees != 10)
-                        throw new BusinessException("Paid fees must be 10 dollars for a practical street test.");
-                    break;
-
-                case TestType.PracticalStreetTest:
-                    // Check if a written theory test appointment exists for the same local driving license application before scheduling a practical street test appointment
-                    if (!TestAppointmentRepository.ExistsForApplication(TestType.WrittenTheoryTest, testAppointment.LocalDrivingLicenseApplicationId))
-                        throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
-
-                    decimal licenseClassFees = LicenseClassRepository.GetFees(localDrivingLicenseApplication.LicenseClassID);
-                    if (testAppointment.PaidFees != licenseClassFees)
-                        throw new BusinessException($"Paid fees must be {licenseClassFees} dollars for a vision test.");
-                    break;
+                throw new BusinessException("This test type is not required for this application type.");
             }
+        }
+
+        private static void ValidateForeignKeys()
+        {
+            ValidateForeignKeysReferences();
+            ValidateForeignKeysRequiredFields();
+        }
+
+        private static void TestValidation()
+        {
+            // Check if there is already a passed test for the local application and test type
+            if (TestRepository.IsPassedByLocalAppId(context.TestAppointment.LocalDrivingLicenseApplicationId,
+                context.TestAppointment.TestTypeId))
+                throw new BusinessException("A passed test already exists for the given test type and local driving license application.");
+
+
+            // If the test type is a written theory test, check if the vision test has been passed.
+            if (context.TestAppointment.TestTypeId == TestType.WrittenTheoryTest
+            && !TestRepository.IsPassedByLocalAppId
+            (context.TestAppointment.LocalDrivingLicenseApplicationId, TestType.VisionTest))
+            {
+                throw new BusinessException("The vision test must be passed before scheduling a written theory test.");
+            }
+            // If the test type is a practical street test, check if the written theory test has been passed.
+            else if (context.TestAppointment.TestTypeId == TestType.PracticalStreetTest
+                && !TestRepository.IsPassedByLocalAppId(context.TestAppointment.LocalDrivingLicenseApplicationId,
+                TestType.WrittenTheoryTest))
+            {
+                throw new BusinessException("A written theory test appointment must be scheduled before scheduling a practical street test appointment.");
+            }
+
+            // Check if the given retake test application already has a test appointment
+            if (context.TestAppointment.RetakeTestApplicationID != null
+                && TestAppointmentRepository.ExistsByRetakeTestAppId(
+                    context.TestAppointment.RetakeTestApplicationID ?? 0))
+                throw new BusinessException("A test appointment already exists for the given retake test application.");
+
+            if (context.TestAppointment.RetakeTestApplicationID == null
+                && context.Application.ApplicationTypeID == ApplicationType.RetakeTest)
+            {
+                throw new BusinessException("This application type requires a retake test application.");
+            }
+        }
+
+        public static void ValidateForAdd(TestAppointment testAppointment)
+        {
+            Core.Validators.TestAppointmentValidator.Validate(testAppointment);
+            LoadContext(testAppointment);
+            ValidateForeignKeys();
+            TestValidation();
         }
     }
 }

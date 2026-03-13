@@ -15,14 +15,14 @@ namespace DVLD.Core.Validators
             if (!Enum.IsDefined(typeof(TestType), testAppointment.TestTypeId))
                 throw new ValidationException("Invalid Test Type.");
 
-            if (testAppointment.AppointmentDate < DateTime.Now)
+            if (testAppointment.AppointmentDate.Date < DateTime.Now.Date)
                 throw new ValidationException("The appointment date cannot be in the past.");
 
             if (testAppointment.LocalDrivingLicenseApplicationId <= 0)
-                throw new ValidationException("Local Driving License Application Id must be greater than zero.");
+                throw new ValidationException("Local Driving License Application Id does not exist.");
 
-            if (testAppointment.PaidFees < 0)
-                throw new ValidationException("Paid fees cannot be negative.");
+            if (testAppointment.RetakeTestApplicationID <= 0)
+                throw new ValidationException("Retake Test Application Id does not exist.");
         }
     }
 }

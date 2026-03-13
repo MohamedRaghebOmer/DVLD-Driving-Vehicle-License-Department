@@ -10,15 +10,18 @@ namespace DVLD.Business
 {
     public static class TestService
     {
-        public static Test Add(Test test)
+        public static int Add(Test test)
         {
             TestValidator.AddNewValidator(test);
 
             try
             {
                 int newTestId = TestRepository.Add(test);
-                TestAppointmentRepository.Lock(test.TestAppointmentID);
-                return TestRepository.GetById(newTestId);
+                bool success = TestAppointmentRepository.Lock(test.TestAppointmentID);
+                
+                if (success)
+                    return newTestId;
+                return -1;
             }
             catch (Exception ex)
             {
@@ -39,6 +42,22 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while retrieving Test with ID = {testId}.", ex);
+                throw new Exception("An error occurred while retrieving the test. Please try again later.", ex);
+            }
+        }
+
+        public static bool IsPassedByLocalAppId(int localAppId, TestType testType)
+        {
+            if (localAppId <= 0)
+                return false;
+
+            try
+            {
+                return TestRepository.IsPassedByLocalAppId(localAppId, testType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving Test with LocalDrivingLicenseApplicationId = {localAppId}.", ex);
                 throw new Exception("An error occurred while retrieving the test. Please try again later.", ex);
             }
         }
@@ -71,6 +90,22 @@ namespace DVLD.Business
                 throw new Exception("An error occurred while retrieving the tests. Please try again later.", ex);
             }
 
+        }
+
+        public static int GetNumOfFailedTestsByLocalAppId(int localAppId, TestType testType)
+        {
+            if (localAppId <= 0)
+                return -1;
+
+            try
+            {
+                return TestRepository.GetNumOfFailedTestsByLocalAppId(localAppId, testType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving number of failed test Tests with LocalDrivingLicenseApplicationId = {localAppId}.", ex);
+                throw new Exception("An error occurred while retrieving the tests. Please try again later.", ex);
+            }
         }
 
         public static bool UpdateNotes(int testId, string newNotes)

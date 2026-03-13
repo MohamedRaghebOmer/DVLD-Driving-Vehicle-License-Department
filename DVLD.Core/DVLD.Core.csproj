@@ -49,6 +49,7 @@
     <Compile Include="DTOs\Entities\LocalDrivingLicenseApplication.cs" />
     <Compile Include="DTOs\Entities\Test.cs" />
     <Compile Include="DTOs\Entities\TestAppointment.cs" />
+    <Compile Include="DTOs\Entities\TestTypeInfo.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Logging\AppLogger.cs" />
     <Compile Include="DTOs\Entities\Country.cs" />
