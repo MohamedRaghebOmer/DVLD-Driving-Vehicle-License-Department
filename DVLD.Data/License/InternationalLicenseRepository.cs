@@ -68,6 +68,36 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            string query = @"SELECT * FROM InternationalLicenses WHERE DriverID IN (SELECT DriverID FROM Drivers WHERE PersonID = @PersonID);";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personId);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license history for PersonID {personId}.", ex);
+                throw;
+            }
+        }
+
         public static InternationalLicense GetById(int licenseID)
         {
             string query = @"SELECT * FROM InternationalLicenses WHERE LicenseID = @LicenseID;";
@@ -133,6 +163,78 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetLicenseHistory(int driverId)
+        {
+            string query = @"SELECT  il.InternationalLicenseID,
+                    		    il.ApplicationID,
+                    		    il.IssuedUsingLocalLicenseID,
+                    		    il.IssueDate,
+                    		    il.ExpirationDate,
+                    		    il.IsActive
+                            FROM InternationalLicenses il
+                            WHERE il.DriverID = @DriverID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", driverId);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        DataTable dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        return dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
+                throw;
+            }
+        }
+
+        public static DataTable GetLicenseHistory(string nationalNo)
+        {
+            string query = @"SELECT  il.InternationalLicenseID,
+                        		il.ApplicationID,
+                        		il.IssuedUsingLocalLicenseID,
+                        		il.IssueDate,
+                        		il.ExpirationDate,
+                        		il.IsActive
+                        FROM InternationalLicenses il
+                        INNER JOIN Drivers d
+                        	ON il.DriverID = d.DriverID
+                        INNER JOIN People p
+                        	ON d.PersonID = p.PersonID
+                        WHERE p.NationalNo = @NationalNo;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@NationalNo", nationalNo);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        DataTable dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        return dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while selecting from InternationalLicenses", ex);
+                throw;
+            }
+        }
+
         public static bool ExistsForLocalLicenseId(int localLicenseId)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID;";
@@ -177,7 +279,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForDirver(int driverId, bool isActive = false, bool notExpired = false)
+        public static bool ExistsForDriver(int driverId, bool isActive = false, bool notExpired = false)
         {
             string query = @"SELECT 1 FROM InternationalLicenses WHERE DriverID = @DriverID";
 

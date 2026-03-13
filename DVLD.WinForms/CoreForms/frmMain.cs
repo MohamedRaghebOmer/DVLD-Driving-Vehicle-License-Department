@@ -1,6 +1,7 @@
 ﻿using DVLD.Core.Logging;
 using DVLD.WinForms.Applications.ManageApplications;
 using DVLD.WinForms.Applications.TestTypes;
+using DVLD.WinForms.CoreForms;
 using DVLD.WinForms.NavigateForms;
 using DVLD.WinForms.Users;
 using System;
@@ -78,6 +79,12 @@ namespace DVLD.WinForms
         private void localDrivingLicenseApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form frm = new frmManageLocalDrivingLicenseApplications();
+            frm.ShowDialog();
+        }
+
+        private void btnDrivers_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmDrivers();
             frm.ShowDialog();
         }
     }

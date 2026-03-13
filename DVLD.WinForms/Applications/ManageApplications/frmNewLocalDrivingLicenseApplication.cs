@@ -1,6 +1,7 @@
 ﻿using DVLD.Business;
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
+using DVLD.WinForms.UserControls;
 using System;
 using System.Windows.Forms;
 
@@ -8,6 +9,8 @@ namespace DVLD.WinForms.NavigateForms
 {
     public partial class frmNewLocalDrivingLicenseApplication : Form
     {
+        public event Action<int> OnApplicationAdded;
+
         public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
@@ -41,7 +44,8 @@ namespace DVLD.WinForms.NavigateForms
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (ctrlPersonDetailsWithFilter1.PersonID <= 0)
+            if (ctrlPersonDetailsWithFilter1.PersonID <= 0 
+                && string.IsNullOrEmpty(ctrlPersonDetailsWithFilter1.NationalNo))
             {
                 MessageBox.Show("Please select a person", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -54,7 +58,8 @@ namespace DVLD.WinForms.NavigateForms
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (ctrlPersonDetailsWithFilter1.PersonID <= 0)
+            if (ctrlPersonDetailsWithFilter1.PersonID <= 0
+                && string.IsNullOrEmpty(ctrlPersonDetailsWithFilter1.NationalNo))
             {
                 MessageBox.Show("Please select a person", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -64,19 +69,32 @@ namespace DVLD.WinForms.NavigateForms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (ctrlPersonDetailsWithFilter1.PersonID <= 0)
+            if ((IsUsingPersonId() && ctrlPersonDetailsWithFilter1.PersonID <= 0) ||
+                (IsUsingNationalNo() && string.IsNullOrEmpty(ctrlPersonDetailsWithFilter1.NationalNo)))
             {
                 MessageBox.Show("Please select a person", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
+                int personId = ctrlPersonDetailsWithFilter1.PersonID;
+                
+                if (IsUsingNationalNo())
+                    personId = PersonService.GetIdByNationalNo(ctrlPersonDetailsWithFilter1.NationalNo);
+
+                if (MessageBox.Show($"Are you want to create a new local driving license " +
+                    $"application for person with id = {personId}?", "Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    return;
+                }
+
                 try
                 {
                     Core.DTOs.Entities.Application application =
                         new Core.DTOs.Entities.Application
                         {
-                            ApplicantPersonID = ctrlPersonDetailsWithFilter1.PersonID,
+                            ApplicantPersonID = personId,
                             ApplicationTypeID =
                             ApplicationType.NewLocalDrivingLicenseService
                         };
@@ -88,11 +106,8 @@ namespace DVLD.WinForms.NavigateForms
                     if (newApplicationID > 0)
                     {
                         lblApplicationId.Text = newApplicationID.ToString();
-                        MessageBox.Show("Application added successfully " +
-                            "with Application ID: " + newApplicationID + ".",
-                            "Success", MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
                         btnSave.Enabled = false;
+                        OnApplicationAdded?.Invoke(newApplicationID);
                     }
                 }
                 catch (Exception ex)
@@ -101,6 +116,18 @@ namespace DVLD.WinForms.NavigateForms
                         MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private bool IsUsingNationalNo()
+        {
+            return ctrlPersonDetailsWithFilter1.LoadType ==
+                ctrlPersonDetails.LoadType.UsingNationalNo;
+        }
+
+        private bool IsUsingPersonId()
+        {
+            return ctrlPersonDetailsWithFilter1.LoadType ==
+                ctrlPersonDetails.LoadType.UsingPersonId;
         }
     }
 }

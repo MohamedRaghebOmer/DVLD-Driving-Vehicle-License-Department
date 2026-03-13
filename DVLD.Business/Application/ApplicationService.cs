@@ -10,12 +10,9 @@ namespace DVLD.Business
 {
     public static class ApplicationService
     {
-        // This method take the object application as a parameter to avoid 
-        // validation on the application id to make sure that the application
-        // with the id given is existed, and other validations
-        public static int Add(Application application, LicenseClass licenseClass)
+        private static int NewLocalDrivingLicenseApplication(Application application, LicenseClass licenseClass)
         {
-            ApplicationValidator.AddNewValidator(application, licenseClass);
+            ApplicationValidator.ValidateNewLocalDrivingLicenseApp(application, licenseClass);
 
             try
             {
@@ -39,6 +36,35 @@ namespace DVLD.Business
                 AppLogger.LogError("BLL: Error while creating new local driving license");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
+
+        }
+
+        public static int NewRetakeTestApplication(Application application)
+        {
+            ApplicationValidator.ValidateNewRetakeTestApplication(application);
+
+            try
+            {
+                // Insert the application into the database and get the new ApplicationId
+                return ApplicationRepository.Add(application);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while creating new retake test application");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static int Add(Application application, LicenseClass licenseClass)
+        {
+            switch (application.ApplicationTypeID)
+            {
+                case ApplicationType.NewLocalDrivingLicenseService:
+                    return NewLocalDrivingLicenseApplication(application, licenseClass);
+
+            }
+
+            return -1;
         }
 
         //public static Application NewInternationalLicenseApplication(Application application)
@@ -86,6 +112,23 @@ namespace DVLD.Business
                 AppLogger.LogError("BLL: Error while retrieving application by id", ex);
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
+        }
+
+        public static Application GetByLocalAppId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return null;
+
+            try
+            {
+                return ApplicationRepository.GetByLocalAppId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving application by local application id = {localAppId}.", ex);
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+
         }
 
         public static bool Exists(int applicationId)

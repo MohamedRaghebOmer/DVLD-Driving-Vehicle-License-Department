@@ -28,7 +28,7 @@ namespace DVLD.Business.EntityValidators
             License localLicense = LicenseRepository.GetById(license.IssuedUsingLocalLicenseID);
 
             // Check if the driver already has an international license.
-            if (InternationalLicenseRepository.ExistsForDirver(localLicense.DriverId, true, true))
+            if (InternationalLicenseRepository.ExistsForDriver(localLicense.DriverId, true, true))
                 throw new BusinessException("The driver already has an active international license.");
 
             // Check if the application already associated with another international license.
@@ -45,7 +45,7 @@ namespace DVLD.Business.EntityValidators
                 throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
 
             // Check if the local license belongs to the applicant.
-            if (DriverRepository.GetById(DriverRepository.GetIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
+            if (DriverRepository.GetById(DriverRepository.GetDriverIdByPersonId(localLicense.DriverId)).PersonId != application.ApplicantPersonID)
                 throw new BusinessException("The local license does not belong to the applicant.");
 
             // Check if the local license is a class 3 license.

@@ -160,7 +160,7 @@ namespace DVLD.Data
 
         public static bool IsDetained(int licenseId)
         {
-            string query = @"SELECT 1 FROM DetainedLicenses WHERE LicenseID = @licenseId AND IsReleased = @isReleased;";
+            string query = @"SELECT 1 FROM DetainedLicenses WHERE LicenseID = @licenseId AND IsReleased = 0;";
 
             try
             {

@@ -43,6 +43,22 @@ namespace DVLD.Business
             }
         }
 
+        public static Person GetByDriverId(int driverId)
+        {
+            if (driverId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByDriverId(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with driver id = {driverId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static Person GetByNationalNo(string nationalNo)
         {
             if (string.IsNullOrWhiteSpace(nationalNo))
@@ -75,24 +91,27 @@ namespace DVLD.Business
             }
         }
 
+        public static int GetPersonIdByLocalApplicationId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return -1;
+
+            try
+            {
+                return PersonRepository.GetPersonIdByLocalApplicationId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person id with local application id = {localAppId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static string GetImagePathByPersonId(int personId)
         {
             if (personId < 1) return null;
 
             string fileName = PersonRepository.GetImagePathByPersonId(personId);
-
-            if (fileName == null)
-                return null;
-
-            return Path.Combine(PathHelper.ImagesFolderPath, fileName);
-        }
-
-        public static string GetImagePathByNationalNo(string nationalNo)
-        {
-            if (string.IsNullOrEmpty(nationalNo))
-                return null;
-
-            string fileName = PersonRepository.GetImagePathByNationalNo(nationalNo);
 
             if (fileName == null)
                 return null;
@@ -108,6 +127,39 @@ namespace DVLD.Business
             return Path.Combine(PathHelper.ImagesFolderPath, imageFileName);
         }
 
+        public static Person GetByApplicationId(int applicationId)
+        {
+            if (applicationId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByApplicationId(applicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with application id = {applicationId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static Person GetByLocalApplicationId(int localAppId)
+        {
+            if (localAppId <= 0)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetByLocalApplicationId(localAppId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person with local application id = {localAppId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+
+        }
+
         public static DataTable GetAllWithDateParts()
         {
             try
@@ -117,6 +169,22 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while reading all people with date parts.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static string GetFullNameByAppId(int appId)
+        {
+            if (appId < 1)
+                return null;
+
+            try
+            {
+                return PersonRepository.GetFullNameByAppId(appId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person full name with application id = {appId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

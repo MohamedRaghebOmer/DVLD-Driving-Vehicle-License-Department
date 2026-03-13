@@ -13,27 +13,19 @@ namespace DVLD.Business
     {
         private static IssueReason DetermineIssueReason(ApplicationType applicationType)
         {
-            IssueReason issueReason;
-
             switch (applicationType)
             {
                 case ApplicationType.NewLocalDrivingLicenseService:
-                    issueReason = IssueReason.FirstTime;
-                    break;
+                    return IssueReason.FirstTime;
                 case ApplicationType.RenewDrivingLicenseService:
-                    issueReason = IssueReason.Renew;
-                    break;
+                    return IssueReason.Renew;
                 case ApplicationType.ReplacementForLostDrivingLicense:
-                    issueReason = IssueReason.ReplacementLost;
-                    break;
+                    return IssueReason.ReplacementLost;
                 case ApplicationType.ReplacementForDamagedDrivingLicense:
-                    issueReason = IssueReason.ReplacementDamaged;
-                    break;
+                    return IssueReason.ReplacementDamaged;
                 default:
                     throw new ValidationException("Invalid application type for issuing a license.");
             }
-
-            return issueReason;
         }
 
         private static int GetDriverId(int personId)
@@ -42,7 +34,7 @@ namespace DVLD.Business
             // else add a new driver and return the new driver id
 
             int driverId = -1;
-            driverId = DriverRepository.GetIdByPersonId(personId);
+            driverId = DriverRepository.GetDriverIdByPersonId(personId);
 
             if (driverId == -1)
                 return driverId;
@@ -64,34 +56,25 @@ namespace DVLD.Business
             return previousLicenseId;
         }
 
-        private static int AddNewLicense(License license, IssueReason issueReason, int applicantPersonId)
+        public static int Issue(int localDrivingLicenseApplicationId, string notes)
         {
-            int driverId = GetDriverId(applicantPersonId); // Must return an existing driver
-            int previousLicenseId = GetAndDeactivatePreviousLicense(driverId, license.LicenseClass);
-            int newLicenseId = LicenseRepository.Add(license, issueReason, driverId, LicenseClassRepository.GetDefaultValidityLength(license.LicenseClass));
-
-            if (license.LicenseClass == LicenseClass.Class3_OrdinaryDrivingLicense && previousLicenseId != -1 && InternationalLicenseRepository.ExistsForLocalLicenseId(previousLicenseId))
-                InternationalLicenseRepository.UpdateLocalLicense(InternationalLicenseRepository.GetIdByLocalLicenseId(previousLicenseId), newLicenseId);
-
-            return newLicenseId;
-        }
-
-
-
-        public static License Add(License license)
-        {
-            LicenseValidator.AddNewValidator(license);
-            Application application = ApplicationRepository.GetById(license.ApplicationId);
+            // Validate and return a trusted license to issue
+            License license = LicenseValidator.AddNewValidator(localDrivingLicenseApplicationId);
+            license.Notes = notes;
 
             try
             {
-                int newLicenseId = AddNewLicense(license, DetermineIssueReason(application.ApplicationTypeID), application.ApplicantPersonID);
-                bool isUpdated = ApplicationRepository.UpdateApplicationStatus(license.ApplicationId, ApplicationStatus.Completed);
-                return (newLicenseId != -1 && isUpdated) ? LicenseRepository.GetById(newLicenseId) : null;
+                int newLicenseId = LicenseRepository.Add(license);
+                bool isUpdated = ApplicationRepository.UpdateAppStatusByLocalAppId(localDrivingLicenseApplicationId, ApplicationStatus.Completed);
+
+                if (newLicenseId != -1 && isUpdated)
+                    return newLicenseId;
+
+                return -1;
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("BLL: Error adding new license.");
+                AppLogger.LogError("BLL: Error adding issuing a license for first time.");
                 throw new Exception("An error occurred while adding the license. Please try again later.", ex);
             }
         }
@@ -137,6 +120,103 @@ namespace DVLD.Business
                 AppLogger.LogError($"BLL: Error while getting licenses for DriverID {driverId}.", ex);
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
+        }
+
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            if (personId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistoryByPersonId(personId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for PersonID {personId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static DataTable GetLicenseHistoryByDriverId(int driverId)
+        {
+            if (driverId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistoryByDriverId(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for DriverID {driverId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static DataTable GetLicenseHistoryByNationalNo(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetLicenseHistoryByNationalNo(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license history for NationalNo {nationalNo}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static License GetByNationalNo(string nationalNo)
+        {
+            if (string.IsNullOrEmpty(nationalNo))
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByNationalNo(nationalNo);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license with NationalNo {nationalNo}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static License GetByApplicationId(int applicationId)
+        {
+            if (applicationId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByApplicationId(applicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license by application id = {applicationId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+        }
+
+        public static License GetByLocalApplicationId(int localApplicationId)
+        {
+            if (localApplicationId <= 0)
+                return null;
+
+            try
+            {
+                return LicenseRepository.GetByLocalApplicationId(localApplicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting license by local application id = {localApplicationId}.", ex);
+                throw new Exception("We encountered a technical issue, please try again later.");
+            }
+
         }
 
         public static bool DeactivateLicense(int licenseId)

@@ -9,6 +9,8 @@ namespace DVLD.Business
 {
     public static class LicenseClassService
     {
+        private const string _licenseClassErrorMessage = "Undefined license class.";
+
         public static DataTable GetAll()
         {
             try
@@ -25,7 +27,7 @@ namespace DVLD.Business
         public static int GetMinimumAllowedAge(LicenseClass licenseClass)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
 
             try
             {
@@ -41,7 +43,7 @@ namespace DVLD.Business
         public static int GetDefaultValidityLength(LicenseClass licenseClass)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
 
             try
             {
@@ -57,7 +59,7 @@ namespace DVLD.Business
         public static decimal GetClassFees(LicenseClass licenseClass)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
             try
             {
                 return LicenseClassRepository.GetFees(licenseClass);
@@ -72,7 +74,7 @@ namespace DVLD.Business
         public static bool UpdateMinimumAllowedAge(LicenseClass licenseClass, int newMinimumAge)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
             if (newMinimumAge < 0)
                 throw new ValidationException("Minimum age cannot be negative.");
             try
@@ -89,7 +91,7 @@ namespace DVLD.Business
         public static bool UpdateDefaultValidityLength(LicenseClass licenseClass, int newValidityLength)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
             if (newValidityLength < 0)
                 throw new ValidationException("Validity length cannot be negative.");
             try
@@ -106,7 +108,7 @@ namespace DVLD.Business
         public static bool UpdateClassFees(LicenseClass licenseClass, decimal newFees)
         {
             if (!Enum.IsDefined(typeof(LicenseClass), licenseClass))
-                throw new ValidationException("Undfined license class.");
+                throw new ValidationException(_licenseClassErrorMessage);
 
             if (newFees < 0)
                 throw new ValidationException("new Fees cannot be negative.");
@@ -121,5 +123,35 @@ namespace DVLD.Business
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
         }
+
+        public static string GetLicenseClassName(LicenseClass licenseClass)
+        {
+            switch (licenseClass)
+            {
+                case LicenseClass.Class1_SmallMotorcycle:
+                    return "Class 1 - Small Motorcycle";
+
+                case LicenseClass.Class2_HeavyMotorcycle:
+                    return "Class 2 - Heavy Motorcycle";
+
+                case LicenseClass.Class3_OrdinaryDrivingLicense:
+                    return "Class 3 - Ordinary Driving License";
+
+                case LicenseClass.Class4_Commercial:
+                    return "Class 4 - Commercial";
+
+                case LicenseClass.Class5_Agricultural:
+                    return "Class 5 - Agricultural";
+
+                case LicenseClass.Class6_SmallAndMediumBus:
+                    return "Class 6 - Small and Medium Bus";
+
+                case LicenseClass.Class7_TruckAndHeavyVehicle:
+                    return "Class 7 - Truck and Heavy Vehicle";
+            }
+
+            return null;
+        }
+
     }
 }

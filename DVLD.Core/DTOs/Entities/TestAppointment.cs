@@ -13,12 +13,13 @@ namespace DVLD.Core.DTOs.Entities
 
         public DateTime AppointmentDate { get; set; }
 
-        public decimal PaidFees { get; set; }
+        public decimal PaidFees { get; private set; }
 
         public int CreatedByUserId { get; private set; }
 
         public bool IsLocked { get; private set; }
 
+        public int? RetakeTestApplicationID { get; set; }
 
         public TestAppointment()
         {
@@ -29,11 +30,12 @@ namespace DVLD.Core.DTOs.Entities
             this.PaidFees = 0;
             this.CreatedByUserId = -1;
             this.IsLocked = false;
+            this.RetakeTestApplicationID = null;
         }
 
         internal TestAppointment(int testAppointmentId, TestType testTypeId,
             int localDrivingLicenseApplicationId, DateTime appointmentDate,
-            decimal paidFees, int createdByUserId, bool isLocked) : this()
+            decimal paidFees, int createdByUserId, bool isLocked, int? retakeTestApplicationID) : this()
         {
             TestAppointmentId = testAppointmentId;
             TestTypeId = testTypeId;
@@ -42,6 +44,7 @@ namespace DVLD.Core.DTOs.Entities
             PaidFees = paidFees;
             CreatedByUserId = createdByUserId;
             IsLocked = isLocked;
+            RetakeTestApplicationID = retakeTestApplicationID;
         }
     }
 }

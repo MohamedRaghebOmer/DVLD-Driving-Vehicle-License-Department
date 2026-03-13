@@ -10,14 +10,44 @@ namespace DVLD.Data
 {
     public static class LicenseRepository
     {
-        public static int Add(License license, IssueReason issueReason, int driverId, int validityLength)
+        public static int Add(License license)
         {
-            string query = @"INSERT INTO Licenses (ApplicationID, DriverID, LicenseClass, 
-                            IssueDate, ExpirationDate, Notes, PaidFees, IsActive, IssueReason, 
-                            CreatedByUserID) 
-                            VALUES (@applicationID, @driverID, @licenseClass, GETDATE(),
-                            DATEADD(YEAR, @validityLength, GETDATE()), @notes, @paidFees, @isActive, 
-                            @issueReason, @createdByUserID);
+            string query = @"DECLARE @ValidityLength INT;
+                            DECLARE @ClassFees MONEY;
+                            
+                            SELECT 
+                                @ValidityLength = DefaultValidityLength,
+                                @ClassFees = ClassFees
+                            FROM LicenseClasses
+                            WHERE LicenseClassID = @licenseClass;
+                            
+                            INSERT INTO Licenses
+                            (
+                                ApplicationID,
+                                DriverID,
+                                LicenseClass,
+                                IssueDate,
+                                ExpirationDate,
+                                Notes,
+                                PaidFees,
+                                IsActive,
+                                IssueReason,
+                                CreatedByUserID
+                            )
+                            VALUES
+                            (
+                                @applicationID,
+                                @driverID,
+                                @licenseClass,
+                                GETDATE(),
+                                DATEADD(YEAR, @ValidityLength, GETDATE()),
+                                @notes,
+                                @ClassFees,
+                                1,
+                                @issueReason,
+                                @createdByUserID
+                            );
+                            
                             SELECT SCOPE_IDENTITY();";
 
             try
@@ -26,13 +56,10 @@ namespace DVLD.Data
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@applicationID", license.ApplicationId);
-                    command.Parameters.AddWithValue("@driverID", driverId);
+                    command.Parameters.AddWithValue("@driverID", license.DriverId);
                     command.Parameters.AddWithValue("@licenseClass", (int)license.LicenseClass);
-                    command.Parameters.AddWithValue("@validityLength", validityLength);
                     command.Parameters.AddWithValue("@notes", license.Notes ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@paidFees", license.PaidFees);
-                    command.Parameters.AddWithValue("@isActive", license.IsActive);
-                    command.Parameters.AddWithValue("@issueReason", (int)issueReason);
+                    command.Parameters.AddWithValue("@issueReason", (int)license.IssueReason);
                     command.Parameters.AddWithValue("@createdByUserID", LoggedInUserInfo.UserId);
                     connection.Open();
 
@@ -137,6 +164,36 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetLicenseHistoryByPersonId(int personId)
+        {
+            string query = "SELECT * FROM Licenses WHERE DriverID IN (SELECT DriverID FROM Drivers WHERE PersonID = @PersonID);";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personId);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license history for PersonID {personId}.", ex);
+                throw;
+            }
+        }
+
         public static License GetById(int licenseId)
         {
             string query = "SELECT * FROM Licenses WHERE LicenseID = @LicenseID;";
@@ -207,6 +264,229 @@ namespace DVLD.Data
             }
         }
 
+        public static DataTable GetLicenseHistoryByDriverId(int driverId)
+        {
+            string query = @"SELECT  l.LicenseID,
+                    		l.ApplicationID,
+                    		lc.ClassName,
+                    		l.IssueDate,
+                    		l.IssueDate + lc.DefaultValidityLength AS ExpirationDate,
+                    		l.IsActive
+                    FROM Licenses l
+                    INNER JOIN LicenseClasses lc
+                    	ON l.LicenseClass = lc.LicenseClassID
+                    WHERE l.DriverID =  @DriverID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", driverId);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license history for DriverID {driverId}.", ex);
+                throw;
+            }
+        }
+
+        public static DataTable GetLicenseHistoryByNationalNo(string nationalNo)
+        {
+            string query = @"SELECT  l.LicenseID,
+                    		l.ApplicationID,
+                    		lc.ClassName,
+                    		l.IssueDate,
+                    		l.IssueDate + lc.DefaultValidityLength AS ExpirationDate,
+                    		l.IsActive
+                    FROM Licenses l
+                    INNER JOIN LicenseClasses lc
+                    	ON l.LicenseClass = lc.LicenseClassID
+                    INNER JOIN Drivers d
+                    	ON l.DriverID = d.DriverID
+                    INNER JOIN People p
+                    	ON d.PersonID = p.PersonID
+                    WHERE p.NationalNo =  @NationalNo;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@NationalNo", nationalNo);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+                            return dataTable;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license history for NationalNo {nationalNo}.", ex);
+                throw;
+            }
+        }
+
+        public static License GetByNationalNo(string nationalNo)
+        {
+            string query = @"SELECT * FROM Licenses l
+                            INNER JOIN Drivers d
+                            ON l.DriverID = d.DriverID
+                            INNER JOIN People p
+                                ON d.PersonID = p.PersonID
+                            WHERE p.NationalNo = @NationalNo;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@NationalNo", nationalNo);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new License(
+                                licenseId: Convert.ToInt32(reader["LicenseID"]),
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                driverId: Convert.ToInt32(reader["DriverID"]),
+                                licenseClass: (LicenseClass)Convert.ToInt32(reader["LicenseClass"]),
+                                issueDate: Convert.ToDateTime(reader["IssueDate"]),
+                                expirationDate: Convert.ToDateTime(reader["ExpirationDate"]),
+                                notes: reader["Notes"] != null ? reader["Notes"].ToString() : string.Empty,
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                isActive: Convert.ToBoolean(reader["IsActive"]),
+                                issueReason: (IssueReason)Convert.ToInt32(reader["IssueReason"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license for NationalNo {nationalNo}.", ex);
+                throw;
+            }
+            return null;
+        }
+
+        public static License GetByApplicationId(int applicationId)
+        {
+            const string query = @"SELECT * FROM Licenses 
+                                WHERE ApplicationID = @ApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@ApplicationID", applicationId);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new License
+                            (
+                                licenseId: Convert.ToInt32(reader["LicenseID"]),
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                driverId: Convert.ToInt32(reader["DriverID"]),
+                                licenseClass: (LicenseClass)Convert.ToInt32(reader["LicenseClass"]),
+                                issueDate: Convert.ToDateTime(reader["IssueDate"]),
+                                expirationDate: Convert.ToDateTime(reader["ExpirationDate"]),
+                                notes: reader["Notes"] != null ? reader["Notes"].ToString() : string.Empty,
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                isActive: Convert.ToBoolean(reader["IsActive"]),
+                                issueReason: (IssueReason)Convert.ToInt32(reader["IssueReason"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license for ApplicationId {applicationId}.", ex);
+                throw;
+            }
+        }
+
+        public static License GetByLocalApplicationId(int localApplicationId)
+        {
+            const string query = @"SELECT * FROM Licenses l
+                            INNER JOIN Applications a
+                                ON l.ApplicationID = a.ApplicationID
+                            INNER JOIN LocalDrivingLicenseApplications ld
+                                ON a.ApplicationID = ld.ApplicationID
+                            WHERE ld.LocalDrivingLicenseApplicationID =
+                            @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID",
+                        localApplicationId);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new License
+                            (
+                                licenseId: Convert.ToInt32(reader["LicenseID"]),
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                driverId: Convert.ToInt32(reader["DriverID"]),
+                                licenseClass: (LicenseClass)Convert.ToInt32(reader["LicenseClass"]),
+                                issueDate: Convert.ToDateTime(reader["IssueDate"]),
+                                expirationDate: Convert.ToDateTime(reader["ExpirationDate"]),
+                                notes: reader["Notes"] != null ? reader["Notes"].ToString() : string.Empty,
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                isActive: Convert.ToBoolean(reader["IsActive"]),
+                                issueReason: (IssueReason)Convert.ToInt32(reader["IssueReason"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching license for LocalApplicationId {localApplicationId}.", ex);
+                throw;
+            }
+
+        }
+
         public static bool Exists(int licenseId)
         {
             string query = @"SELECT 1 FROM Licenses WHERE LicenseID = @licenseId;";
@@ -229,7 +509,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForDriver(int driverId, LicenseClass licenseClass, bool checkActive = false)
+        public static bool ExistsByDriver(int driverId, LicenseClass licenseClass, bool checkActive = false)
         {
             string query = @"SELECT 1 FROM Licenses WHERE DriverID = @Id AND LicenseClass = @class";
 

@@ -56,15 +56,15 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAll()
+        public static DataTable GetDriversView()
         {
             try
             {
-                return DriverRepository.GetAll();
+                return DriverRepository.GetDriversView();
             }
             catch (Exception ex)
             {
-                AppLogger.LogError("BLL: Error while trying to get all drivers.");
+                AppLogger.LogError("BLL: Error while trying to get drivers view.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
@@ -76,7 +76,7 @@ namespace DVLD.Business
 
             try
             {
-                return DriverRepository.ExistsForPerson(personId, excludedDriverId);
+                return DriverRepository.ExistsByPersonId(personId, excludedDriverId);
             }
             catch (Exception ex)
             {

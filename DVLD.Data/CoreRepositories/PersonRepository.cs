@@ -180,6 +180,98 @@ namespace DVLD.Data
             }
         }
 
+        public static Person GetByDriverId(int driverId)
+        {
+            string query = @"SELECT * FROM People
+                            INNER JOIN Drivers
+                                ON People.PersonID = Drivers.PersonID
+                            WHERE Drivers.DriverID = @DriverID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", driverId);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Person(
+                                (int)reader["PersonID"],
+                                (string)reader["NationalNo"],
+                                (string)reader["FirstName"],
+                                (string)reader["SecondName"],
+                                reader["ThirdName"] == DBNull.Value ? string.Empty : (string)reader["ThirdName"],
+                                (string)reader["LastName"],
+                                (DateTime)reader["DateOfBirth"],
+                                (Gender)(byte)reader["Gender"],
+                                (string)reader["Address"],
+                                (string)reader["Phone"],
+                                reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
+                                (int)reader["NationalityCountryID"],
+                                reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+            return null;
+        }
+
+        public static Person GetByApplicationId(int applicationId)
+        {
+            string query = @"SELECT * FROM People p
+                            INNER JOIN Applications a
+                                ON p.PersonID = a.ApplicantPersonID
+                            WHERE a.ApplicationID = @ApplicationID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", applicationId);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Person(
+                                (int)reader["PersonID"],
+                                (string)reader["NationalNo"],
+                                (string)reader["FirstName"],
+                                (string)reader["SecondName"],
+                                reader["ThirdName"] == DBNull.Value ? string.Empty : (string)reader["ThirdName"],
+                                (string)reader["LastName"],
+                                (DateTime)reader["DateOfBirth"],
+                                (Gender)(byte)reader["Gender"],
+                                (string)reader["Address"],
+                                (string)reader["Phone"],
+                                reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
+                                (int)reader["NationalityCountryID"],
+                                reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+            return null;
+        }
+
         public static string GetImagePathByPersonId(int personId)
         {
             string query = "SELECT ImagePath FROM People WHERE PersonID = @personId;";
@@ -206,18 +298,74 @@ namespace DVLD.Data
             }
         }
 
-        public static string GetImagePathByNationalNo(string nationalNo)
+        public static Person GetByLocalApplicationId(int localAppId)
         {
-            string query = "SELECT ImagePath FROM People WHERE NationalNo = @nationalNo;";
+            const string query = @"SELECT * 
+                        FROM People p
+                        INNER JOIN Applications a
+                        	ON a.ApplicantPersonID = p.PersonID
+                        INNER JOIN LocalDrivingLicenseApplications lc
+                        	ON a.ApplicationID = lc.ApplicationID
+                        WHERE lc.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID",
+                        localAppId);
+
+                    con.Open();
+
+                    using (SqlDataReader reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Person(
+                                (int)reader["PersonID"],
+                                (string)reader["NationalNo"],
+                                (string)reader["FirstName"],
+                                (string)reader["SecondName"],
+                                reader["ThirdName"] == DBNull.Value ? string.Empty : (string)reader["ThirdName"],
+                                (string)reader["LastName"],
+                                (DateTime)reader["DateOfBirth"],
+                                (Gender)(byte)reader["Gender"],
+                                (string)reader["Address"],
+                                (string)reader["Phone"],
+                                reader["Email"] == DBNull.Value ? string.Empty : (string)reader["Email"],
+                                (int)reader["NationalityCountryID"],
+                                reader["ImagePath"] == DBNull.Value ? string.Empty : (string)reader["ImagePath"]
+                            );
+                        }
+                    }
+
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching person by LocalDrivingLicenseApplicationId = {localAppId},." + ex);
+                throw;
+            }
+        }
+
+        public static string GetFullNameByAppId(int appId)
+        {
+            string query = @"SELECT p.FirstName + ' ' + p.SecondName + ' ' + p.ThirdName + ' ' + p.LastName AS FullName
+                            FROM People p
+                            INNER JOIN Applications a
+                                ON a.ApplicantPersonID = p.PersonID
+                            WHERE a.ApplicationID = @ApplicationID;";
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@nationalNo", nationalNo);
-
+                    command.Parameters.AddWithValue("@ApplicationID", appId);
                     connection.Open();
+                    
                     object result = command.ExecuteScalar();
 
                     if (result != null)
@@ -228,6 +376,42 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError("DAL: Error while reading from People." + ex);
+                throw;
+            }
+        }
+
+        public static int GetPersonIdByLocalApplicationId(int localAppId)
+        {
+            const string query = @"SELECT p.PersonID
+                        FROM People p
+                        INNER JOIN Applications a
+                        	ON a.ApplicantPersonID = p.PersonID
+                        INNER JOIN LocalDrivingLicenseApplications lc
+                        	ON a.ApplicationID = lc.ApplicationID
+                        WHERE lc.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    con.Open();
+
+                    using (SqlDataReader reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return (int)reader["PersonID"];
+                        }
+                    }
+
+                }
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while fetching person by LocalDrivingLicenseApplicationId = {localAppId},." + ex);
                 throw;
             }
         }

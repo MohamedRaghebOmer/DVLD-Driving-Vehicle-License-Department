@@ -32,13 +32,13 @@ namespace DVLD.WinForms
 
         private void frmAddEditPersonInfo_Load(object sender, EventArgs e)
         {
-            SetLables();
+            SetLabels();
 
             if (IsUpdateMode)
                 ctrlAddEditPersonInfo1.PersonID = this._personId;
         }
 
-        private void SetLables()
+        private void SetLabels()
         {
             if (IsUpdateMode)
             {

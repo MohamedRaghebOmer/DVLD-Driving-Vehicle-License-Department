@@ -1,4 +1,5 @@
-﻿using DVLD.Core.DTOs.Enums;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;
@@ -53,6 +54,19 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while updating test type with id = {(int)testType}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
+        public static decimal GetFees(TestType testType)
+        {
+            try
+            {
+                return TestTypeRepository.GetFees(testType);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while getting fees for test type with id = {(int)testType}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

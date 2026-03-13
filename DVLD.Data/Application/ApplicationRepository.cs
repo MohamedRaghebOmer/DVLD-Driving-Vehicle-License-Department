@@ -125,6 +125,49 @@ namespace DVLD.Data
             }
         }
 
+        public static Application GetByLocalAppId(int localAppId)
+        {
+            string query = @"SELECT * FROM Applications a
+                            INNER JOIN LocalDrivingLicenseApplications l
+                                ON a.ApplicationID = l.ApplicationID
+                            WHERE l.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Application
+                            (
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                applicantPersonId: Convert.ToInt32(reader["ApplicantPersonID"]),
+                                applicationDate: Convert.ToDateTime(reader["ApplicationDate"]),
+                                applicationTypeId: (ApplicationType)Convert.ToInt32(reader["ApplicationTypeID"]),
+                                applicationStatus: (ApplicationStatus)Convert.ToInt32(reader["ApplicationStatus"]),
+                                lastStatusDate: Convert.ToDateTime(reader["LastStatusDate"]),
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving application from Applications table.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int applicationId)
         {
             string query = @"SELECT 1 FROM Applications WHERE ApplicationID = @id;";
@@ -171,7 +214,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool UpdateApplicationStatus(int applicationId, ApplicationStatus newStatus, bool autoUpdateLastStatusDate = true)
+        public static bool UpdateAppStatusByAppId(int applicationId, ApplicationStatus newStatus, bool autoUpdateLastStatusDate = true)
         {
             string query = @"UPDATE Applications SET ApplicationStatus = @applicationStatus";
 
@@ -187,6 +230,35 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@applicationStatus", (int)newStatus);
                     command.Parameters.AddWithValue("@applicationId", applicationId);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while updating application status in Applications table.", ex);
+                throw;
+            }
+        }
+
+        public static bool UpdateAppStatusByLocalAppId(int localAppId, ApplicationStatus newStatus)
+        {
+            string query = @"UPDATE a
+                            SET 
+                                a.ApplicationStatus = @ApplicationStatus,
+                                a.LastStatusDate = GETDATE()
+                            FROM Applications a
+                            INNER JOIN LocalDrivingLicenseApplications ld
+                                ON a.ApplicationID = ld.ApplicationID
+                            WHERE ld.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationStatus", (int)newStatus);
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localAppId);
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;
                 }

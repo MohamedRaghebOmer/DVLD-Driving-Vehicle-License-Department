@@ -5,65 +5,58 @@ using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
-    internal class LicenseValidator
+    internal static class LicenseValidator
     {
-        public static void AddNewValidator(License license)
+        public static License AddNewValidator(int localAppId)
         {
-            Core.Validators.LicenseValidator.Validate(license);
+            if (localAppId <= 0)
+                throw new ValidationException($"Local Driving License Application with Id = {localAppId} does not exist.");
+
+            var localApp = LocalDrivingLicenseApplicationRepository.GetById(localAppId);
+
+            if (localApp == null)
+                throw new ValidationException($"Local Driving License Application with Id = {localAppId} does not exist.");
 
 
-            // Check if application exists.
-            if (!ApplicationRepository.Exists(license.ApplicationId))
-                throw new BusinessException("Application does not exist.");
+            Application application = ApplicationRepository.GetById(localApp.ApplicationID);
+            int driverId = DriverRepository.GetDriverIdByPersonId(application.ApplicantPersonID);
+            bool isDriver = (driverId > 0);
 
-            // Check if driver exists.
-            if (!DriverRepository.Exists(license.DriverId))
-                throw new BusinessException("Driver does not exist.");
+            if (isDriver)
+            {
+                // Check if the person already hold a license with the same class type
+                if (LicenseRepository.ExistsByDriver(driverId, localApp.LicenseClassID))
+                    throw new BusinessException($"The applicant already hold {LicenseClassService.GetLicenseClassName(localApp.LicenseClassID)} license class.");
+            }
 
+            // Check if the application status is not new
+            if (application.ApplicationStatus != ApplicationStatus.New)
+                throw new BusinessException("The status of the associated application must be new for issuing a new license.");
 
-
-            // Check if driver already has license with the same type.
-            if (LicenseRepository.ExistsForDriver(license.DriverId, license.LicenseClass))
-                throw new BusinessException("Driver already has an license with the same type.");
-
-            // Check if the application already associated with another license.
-            if (LicenseRepository.ExistsForApplication(license.ApplicationId))
-                throw new BusinessException("License for the application already exists.");
-
-
-            // Check if the application is completed.
-            ApplicationStatus applicationStatus = ApplicationRepository.GetById(license.ApplicationId).ApplicationStatus;
-
-            if (applicationStatus == ApplicationStatus.Completed)
-                throw new BusinessException("License already exists for the completed application.");
-
-            if (applicationStatus == ApplicationStatus.Cancelled)
-                throw new BusinessException("Can't add license for a canceled application.");
-
-
-            // Check if the application type is valid.
-            ApplicationType applicationType = ApplicationRepository.GetById(license.ApplicationId).ApplicationTypeID;
-
-            if (applicationType == ApplicationType.ReleaseDetainedDrivingLicense)
+            // Check if the application type is not valid.
+            if (application.ApplicationTypeID != ApplicationType.NewLocalDrivingLicenseService)
                 throw new BusinessException("Invalid application type.");
 
-            if (applicationType == ApplicationType.NewInternationalLicense)
-                throw new BusinessException("Can't add license for an international application.");
+            if (!TestRepository.HasPassedThreeTests(localAppId))
+                throw new BusinessException("The Applicant must pass the three tests to issue the license.");
 
+            // If the applicant is not a driver then make him a driver.
+            if (!isDriver)
+            {
+                Driver driver = new Driver();
 
-            // Check if the driver has passed all three tests.
-            LocalDrivingLicenseApplication localDrivingLicenseApplication = LocalDrivingLicenseApplicationRepository.GetByApplicationId(license.ApplicationId);
-            _ = localDrivingLicenseApplication
-                ?? throw new BusinessException("Local driving license application does not exist.");
+                driver.PersonId = application.ApplicantPersonID;
 
-            if (!TestRepository.HasPassedThreeTests(localDrivingLicenseApplication.LocalDrivingLicenseApplicationID))
-                throw new BusinessException("Driver has not passed all three tests.");
+                driverId = DriverRepository.Add(driver);
+            }
 
+            License license = new License();
 
-            // Check if the license class fees are paid.
-            decimal licenseClassFees = LicenseClassRepository.GetFees(license.LicenseClass);
-            if (license.PaidFees != licenseClassFees)
-                throw new BusinessException($"Paid fees must be {licenseClassFees} for this license class.");
+            license.ApplicationId = application.ApplicationID;
+            license.DriverId = driverId;
+            license.LicenseClass = localApp.LicenseClassID;
+
+            return license;
         }
     }
 }

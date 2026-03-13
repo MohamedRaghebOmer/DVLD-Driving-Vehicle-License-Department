@@ -1,4 +1,5 @@
-﻿using DVLD.Core.DTOs.Enums;
+﻿using DVLD.Core.DTOs.Entities;
+using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
@@ -36,6 +37,29 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while retrieving TestType for TestTypeId = {(int)testType}.", ex);
+                throw;
+            }
+        }
+
+        public static decimal GetFees(TestType testType)
+        {
+            string query = @"SELECT TestTypeFees 
+                            FROM TestTypes
+                            WHERE TestTypeID = @id;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@id", (int)testType);
+                    con.Open();
+                    return Convert.ToDecimal(com.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"DAL: Error while retrieving TestType Fees for TestTypeId = {(int)testType}.", ex);
                 throw;
             }
         }

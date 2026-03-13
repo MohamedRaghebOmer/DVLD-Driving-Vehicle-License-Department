@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\LocalDrivingLicenseService.cs" />
+    <Compile Include="Application\ApplicationService.cs" />
     <Compile Include="Application\ApplicationTypeService.cs" />
     <Compile Include="CoreServices\CountryService.cs" />
     <Compile Include="License\DetainedLicenseService.cs" />

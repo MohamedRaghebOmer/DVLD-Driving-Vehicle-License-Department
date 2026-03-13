@@ -4,19 +4,16 @@ using DVLD.Data;
 
 namespace DVLD.Business.EntityValidators
 {
-    internal class TestValidator
+    internal static class TestValidator
     {
         public static void AddNewValidator(Test test)
         {
             Core.Validators.TestValidator.Validate(test);
 
-            if (test.TestID != -1)
-                throw new ValidationException("This TestID is not valid for a new test.");
-
             if (!TestAppointmentRepository.Exists(test.TestAppointmentID))
                 throw new ValidationException("The specified TestAppointmentID does not exist.");
 
-            if (TestRepository.ExistsForTestAppointment(test.TestAppointmentID))
+            if (TestRepository.ExistsByTestAppointment(test.TestAppointmentID))
                 throw new ValidationException("A test with the same TestAppointmentID already exists.");
         }
     }
