@@ -31,8 +31,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
+            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
             this.btnNext = new System.Windows.Forms.Button();
             this.tpApplicationInfo = new System.Windows.Forms.TabPage();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbNationalNo = new System.Windows.Forms.PictureBox();
             this.cbLicenseClass = new System.Windows.Forms.ComboBox();
             this.lblCreatedBy = new System.Windows.Forms.Label();
             this.lblApplicationFees = new System.Windows.Forms.Label();
@@ -46,10 +52,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
             this.tabControl1.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpApplicationInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -86,6 +96,18 @@
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
             // 
+            // ctrlPersonDetailsWithFilter1
+            // 
+            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = true;
+            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
+            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
+            this.ctrlPersonDetailsWithFilter1.NationalNo = "";
+            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
+            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
+            this.ctrlPersonDetailsWithFilter1.TabIndex = 3;
+            // 
             // btnNext
             // 
             this.btnNext.Image = global::DVLD.WinForms.Properties.Resources.RightArrow32;
@@ -101,6 +123,11 @@
             // 
             // tpApplicationInfo
             // 
+            this.tpApplicationInfo.Controls.Add(this.pictureBox4);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox3);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox2);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox1);
+            this.tpApplicationInfo.Controls.Add(this.pbNationalNo);
             this.tpApplicationInfo.Controls.Add(this.cbLicenseClass);
             this.tpApplicationInfo.Controls.Add(this.lblCreatedBy);
             this.tpApplicationInfo.Controls.Add(this.lblApplicationFees);
@@ -119,11 +146,61 @@
             this.tpApplicationInfo.Text = "Application Info";
             this.tpApplicationInfo.UseVisualStyleBackColor = true;
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::DVLD.WinForms.Properties.Resources.Calendar512;
+            this.pictureBox4.Location = new System.Drawing.Point(455, 118);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 17;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::DVLD.WinForms.Properties.Resources.Category512;
+            this.pictureBox3.Location = new System.Drawing.Point(455, 174);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 16;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::DVLD.WinForms.Properties.Resources.Users64;
+            this.pictureBox2.Location = new System.Drawing.Point(455, 286);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.Money512;
+            this.pictureBox1.Location = new System.Drawing.Point(455, 230);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pbNationalNo
+            // 
+            this.pbNationalNo.Image = global::DVLD.WinForms.Properties.Resources.GrayCard512;
+            this.pbNationalNo.Location = new System.Drawing.Point(455, 62);
+            this.pbNationalNo.Name = "pbNationalNo";
+            this.pbNationalNo.Size = new System.Drawing.Size(28, 28);
+            this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbNationalNo.TabIndex = 13;
+            this.pbNationalNo.TabStop = false;
+            // 
             // cbLicenseClass
             // 
             this.cbLicenseClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLicenseClass.FormattingEnabled = true;
-            this.cbLicenseClass.Location = new System.Drawing.Point(456, 174);
+            this.cbLicenseClass.Location = new System.Drawing.Point(494, 174);
             this.cbLicenseClass.Name = "cbLicenseClass";
             this.cbLicenseClass.Size = new System.Drawing.Size(289, 33);
             this.cbLicenseClass.TabIndex = 11;
@@ -132,7 +209,7 @@
             // 
             this.lblCreatedBy.AutoSize = true;
             this.lblCreatedBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCreatedBy.Location = new System.Drawing.Point(451, 286);
+            this.lblCreatedBy.Location = new System.Drawing.Point(489, 286);
             this.lblCreatedBy.Name = "lblCreatedBy";
             this.lblCreatedBy.Size = new System.Drawing.Size(45, 25);
             this.lblCreatedBy.TabIndex = 10;
@@ -142,7 +219,7 @@
             // 
             this.lblApplicationFees.AutoSize = true;
             this.lblApplicationFees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationFees.Location = new System.Drawing.Point(451, 230);
+            this.lblApplicationFees.Location = new System.Drawing.Point(489, 230);
             this.lblApplicationFees.Name = "lblApplicationFees";
             this.lblApplicationFees.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationFees.TabIndex = 9;
@@ -152,7 +229,7 @@
             // 
             this.lblApplicationDate.AutoSize = true;
             this.lblApplicationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationDate.Location = new System.Drawing.Point(451, 118);
+            this.lblApplicationDate.Location = new System.Drawing.Point(489, 118);
             this.lblApplicationDate.Name = "lblApplicationDate";
             this.lblApplicationDate.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationDate.TabIndex = 8;
@@ -202,7 +279,7 @@
             // 
             this.lblApplicationId.AutoSize = true;
             this.lblApplicationId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationId.Location = new System.Drawing.Point(451, 62);
+            this.lblApplicationId.Location = new System.Drawing.Point(489, 62);
             this.lblApplicationId.Name = "lblApplicationId";
             this.lblApplicationId.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationId.TabIndex = 1;
@@ -257,17 +334,6 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "New Local Driving License Application";
             // 
-            // ctrlPersonDetailsWithFilter1
-            // 
-            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = true;
-            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
-            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
-            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
-            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
-            this.ctrlPersonDetailsWithFilter1.TabIndex = 3;
-            // 
             // frmNewLocalDrivingLicenseApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -289,6 +355,11 @@
             this.tpPersonalInfo.ResumeLayout(false);
             this.tpApplicationInfo.ResumeLayout(false);
             this.tpApplicationInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,5 +386,10 @@
         private System.Windows.Forms.Label lblApplicationFees;
         private System.Windows.Forms.Label lblCreatedBy;
         private System.Windows.Forms.ComboBox cbLicenseClass;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbNationalNo;
     }
 }

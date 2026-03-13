@@ -1,13 +1,6 @@
 ﻿using DVLD.Business;
 using DVLD.Core.DTOs.Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.Tests
@@ -21,7 +14,7 @@ namespace DVLD.WinForms.Tests
         public frmTakeTest(int appointmentId)
         {
             InitializeComponent();
-            ctrlScheduleTest1.Initialize(appointmentId, UserControls.ctrlManageTestAppointment.Mode.View);
+            ctrlManageTestAppointment1.Initialize(appointmentId, UserControls.ctrlManageTestAppointment.Mode.View);
             this._testAppointment = TestAppointmentService.GetById(appointmentId);
         }
 

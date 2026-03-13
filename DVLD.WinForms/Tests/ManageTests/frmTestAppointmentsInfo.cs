@@ -1,11 +1,9 @@
 ﻿using DVLD.Business;
-using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Properties;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Reflection.Emit;
 using System.Windows.Forms;
 using Mode = DVLD.WinForms.UserControls.ctrlManageTestAppointment.Mode;
 
@@ -150,7 +148,7 @@ namespace DVLD.WinForms.Tests
         {
             Mode mode = IsSelectedAppointmentLocked() ? Mode.View : Mode.Edit;
 
-            frmManageTestAppointments frm = 
+            frmManageTestAppointments frm =
                 new frmManageTestAppointments(GetSelectedAppointmentId(), mode);
             frm.OnAppointmentUpdated += LoadDataGrid;
             frm.ShowDialog();
@@ -224,7 +222,7 @@ namespace DVLD.WinForms.Tests
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);

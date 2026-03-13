@@ -18,7 +18,7 @@ namespace DVLD.Business
             {
                 int newTestId = TestRepository.Add(test);
                 bool success = TestAppointmentRepository.Lock(test.TestAppointmentID);
-                
+
                 if (success)
                     return newTestId;
                 return -1;

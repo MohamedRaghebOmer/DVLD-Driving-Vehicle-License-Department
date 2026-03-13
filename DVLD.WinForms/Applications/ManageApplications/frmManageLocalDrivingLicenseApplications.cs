@@ -7,7 +7,6 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
-using DVLD.WinForms.Applications.ManageApplications;
 
 namespace DVLD.WinForms.Applications.ManageApplications
 {

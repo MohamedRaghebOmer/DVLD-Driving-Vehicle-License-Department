@@ -35,14 +35,18 @@
             this.rbPass = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.ctrlScheduleTest1 = new DVLD.WinForms.UserControls.ctrlManageTestAppointment();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.ctrlManageTestAppointment1 = new DVLD.WinForms.UserControls.ctrlManageTestAppointment();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.Image = global::DVLD.WinForms.Properties.Resources.Close32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(204, 654);
+            this.btnCancel.Location = new System.Drawing.Point(298, 654);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(138, 51);
             this.btnCancel.TabIndex = 15;
@@ -64,17 +68,17 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(78, 546);
+            this.txtNotes.Location = new System.Drawing.Point(119, 547);
             this.txtNotes.MaxLength = 500;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(599, 101);
+            this.txtNotes.Size = new System.Drawing.Size(747, 101);
             this.txtNotes.TabIndex = 20;
             this.txtNotes.Text = "";
             // 
             // rdFail
             // 
             this.rdFail.AutoSize = true;
-            this.rdFail.Location = new System.Drawing.Point(404, 505);
+            this.rdFail.Location = new System.Drawing.Point(514, 504);
             this.rdFail.Name = "rdFail";
             this.rdFail.Size = new System.Drawing.Size(64, 29);
             this.rdFail.TabIndex = 24;
@@ -85,7 +89,7 @@
             // 
             this.rbPass.AutoSize = true;
             this.rbPass.Checked = true;
-            this.rbPass.Location = new System.Drawing.Point(312, 505);
+            this.rbPass.Location = new System.Drawing.Point(424, 504);
             this.rbPass.Name = "rbPass";
             this.rbPass.Size = new System.Drawing.Size(77, 29);
             this.rbPass.TabIndex = 23;
@@ -97,7 +101,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(227, 506);
+            this.label1.Location = new System.Drawing.Point(301, 504);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 25);
             this.label1.TabIndex = 22;
@@ -107,7 +111,7 @@
             // 
             this.btnSave.Image = global::DVLD.WinForms.Properties.Resources.Save32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(348, 654);
+            this.btnSave.Location = new System.Drawing.Point(442, 654);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(138, 51);
             this.btnSave.TabIndex = 0;
@@ -117,20 +121,43 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // ctrlScheduleTest1
+            // pictureBox1
             // 
-            this.ctrlScheduleTest1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlScheduleTest1.Location = new System.Drawing.Point(13, 14);
-            this.ctrlScheduleTest1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ctrlScheduleTest1.Name = "ctrlScheduleTest1";
-            this.ctrlScheduleTest1.Size = new System.Drawing.Size(664, 483);
-            this.ctrlScheduleTest1.TabIndex = 25;
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.Cards512;
+            this.pictureBox1.Location = new System.Drawing.Point(75, 537);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(38, 38);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 26;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::DVLD.WinForms.Properties.Resources.Result512;
+            this.pictureBox2.Location = new System.Drawing.Point(370, 501);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(32, 28);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 27;
+            this.pictureBox2.TabStop = false;
+            // 
+            // ctrlManageTestAppointment1
+            // 
+            this.ctrlManageTestAppointment1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlManageTestAppointment1.Location = new System.Drawing.Point(0, 0);
+            this.ctrlManageTestAppointment1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ctrlManageTestAppointment1.Name = "ctrlManageTestAppointment1";
+            this.ctrlManageTestAppointment1.Size = new System.Drawing.Size(931, 493);
+            this.ctrlManageTestAppointment1.TabIndex = 28;
             // 
             // frmTakeTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 717);
+            this.ClientSize = new System.Drawing.Size(884, 717);
+            this.Controls.Add(this.ctrlManageTestAppointment1);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.rdFail);
             this.Controls.Add(this.rbPass);
@@ -138,7 +165,6 @@
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.ctrlScheduleTest1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -148,6 +174,8 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Take Test";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,7 +188,9 @@
         private System.Windows.Forms.RadioButton rdFail;
         private System.Windows.Forms.RadioButton rbPass;
         private System.Windows.Forms.Label label1;
-        private UserControls.ctrlManageTestAppointment ctrlScheduleTest1;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private UserControls.ctrlManageTestAppointment ctrlManageTestAppointment1;
     }
 }

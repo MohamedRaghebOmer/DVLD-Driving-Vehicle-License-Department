@@ -112,8 +112,8 @@ namespace DVLD.WinForms.UserControls
                     lblDate.Visible = true;
                     lblDate.Text = _testAppointment.AppointmentDate.ToString("dd/MM/yyyy");
                     btnSave.Visible = false;
-                    gbFormGroupbox.Size = new Size(657, 481);
-                    this.Size = new Size(664, 488);
+                    gbFormGroupbox.Size = new Size(865, 479);
+                    this.Size = new Size(871, 492);
                     break;
             }
 
@@ -206,7 +206,7 @@ namespace DVLD.WinForms.UserControls
         private void AddNewAppointment()
         {
             if (_mode != Mode.Add) return;
-            
+
             FillTestAppointment();
 
             try
@@ -273,7 +273,7 @@ namespace DVLD.WinForms.UserControls
                 if (TestAppointmentService.Update(_testAppointment))
                 {
                     btnSave.Enabled = false;
-                    OnUpdate?.Invoke(); 
+                    OnUpdate?.Invoke();
                 }
             }
             catch (Exception ex)

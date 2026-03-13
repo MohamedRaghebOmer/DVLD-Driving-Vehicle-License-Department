@@ -1,5 +1,4 @@
-﻿using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Core.Logging;
 using DVLD.Data;

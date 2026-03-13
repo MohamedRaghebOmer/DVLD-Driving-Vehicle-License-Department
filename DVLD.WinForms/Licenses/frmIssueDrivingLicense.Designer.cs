@@ -66,6 +66,7 @@
             // 
             // btnIssue
             // 
+            this.btnIssue.Image = global::DVLD.WinForms.Properties.Resources.Rocket32;
             this.btnIssue.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnIssue.Location = new System.Drawing.Point(506, 453);
             this.btnIssue.Name = "btnIssue";

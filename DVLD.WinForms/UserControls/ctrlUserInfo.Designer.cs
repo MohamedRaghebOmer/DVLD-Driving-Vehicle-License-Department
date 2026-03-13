@@ -29,19 +29,28 @@
         private void InitializeComponent()
         {
             this.gbLoginInfo = new System.Windows.Forms.GroupBox();
+            this.lblEditloginInfo = new System.Windows.Forms.LinkLabel();
             this.lblIsActive = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblUserId = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblEditloginInfo = new System.Windows.Forms.LinkLabel();
             this.ctrlPersonDetails1 = new DVLD.WinForms.UserControls.ctrlPersonDetails();
+            this.pbNationalNo = new System.Windows.Forms.PictureBox();
+            this.pbName = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbLoginInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // gbLoginInfo
             // 
+            this.gbLoginInfo.Controls.Add(this.pictureBox1);
+            this.gbLoginInfo.Controls.Add(this.pbName);
+            this.gbLoginInfo.Controls.Add(this.pbNationalNo);
             this.gbLoginInfo.Controls.Add(this.lblEditloginInfo);
             this.gbLoginInfo.Controls.Add(this.lblIsActive);
             this.gbLoginInfo.Controls.Add(this.label4);
@@ -59,10 +68,21 @@
             this.gbLoginInfo.TabStop = false;
             this.gbLoginInfo.Text = "Login Information";
             // 
+            // lblEditloginInfo
+            // 
+            this.lblEditloginInfo.AutoSize = true;
+            this.lblEditloginInfo.Location = new System.Drawing.Point(390, 17);
+            this.lblEditloginInfo.Name = "lblEditloginInfo";
+            this.lblEditloginInfo.Size = new System.Drawing.Size(135, 25);
+            this.lblEditloginInfo.TabIndex = 2;
+            this.lblEditloginInfo.TabStop = true;
+            this.lblEditloginInfo.Text = "Edit Login Info";
+            this.lblEditloginInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblEditLoginInfo_LinkClicked);
+            // 
             // lblIsActive
             // 
             this.lblIsActive.AutoSize = true;
-            this.lblIsActive.Location = new System.Drawing.Point(773, 55);
+            this.lblIsActive.Location = new System.Drawing.Point(819, 55);
             this.lblIsActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIsActive.Name = "lblIsActive";
             this.lblIsActive.Size = new System.Drawing.Size(45, 25);
@@ -82,7 +102,7 @@
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(452, 55);
+            this.lblUsername.Location = new System.Drawing.Point(495, 55);
             this.lblUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(45, 25);
@@ -102,7 +122,7 @@
             // lblUserId
             // 
             this.lblUserId.AutoSize = true;
-            this.lblUserId.Location = new System.Drawing.Point(148, 55);
+            this.lblUserId.Location = new System.Drawing.Point(183, 55);
             this.lblUserId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserId.Name = "lblUserId";
             this.lblUserId.Size = new System.Drawing.Size(45, 25);
@@ -119,19 +139,9 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "User Id:";
             // 
-            // lblEditloginInfo
-            // 
-            this.lblEditloginInfo.AutoSize = true;
-            this.lblEditloginInfo.Location = new System.Drawing.Point(390, 17);
-            this.lblEditloginInfo.Name = "lblEditloginInfo";
-            this.lblEditloginInfo.Size = new System.Drawing.Size(135, 25);
-            this.lblEditloginInfo.TabIndex = 2;
-            this.lblEditloginInfo.TabStop = true;
-            this.lblEditloginInfo.Text = "Edit Login Info";
-            this.lblEditloginInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblEditLoginInfo_LinkClicked);
-            // 
             // ctrlPersonDetails1
             // 
+            this.ctrlPersonDetails1.DriverID = -1;
             this.ctrlPersonDetails1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ctrlPersonDetails1.Location = new System.Drawing.Point(0, 110);
             this.ctrlPersonDetails1.Margin = new System.Windows.Forms.Padding(4);
@@ -140,6 +150,36 @@
             this.ctrlPersonDetails1.PersonID = -1;
             this.ctrlPersonDetails1.Size = new System.Drawing.Size(914, 323);
             this.ctrlPersonDetails1.TabIndex = 1;
+            // 
+            // pbNationalNo
+            // 
+            this.pbNationalNo.Image = global::DVLD.WinForms.Properties.Resources.GrayCard512;
+            this.pbNationalNo.Location = new System.Drawing.Point(172, 52);
+            this.pbNationalNo.Name = "pbNationalNo";
+            this.pbNationalNo.Size = new System.Drawing.Size(28, 28);
+            this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbNationalNo.TabIndex = 77;
+            this.pbNationalNo.TabStop = false;
+            // 
+            // pbName
+            // 
+            this.pbName.Image = global::DVLD.WinForms.Properties.Resources.NameCard512;
+            this.pbName.Location = new System.Drawing.Point(460, 52);
+            this.pbName.Name = "pbName";
+            this.pbName.Size = new System.Drawing.Size(28, 28);
+            this.pbName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbName.TabIndex = 98;
+            this.pbName.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.information32;
+            this.pictureBox1.Location = new System.Drawing.Point(784, 52);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 99;
+            this.pictureBox1.TabStop = false;
             // 
             // ctrlUserInfo
             // 
@@ -153,6 +193,9 @@
             this.Size = new System.Drawing.Size(921, 438);
             this.gbLoginInfo.ResumeLayout(false);
             this.gbLoginInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -168,5 +211,8 @@
         private System.Windows.Forms.Label label4;
         private UserControls.ctrlPersonDetails ctrlPersonDetails1;
         private System.Windows.Forms.LinkLabel lblEditloginInfo;
+        private System.Windows.Forms.PictureBox pbNationalNo;
+        private System.Windows.Forms.PictureBox pbName;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -86,22 +86,22 @@
     <Compile Include="Applications\ManageApplications\frmManageLocalDrivingLicenseApplications.Designer.cs">
       <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tests\frmManageTestAppointments.cs">
+    <Compile Include="Tests\ManageTests\frmManageTestAppointments.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tests\frmManageTestAppointments.Designer.cs">
+    <Compile Include="Tests\ManageTests\frmManageTestAppointments.Designer.cs">
       <DependentUpon>frmManageTestAppointments.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tests\frmTakeTest.cs">
+    <Compile Include="Tests\ManageTests\frmTakeTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tests\frmTakeTest.Designer.cs">
+    <Compile Include="Tests\ManageTests\frmTakeTest.Designer.cs">
       <DependentUpon>frmTakeTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tests\frmTestAppointmentsInfo.cs">
+    <Compile Include="Tests\ManageTests\frmTestAppointmentsInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tests\frmTestAppointmentsInfo.Designer.cs">
+    <Compile Include="Tests\ManageTests\frmTestAppointmentsInfo.Designer.cs">
       <DependentUpon>frmTestAppointmentsInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\TestTypes\frmManageTestTypes.cs">
@@ -256,13 +256,13 @@
     <EmbeddedResource Include="Applications\ManageApplications\frmManageLocalDrivingLicenseApplications.resx">
       <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\frmManageTestAppointments.resx">
+    <EmbeddedResource Include="Tests\ManageTests\frmManageTestAppointments.resx">
       <DependentUpon>frmManageTestAppointments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\frmTakeTest.resx">
+    <EmbeddedResource Include="Tests\ManageTests\frmTakeTest.resx">
       <DependentUpon>frmTakeTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\frmTestAppointmentsInfo.resx">
+    <EmbeddedResource Include="Tests\ManageTests\frmTestAppointmentsInfo.resx">
       <DependentUpon>frmTestAppointmentsInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\TestTypes\frmManageTestTypes.resx">

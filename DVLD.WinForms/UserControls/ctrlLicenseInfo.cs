@@ -97,6 +97,81 @@ namespace DVLD.WinForms.UserControls
             frm.ShowDialog();
         }
 
+        private void label13_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void pictureBox10_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblExpirationDate_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblIsActive_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblDateOfBirth_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblDriverId_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblIsDetained_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void pictureBox4_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
         private void lblShowPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (_personId > 0)

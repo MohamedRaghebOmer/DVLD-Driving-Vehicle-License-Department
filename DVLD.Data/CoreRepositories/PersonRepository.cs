@@ -365,7 +365,7 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@ApplicationID", appId);
                     connection.Open();
-                    
+
                     object result = command.ExecuteScalar();
 
                     if (result != null)
