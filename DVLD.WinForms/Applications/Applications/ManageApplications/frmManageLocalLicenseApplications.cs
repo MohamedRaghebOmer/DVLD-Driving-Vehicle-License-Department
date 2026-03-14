@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace DVLD.WinForms.Applications.ManageApplications
 {
-    public partial class frmManageLocalDrivingLicenseApplications : Form
+    public partial class frmManageLocalLicenseApplications : Form
     {
         private int _selectedRowIndex = -1;
 
-        public frmManageLocalDrivingLicenseApplications()
+        public frmManageLocalLicenseApplications()
         {
             InitializeComponent();
         }

@@ -214,6 +214,7 @@
             this.internaToolStripMenuItem.Name = "internaToolStripMenuItem";
             this.internaToolStripMenuItem.Size = new System.Drawing.Size(379, 38);
             this.internaToolStripMenuItem.Text = "International License Applications";
+            this.internaToolStripMenuItem.Click += new System.EventHandler(this.internaToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 

@@ -1,6 +1,7 @@
 ﻿using DVLD.Core.Logging;
 using DVLD.WinForms.Applications.ManageApplications;
 using DVLD.WinForms.Applications.ManageApplications.AddNewApplications;
+using DVLD.WinForms.Applications.ManageApplications.ManageApplications;
 using DVLD.WinForms.Applications.TestTypes;
 using DVLD.WinForms.CoreForms;
 using DVLD.WinForms.NavigateForms;
@@ -79,7 +80,7 @@ namespace DVLD.WinForms
 
         private void localDrivingLicenseApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form frm = new frmManageLocalDrivingLicenseApplications();
+            Form frm = new frmManageLocalLicenseApplications();
             frm.ShowDialog();
         }
 
@@ -92,6 +93,12 @@ namespace DVLD.WinForms
         private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmNewInternationalLicenseApplication();
+            frm.ShowDialog();
+        }
+
+        private void internaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageInternationalLicenseApplications();
             frm.ShowDialog();
         }
     }
