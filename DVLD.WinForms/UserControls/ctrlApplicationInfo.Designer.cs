@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gbApplicationBasicInfo = new System.Windows.Forms.GroupBox();
+            this.gbApplicationInfo = new System.Windows.Forms.GroupBox();
             this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.pictureBox13 = new System.Windows.Forms.PictureBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
@@ -63,7 +63,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.gbApplicationBasicInfo.SuspendLayout();
+            this.gbApplicationInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
@@ -77,48 +77,48 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // gbApplicationBasicInfo
+            // gbApplicationInfo
             // 
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox14);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox13);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox12);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox11);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox10);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox9);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox8);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox7);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox6);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox5);
-            this.gbApplicationBasicInfo.Controls.Add(this.pictureBox1);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblPassedTests);
-            this.gbApplicationBasicInfo.Controls.Add(this.label10);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblShowLicenseInfo);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLocalAppId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLicenseClass);
-            this.gbApplicationBasicInfo.Controls.Add(this.lable1);
-            this.gbApplicationBasicInfo.Controls.Add(this.label12);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationDate);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblPaidFees);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblCreatedByUserId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLastStatusDate);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationStatus);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationType);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicantPersonId);
-            this.gbApplicationBasicInfo.Controls.Add(this.label9);
-            this.gbApplicationBasicInfo.Controls.Add(this.label8);
-            this.gbApplicationBasicInfo.Controls.Add(this.label7);
-            this.gbApplicationBasicInfo.Controls.Add(this.label6);
-            this.gbApplicationBasicInfo.Controls.Add(this.label5);
-            this.gbApplicationBasicInfo.Controls.Add(this.label4);
-            this.gbApplicationBasicInfo.Controls.Add(this.label3);
-            this.gbApplicationBasicInfo.Controls.Add(this.label1);
-            this.gbApplicationBasicInfo.Location = new System.Drawing.Point(7, 3);
-            this.gbApplicationBasicInfo.Name = "gbApplicationBasicInfo";
-            this.gbApplicationBasicInfo.Size = new System.Drawing.Size(970, 295);
-            this.gbApplicationBasicInfo.TabIndex = 0;
-            this.gbApplicationBasicInfo.TabStop = false;
-            this.gbApplicationBasicInfo.Text = "Application Basic Info";
+            this.gbApplicationInfo.Controls.Add(this.pictureBox14);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox13);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox12);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox11);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox10);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox9);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox8);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox7);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox6);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox5);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox1);
+            this.gbApplicationInfo.Controls.Add(this.lblPassedTests);
+            this.gbApplicationInfo.Controls.Add(this.label10);
+            this.gbApplicationInfo.Controls.Add(this.lblShowLicenseInfo);
+            this.gbApplicationInfo.Controls.Add(this.lblLocalAppId);
+            this.gbApplicationInfo.Controls.Add(this.lblLicenseClass);
+            this.gbApplicationInfo.Controls.Add(this.lable1);
+            this.gbApplicationInfo.Controls.Add(this.label12);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationId);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationDate);
+            this.gbApplicationInfo.Controls.Add(this.lblPaidFees);
+            this.gbApplicationInfo.Controls.Add(this.lblCreatedByUserId);
+            this.gbApplicationInfo.Controls.Add(this.lblLastStatusDate);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationStatus);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationType);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicantPersonId);
+            this.gbApplicationInfo.Controls.Add(this.label9);
+            this.gbApplicationInfo.Controls.Add(this.label8);
+            this.gbApplicationInfo.Controls.Add(this.label7);
+            this.gbApplicationInfo.Controls.Add(this.label6);
+            this.gbApplicationInfo.Controls.Add(this.label5);
+            this.gbApplicationInfo.Controls.Add(this.label4);
+            this.gbApplicationInfo.Controls.Add(this.label3);
+            this.gbApplicationInfo.Controls.Add(this.label1);
+            this.gbApplicationInfo.Location = new System.Drawing.Point(7, 3);
+            this.gbApplicationInfo.Name = "gbApplicationInfo";
+            this.gbApplicationInfo.Size = new System.Drawing.Size(970, 295);
+            this.gbApplicationInfo.TabIndex = 0;
+            this.gbApplicationInfo.TabStop = false;
+            this.gbApplicationInfo.Text = "Application Info";
             // 
             // pictureBox14
             // 
@@ -454,13 +454,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbApplicationBasicInfo);
+            this.Controls.Add(this.gbApplicationInfo);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ctrlApplicationInfo";
             this.Size = new System.Drawing.Size(986, 301);
-            this.gbApplicationBasicInfo.ResumeLayout(false);
-            this.gbApplicationBasicInfo.PerformLayout();
+            this.gbApplicationInfo.ResumeLayout(false);
+            this.gbApplicationInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
@@ -478,7 +478,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbApplicationBasicInfo;
+        private System.Windows.Forms.GroupBox gbApplicationInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;

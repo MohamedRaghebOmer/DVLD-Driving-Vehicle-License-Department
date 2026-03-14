@@ -121,6 +121,9 @@
   <data name="Traffic24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\24px\Traffic24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Detain512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Detain512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="License512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\License512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,14 +133,14 @@
   <data name="Eye512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Eye512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BluePhone512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\BluePhone512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Card32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\Card32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Delete32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\Delete32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Result512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\512px\Result512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Team512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Team512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -177,6 +180,9 @@
   </data>
   <data name="BluePen512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\BluePen512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Driver512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Driver512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Users64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\64px\Users64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,8 +238,8 @@
   <data name="Gender512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Gender512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Driver512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\512px\Driver512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Result512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\Result512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NameCard512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\NameCard512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -310,9 +316,6 @@
   <data name="Black870" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Black870.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Shapes32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\32px\Shapes32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Retake32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\Retake32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -349,8 +352,8 @@
   <data name="SendEmail512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\SendEmail512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BluePhone512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\512px\BluePhone512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Shapes32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\Shapes32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Road512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Road512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -376,6 +379,9 @@
   <data name="International32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\International32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DateAndRocket512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\DateAndRocket512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="DecisionTree512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DecisionTree512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -391,7 +397,7 @@
   <data name="SingOut32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\SingOut32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Detain512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\512px\Detain512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Find24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\24px\Find24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

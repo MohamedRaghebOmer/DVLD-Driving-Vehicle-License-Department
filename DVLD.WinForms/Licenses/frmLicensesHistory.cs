@@ -18,15 +18,14 @@ namespace DVLD.WinForms.Applications.ManageApplications
             InitializeComponent();
 
             this._id = id;
+            _frmLoadType = loadType;
 
             if (loadType == LoadType.UsingDriverId)
             {
-                _frmLoadType = LoadType.UsingDriverId;
                 ctrlPersonDetails1.DriverID = id;
             }
             else if (loadType == LoadType.UsingPersonId)
             {
-                _frmLoadType = LoadType.UsingPersonId;
                 ctrlPersonDetails1.PersonID = id;
             }
         }

@@ -78,6 +78,7 @@
             this.tabControl1.Size = new System.Drawing.Size(915, 297);
             this.tabControl1.TabIndex = 4;
             this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.UpdateLabelCount);
+            this.tabControl1.TabIndexChanged += new System.EventHandler(this.UpdateLabelCount);
             // 
             // tabPage1
             // 
@@ -211,7 +212,7 @@
             this.dgvInternational.ReadOnly = true;
             this.dgvInternational.RowHeadersWidth = 51;
             this.dgvInternational.RowTemplate.Height = 24;
-            this.dgvInternational.Size = new System.Drawing.Size(901, 262);
+            this.dgvInternational.Size = new System.Drawing.Size(901, 253);
             this.dgvInternational.TabIndex = 1;
             this.dgvInternational.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.UpdateLabelCount);
             this.dgvInternational.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.UpdateLabelCount);
@@ -312,6 +313,7 @@
             // 
             // ctrlPersonDetails1
             // 
+            this.ctrlPersonDetails1.DriverID = -1;
             this.ctrlPersonDetails1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ctrlPersonDetails1.Location = new System.Drawing.Point(7, 52);
             this.ctrlPersonDetails1.Margin = new System.Windows.Forms.Padding(4);
@@ -321,7 +323,7 @@
             this.ctrlPersonDetails1.Size = new System.Drawing.Size(914, 323);
             this.ctrlPersonDetails1.TabIndex = 3;
             // 
-            // frmLicenseHistory
+            // frmLicensesHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -337,7 +339,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmLicenseHistory";
+            this.Name = "frmLicensesHistory";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "License History";

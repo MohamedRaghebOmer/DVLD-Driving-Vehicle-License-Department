@@ -1,5 +1,6 @@
 ﻿using DVLD.Core.Logging;
 using DVLD.WinForms.Applications.ManageApplications;
+using DVLD.WinForms.Applications.ManageApplications.AddNewApplications;
 using DVLD.WinForms.Applications.TestTypes;
 using DVLD.WinForms.CoreForms;
 using DVLD.WinForms.NavigateForms;
@@ -85,6 +86,12 @@ namespace DVLD.WinForms
         private void btnDrivers_Click(object sender, EventArgs e)
         {
             Form frm = new frmDrivers();
+            frm.ShowDialog();
+        }
+
+        private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmNewInternationalLicenseApplication();
             frm.ShowDialog();
         }
     }

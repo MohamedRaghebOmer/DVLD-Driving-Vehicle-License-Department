@@ -213,6 +213,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DateAndRocket512 {
+            get {
+                object obj = ResourceManager.GetObject("DateAndRocket512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DecisionTree512 {
             get {
                 object obj = ResourceManager.GetObject("DecisionTree512", resourceCulture);
@@ -346,6 +356,16 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap FemaleSign512 {
             get {
                 object obj = ResourceManager.GetObject("FemaleSign512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Find24 {
+            get {
+                object obj = ResourceManager.GetObject("Find24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

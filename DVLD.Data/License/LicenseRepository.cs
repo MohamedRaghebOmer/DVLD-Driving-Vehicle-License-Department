@@ -166,7 +166,22 @@ namespace DVLD.Data
 
         public static DataTable GetLicenseHistoryByPersonId(int personId)
         {
-            string query = "SELECT * FROM Licenses WHERE DriverID IN (SELECT DriverID FROM Drivers WHERE PersonID = @PersonID);";
+            string query = @"SELECT 
+                            l.LicenseID,
+                            l.ApplicationID,
+                            lc.ClassName,
+                            l.IssueDate,
+                            l.IssueDate + lc.DefaultValidityLength AS ExpirationDate,
+                            l.IsActive
+                        FROM Licenses l
+                        INNER JOIN LicenseClasses lc 
+                            ON l.LicenseClass = lc.LicenseClassID
+                        WHERE l.DriverID IN 
+                        (
+                            SELECT DriverID 
+                            FROM Drivers 
+                            WHERE PersonID = @PersonID
+                        );";
 
             try
             {

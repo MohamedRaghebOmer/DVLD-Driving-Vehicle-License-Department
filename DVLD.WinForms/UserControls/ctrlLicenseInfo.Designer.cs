@@ -135,7 +135,7 @@
             this.gbDriverLicenseInfo.Margin = new System.Windows.Forms.Padding(5);
             this.gbDriverLicenseInfo.Name = "gbDriverLicenseInfo";
             this.gbDriverLicenseInfo.Padding = new System.Windows.Forms.Padding(5);
-            this.gbDriverLicenseInfo.Size = new System.Drawing.Size(1069, 386);
+            this.gbDriverLicenseInfo.Size = new System.Drawing.Size(1069, 350);
             this.gbDriverLicenseInfo.TabIndex = 0;
             this.gbDriverLicenseInfo.TabStop = false;
             this.gbDriverLicenseInfo.Text = "Driver License Info";
@@ -143,7 +143,7 @@
             // pictureBox13
             // 
             this.pictureBox13.Image = global::DVLD.WinForms.Properties.Resources.information32;
-            this.pictureBox13.Location = new System.Drawing.Point(144, 305);
+            this.pictureBox13.Location = new System.Drawing.Point(660, 270);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(31, 30);
             this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -153,7 +153,7 @@
             // pictureBox12
             // 
             this.pictureBox12.Image = global::DVLD.WinForms.Properties.Resources.Description512;
-            this.pictureBox12.Location = new System.Drawing.Point(144, 344);
+            this.pictureBox12.Location = new System.Drawing.Point(143, 305);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(31, 30);
             this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -229,7 +229,6 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 43;
             this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox3
             // 
@@ -240,7 +239,6 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 42;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox2
             // 
@@ -251,7 +249,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 41;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox1
             // 
@@ -262,7 +259,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 40;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox10
             // 
@@ -273,7 +269,6 @@
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox10.TabIndex = 39;
             this.pictureBox10.TabStop = false;
-            this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
             // 
             // lblShowLicensesHistory
             // 
@@ -350,7 +345,7 @@
             // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotes.Location = new System.Drawing.Point(181, 349);
+            this.lblNotes.Location = new System.Drawing.Point(180, 310);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.Size = new System.Drawing.Size(45, 25);
             this.lblNotes.TabIndex = 22;
@@ -365,7 +360,6 @@
             this.lblExpirationDate.Size = new System.Drawing.Size(45, 25);
             this.lblExpirationDate.TabIndex = 21;
             this.lblExpirationDate.Text = "???";
-            this.lblExpirationDate.Click += new System.EventHandler(this.lblExpirationDate_Click);
             // 
             // lblIsActive
             // 
@@ -376,7 +370,6 @@
             this.lblIsActive.Size = new System.Drawing.Size(45, 25);
             this.lblIsActive.TabIndex = 20;
             this.lblIsActive.Text = "???";
-            this.lblIsActive.Click += new System.EventHandler(this.lblIsActive_Click);
             // 
             // lblDateOfBirth
             // 
@@ -387,7 +380,6 @@
             this.lblDateOfBirth.Size = new System.Drawing.Size(45, 25);
             this.lblDateOfBirth.TabIndex = 19;
             this.lblDateOfBirth.Text = "???";
-            this.lblDateOfBirth.Click += new System.EventHandler(this.lblDateOfBirth_Click);
             // 
             // lblDriverId
             // 
@@ -398,7 +390,6 @@
             this.lblDriverId.Size = new System.Drawing.Size(45, 25);
             this.lblDriverId.TabIndex = 18;
             this.lblDriverId.Text = "???";
-            this.lblDriverId.Click += new System.EventHandler(this.lblDriverId_Click);
             // 
             // lblIsDetained
             // 
@@ -409,13 +400,12 @@
             this.lblIsDetained.Size = new System.Drawing.Size(45, 25);
             this.lblIsDetained.TabIndex = 17;
             this.lblIsDetained.Text = "???";
-            this.lblIsDetained.Click += new System.EventHandler(this.lblIsDetained_Click);
             // 
             // lblIssueReason
             // 
             this.lblIssueReason.AutoSize = true;
             this.lblIssueReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIssueReason.Location = new System.Drawing.Point(181, 310);
+            this.lblIssueReason.Location = new System.Drawing.Point(697, 273);
             this.lblIssueReason.Name = "lblIssueReason";
             this.lblIssueReason.Size = new System.Drawing.Size(45, 25);
             this.lblIssueReason.TabIndex = 14;
@@ -441,7 +431,6 @@
             this.label13.Size = new System.Drawing.Size(100, 25);
             this.label13.TabIndex = 12;
             this.label13.Text = "Driver Id:";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // label12
             // 
@@ -452,7 +441,6 @@
             this.label12.Size = new System.Drawing.Size(166, 25);
             this.label12.TabIndex = 11;
             this.label12.Text = "Expiration Date:";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // label11
             // 
@@ -463,7 +451,6 @@
             this.label11.Size = new System.Drawing.Size(128, 25);
             this.label11.TabIndex = 10;
             this.label11.Text = "Is Detained:";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // label10
             // 
@@ -499,7 +486,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(7, 310);
+            this.label7.Location = new System.Drawing.Point(518, 271);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(150, 25);
             this.label7.TabIndex = 6;
@@ -509,7 +496,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(7, 349);
+            this.label6.Location = new System.Drawing.Point(6, 310);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 25);
             this.label6.TabIndex = 5;
@@ -524,7 +511,6 @@
             this.label5.Size = new System.Drawing.Size(102, 25);
             this.label5.TabIndex = 4;
             this.label5.Text = "Is Active:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
@@ -535,7 +521,6 @@
             this.label4.Size = new System.Drawing.Size(143, 25);
             this.label4.TabIndex = 3;
             this.label4.Text = "Date Of Birth:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -575,7 +560,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "ctrlLicenseInfo";
-            this.Size = new System.Drawing.Size(1079, 404);
+            this.Size = new System.Drawing.Size(1079, 362);
             this.gbDriverLicenseInfo.ResumeLayout(false);
             this.gbDriverLicenseInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
