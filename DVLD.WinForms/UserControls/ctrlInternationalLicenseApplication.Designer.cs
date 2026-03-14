@@ -90,6 +90,7 @@
             this.lblShowInterLicenseInfo.TabIndex = 4;
             this.lblShowInterLicenseInfo.TabStop = true;
             this.lblShowInterLicenseInfo.Text = "Show International License Info";
+            this.lblShowInterLicenseInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblShowInterLicenseInfo_LinkClicked);
             // 
             // ctrlInternationalLicenseApplicationInfo1
             // 

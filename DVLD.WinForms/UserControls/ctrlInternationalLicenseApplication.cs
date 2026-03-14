@@ -103,6 +103,13 @@ namespace DVLD.WinForms.UserControls
                 frmLicenseInfo.ShowDialog();
             }
         }
+
+        private void lblShowInterLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var frm = new frmInternationalLicenseInfo
+                (ctrlInternationalLicenseApplicationInfo1.InternationalLicense.InternationalLicenseID);
+            frm.ShowDialog();
+        }
     }
 }
 

@@ -74,6 +74,12 @@
     <Compile Include="Applications\ManageApplications\ApplicationInfo\frmApplicationInfo.Designer.cs">
       <DependentUpon>frmApplicationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Licenses\frmInternationalLicenseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\frmInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>frmInternationalLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Licenses\frmIssueDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +202,12 @@
     <Compile Include="UserControls\ctrlInternationalLicenseApplication.Designer.cs">
       <DependentUpon>ctrlInternationalLicenseApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ctrlInternationalLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ctrlInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ctrlLicenseInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -261,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ManageApplications\ApplicationInfo\frmApplicationInfo.resx">
       <DependentUpon>frmApplicationInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\frmInternationalLicenseInfo.resx">
+      <DependentUpon>frmInternationalLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
@@ -329,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlInternationalLicenseApplicationInfo.resx">
       <DependentUpon>ctrlInternationalLicenseApplicationInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ctrlInternationalLicenseInfo.resx">
+      <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlLicenseInfo.resx">
       <DependentUpon>ctrlLicenseInfo.cs</DependentUpon>

@@ -205,7 +205,7 @@ namespace DVLD.Data
 
         public static InternationalLicense GetById(int licenseID)
         {
-            string query = @"SELECT * FROM InternationalLicenses WHERE LicenseID = @LicenseID;";
+            string query = @"SELECT * FROM InternationalLicenses WHERE InternationalLicenseID = @LicenseID;";
 
             try
             {
@@ -217,19 +217,19 @@ namespace DVLD.Data
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        if (reader.HasRows)
+                        if (reader.Read())
                         {
                             return new InternationalLicense
-                                (
-                                    licenseID,
-                                    (int)reader["ApplicationID"],
-                                    (int)reader["DriverID"],
-                                    (int)reader["IssuedUsingLocalLicenseID"],
-                                    (DateTime)reader["IssuedDate"],
-                                    (DateTime)reader["ExpirationDate"],
-                                    (bool)reader["IsActive"],
-                                    (int)reader["CreatedByUserID"]
-                                );
+                            (
+                                licenseID,
+                                reader.GetInt32(reader.GetOrdinal("ApplicationID")),
+                                reader.GetInt32(reader.GetOrdinal("DriverID")),
+                                reader.GetInt32(reader.GetOrdinal("IssuedUsingLocalLicenseID")),
+                                reader.GetDateTime(reader.GetOrdinal("IssueDate")),
+                                reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
+                                reader.GetBoolean(reader.GetOrdinal("IsActive")),
+                                reader.GetInt32(reader.GetOrdinal("CreatedByUserID"))
+                            );
                         }
                     }
                 }
