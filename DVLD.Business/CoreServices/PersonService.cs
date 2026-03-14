@@ -91,6 +91,22 @@ namespace DVLD.Business
             }
         }
 
+        public static int GetIdByDriverId(int driverId)
+        {
+            if (driverId < 1)
+                return -1;
+
+            try
+            {
+                return PersonRepository.GetIdByDriverId(driverId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while reading person id with driver id = {driverId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static int GetPersonIdByLocalApplicationId(int localAppId)
         {
             if (localAppId <= 0)

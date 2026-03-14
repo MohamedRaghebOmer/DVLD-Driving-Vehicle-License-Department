@@ -48,10 +48,16 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.pbName = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpLoginIfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // formLabel
@@ -95,6 +101,7 @@
             this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
             this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
+            this.ctrlPersonDetailsWithFilter1.NationalNo = "";
             this.ctrlPersonDetailsWithFilter1.PersonID = -1;
             this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
             this.ctrlPersonDetailsWithFilter1.TabIndex = 1;
@@ -114,6 +121,9 @@
             // 
             // tpLoginIfo
             // 
+            this.tpLoginIfo.Controls.Add(this.pictureBox2);
+            this.tpLoginIfo.Controls.Add(this.pictureBox1);
+            this.tpLoginIfo.Controls.Add(this.pbName);
             this.tpLoginIfo.Controls.Add(this.chkShowPassword);
             this.tpLoginIfo.Controls.Add(this.chkIsActive);
             this.tpLoginIfo.Controls.Add(this.txtPassword);
@@ -135,7 +145,7 @@
             // chkShowPassword
             // 
             this.chkShowPassword.AutoSize = true;
-            this.chkShowPassword.Location = new System.Drawing.Point(668, 206);
+            this.chkShowPassword.Location = new System.Drawing.Point(695, 206);
             this.chkShowPassword.Name = "chkShowPassword";
             this.chkShowPassword.Size = new System.Drawing.Size(175, 29);
             this.chkShowPassword.TabIndex = 7;
@@ -157,7 +167,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(462, 178);
+            this.txtPassword.Location = new System.Drawing.Point(489, 178);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(200, 30);
@@ -167,7 +177,7 @@
             // 
             // txtConfirm
             // 
-            this.txtConfirm.Location = new System.Drawing.Point(462, 234);
+            this.txtConfirm.Location = new System.Drawing.Point(489, 234);
             this.txtConfirm.Name = "txtConfirm";
             this.txtConfirm.PasswordChar = '*';
             this.txtConfirm.Size = new System.Drawing.Size(200, 30);
@@ -217,7 +227,7 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(462, 122);
+            this.txtUsername.Location = new System.Drawing.Point(489, 122);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(200, 30);
             this.txtUsername.TabIndex = 0;
@@ -267,6 +277,36 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // pbName
+            // 
+            this.pbName.Image = global::DVLD.WinForms.Properties.Resources.NameCard512;
+            this.pbName.Location = new System.Drawing.Point(456, 125);
+            this.pbName.Name = "pbName";
+            this.pbName.Size = new System.Drawing.Size(28, 28);
+            this.pbName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbName.TabIndex = 98;
+            this.pbName.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.PasswordBox72;
+            this.pictureBox1.Location = new System.Drawing.Point(455, 181);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 99;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::DVLD.WinForms.Properties.Resources.Retake32;
+            this.pictureBox2.Location = new System.Drawing.Point(456, 235);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 100;
+            this.pictureBox2.TabStop = false;
+            // 
             // frmAddEditUserInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -290,6 +330,9 @@
             this.tpLoginIfo.ResumeLayout(false);
             this.tpLoginIfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -316,5 +359,8 @@
         private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.CheckBox chkShowPassword;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbName;
     }
 }

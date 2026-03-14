@@ -28,7 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gbApplicationBasicInfo = new System.Windows.Forms.GroupBox();
+            this.gbApplicationInfo = new System.Windows.Forms.GroupBox();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblPassedTests = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.lblShowLicenseInfo = new System.Windows.Forms.LinkLabel();
             this.lblLocalAppId = new System.Windows.Forms.Label();
             this.lblLicenseClass = new System.Windows.Forms.Label();
@@ -50,42 +63,191 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblPassedTests = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.gbApplicationBasicInfo.SuspendLayout();
+            this.gbApplicationInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // gbApplicationBasicInfo
+            // gbApplicationInfo
             // 
-            this.gbApplicationBasicInfo.Controls.Add(this.lblPassedTests);
-            this.gbApplicationBasicInfo.Controls.Add(this.label10);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblShowLicenseInfo);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLocalAppId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLicenseClass);
-            this.gbApplicationBasicInfo.Controls.Add(this.lable1);
-            this.gbApplicationBasicInfo.Controls.Add(this.label12);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationDate);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblPaidFees);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblCreatedByUserId);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblLastStatusDate);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationStatus);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicationType);
-            this.gbApplicationBasicInfo.Controls.Add(this.lblApplicantPersonId);
-            this.gbApplicationBasicInfo.Controls.Add(this.label9);
-            this.gbApplicationBasicInfo.Controls.Add(this.label8);
-            this.gbApplicationBasicInfo.Controls.Add(this.label7);
-            this.gbApplicationBasicInfo.Controls.Add(this.label6);
-            this.gbApplicationBasicInfo.Controls.Add(this.label5);
-            this.gbApplicationBasicInfo.Controls.Add(this.label4);
-            this.gbApplicationBasicInfo.Controls.Add(this.label3);
-            this.gbApplicationBasicInfo.Controls.Add(this.label1);
-            this.gbApplicationBasicInfo.Location = new System.Drawing.Point(7, 3);
-            this.gbApplicationBasicInfo.Name = "gbApplicationBasicInfo";
-            this.gbApplicationBasicInfo.Size = new System.Drawing.Size(970, 295);
-            this.gbApplicationBasicInfo.TabIndex = 0;
-            this.gbApplicationBasicInfo.TabStop = false;
-            this.gbApplicationBasicInfo.Text = "Application Basic Info";
+            this.gbApplicationInfo.Controls.Add(this.pictureBox14);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox13);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox12);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox11);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox10);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox9);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox8);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox7);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox6);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox5);
+            this.gbApplicationInfo.Controls.Add(this.pictureBox1);
+            this.gbApplicationInfo.Controls.Add(this.lblPassedTests);
+            this.gbApplicationInfo.Controls.Add(this.label10);
+            this.gbApplicationInfo.Controls.Add(this.lblShowLicenseInfo);
+            this.gbApplicationInfo.Controls.Add(this.lblLocalAppId);
+            this.gbApplicationInfo.Controls.Add(this.lblLicenseClass);
+            this.gbApplicationInfo.Controls.Add(this.lable1);
+            this.gbApplicationInfo.Controls.Add(this.label12);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationId);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationDate);
+            this.gbApplicationInfo.Controls.Add(this.lblPaidFees);
+            this.gbApplicationInfo.Controls.Add(this.lblCreatedByUserId);
+            this.gbApplicationInfo.Controls.Add(this.lblLastStatusDate);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationStatus);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicationType);
+            this.gbApplicationInfo.Controls.Add(this.lblApplicantPersonId);
+            this.gbApplicationInfo.Controls.Add(this.label9);
+            this.gbApplicationInfo.Controls.Add(this.label8);
+            this.gbApplicationInfo.Controls.Add(this.label7);
+            this.gbApplicationInfo.Controls.Add(this.label6);
+            this.gbApplicationInfo.Controls.Add(this.label5);
+            this.gbApplicationInfo.Controls.Add(this.label4);
+            this.gbApplicationInfo.Controls.Add(this.label3);
+            this.gbApplicationInfo.Controls.Add(this.label1);
+            this.gbApplicationInfo.Location = new System.Drawing.Point(7, 3);
+            this.gbApplicationInfo.Name = "gbApplicationInfo";
+            this.gbApplicationInfo.Size = new System.Drawing.Size(970, 295);
+            this.gbApplicationInfo.TabIndex = 0;
+            this.gbApplicationInfo.TabStop = false;
+            this.gbApplicationInfo.Text = "Application Info";
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.Image = global::DVLD.WinForms.Properties.Resources.JobApplication512;
+            this.pictureBox14.Location = new System.Drawing.Point(203, 70);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox14.TabIndex = 42;
+            this.pictureBox14.TabStop = false;
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Image = global::DVLD.WinForms.Properties.Resources.UsernameBox72;
+            this.pictureBox13.Location = new System.Drawing.Point(203, 107);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox13.TabIndex = 41;
+            this.pictureBox13.TabStop = false;
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Image = global::DVLD.WinForms.Properties.Resources.Calendar512;
+            this.pictureBox12.Location = new System.Drawing.Point(203, 147);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox12.TabIndex = 40;
+            this.pictureBox12.TabStop = false;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Image = global::DVLD.WinForms.Properties.Resources.Money512;
+            this.pictureBox11.Location = new System.Drawing.Point(203, 185);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox11.TabIndex = 39;
+            this.pictureBox11.TabStop = false;
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Image = global::DVLD.WinForms.Properties.Resources.Pass512;
+            this.pictureBox10.Location = new System.Drawing.Point(203, 219);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox10.TabIndex = 38;
+            this.pictureBox10.TabStop = false;
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Image = global::DVLD.WinForms.Properties.Resources.Users64;
+            this.pictureBox9.Location = new System.Drawing.Point(664, 185);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox9.TabIndex = 37;
+            this.pictureBox9.TabStop = false;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Image = global::DVLD.WinForms.Properties.Resources.LastDate512;
+            this.pictureBox8.Location = new System.Drawing.Point(664, 146);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox8.TabIndex = 36;
+            this.pictureBox8.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::DVLD.WinForms.Properties.Resources.Loading512;
+            this.pictureBox7.Location = new System.Drawing.Point(664, 108);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox7.TabIndex = 35;
+            this.pictureBox7.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::DVLD.WinForms.Properties.Resources.Category512;
+            this.pictureBox6.Location = new System.Drawing.Point(664, 70);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 34;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::DVLD.WinForms.Properties.Resources.DecisionTree512;
+            this.pictureBox5.Location = new System.Drawing.Point(664, 33);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 33;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.GrayCard512;
+            this.pictureBox1.Location = new System.Drawing.Point(203, 32);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 29;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblPassedTests
+            // 
+            this.lblPassedTests.AutoSize = true;
+            this.lblPassedTests.Location = new System.Drawing.Point(240, 223);
+            this.lblPassedTests.Name = "lblPassedTests";
+            this.lblPassedTests.Size = new System.Drawing.Size(45, 25);
+            this.lblPassedTests.TabIndex = 23;
+            this.lblPassedTests.Text = "???";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 223);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(151, 25);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "Passed Tests:";
             // 
             // lblShowLicenseInfo
             // 
@@ -101,7 +263,7 @@
             // lblLocalAppId
             // 
             this.lblLocalAppId.AutoSize = true;
-            this.lblLocalAppId.Location = new System.Drawing.Point(189, 37);
+            this.lblLocalAppId.Location = new System.Drawing.Point(240, 37);
             this.lblLocalAppId.Name = "lblLocalAppId";
             this.lblLocalAppId.Size = new System.Drawing.Size(45, 25);
             this.lblLocalAppId.TabIndex = 21;
@@ -110,7 +272,7 @@
             // lblLicenseClass
             // 
             this.lblLicenseClass.AutoSize = true;
-            this.lblLicenseClass.Location = new System.Drawing.Point(640, 37);
+            this.lblLicenseClass.Location = new System.Drawing.Point(706, 37);
             this.lblLicenseClass.Name = "lblLicenseClass";
             this.lblLicenseClass.Size = new System.Drawing.Size(45, 25);
             this.lblLicenseClass.TabIndex = 20;
@@ -139,7 +301,7 @@
             // lblApplicationId
             // 
             this.lblApplicationId.AutoSize = true;
-            this.lblApplicationId.Location = new System.Drawing.Point(189, 75);
+            this.lblApplicationId.Location = new System.Drawing.Point(240, 75);
             this.lblApplicationId.Name = "lblApplicationId";
             this.lblApplicationId.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationId.TabIndex = 17;
@@ -148,7 +310,7 @@
             // lblApplicationDate
             // 
             this.lblApplicationDate.AutoSize = true;
-            this.lblApplicationDate.Location = new System.Drawing.Point(189, 151);
+            this.lblApplicationDate.Location = new System.Drawing.Point(240, 151);
             this.lblApplicationDate.Name = "lblApplicationDate";
             this.lblApplicationDate.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationDate.TabIndex = 16;
@@ -157,7 +319,7 @@
             // lblPaidFees
             // 
             this.lblPaidFees.AutoSize = true;
-            this.lblPaidFees.Location = new System.Drawing.Point(189, 189);
+            this.lblPaidFees.Location = new System.Drawing.Point(240, 189);
             this.lblPaidFees.Name = "lblPaidFees";
             this.lblPaidFees.Size = new System.Drawing.Size(45, 25);
             this.lblPaidFees.TabIndex = 15;
@@ -166,7 +328,7 @@
             // lblCreatedByUserId
             // 
             this.lblCreatedByUserId.AutoSize = true;
-            this.lblCreatedByUserId.Location = new System.Drawing.Point(640, 189);
+            this.lblCreatedByUserId.Location = new System.Drawing.Point(706, 189);
             this.lblCreatedByUserId.Name = "lblCreatedByUserId";
             this.lblCreatedByUserId.Size = new System.Drawing.Size(45, 25);
             this.lblCreatedByUserId.TabIndex = 14;
@@ -175,7 +337,7 @@
             // lblLastStatusDate
             // 
             this.lblLastStatusDate.AutoSize = true;
-            this.lblLastStatusDate.Location = new System.Drawing.Point(640, 151);
+            this.lblLastStatusDate.Location = new System.Drawing.Point(706, 151);
             this.lblLastStatusDate.Name = "lblLastStatusDate";
             this.lblLastStatusDate.Size = new System.Drawing.Size(45, 25);
             this.lblLastStatusDate.TabIndex = 13;
@@ -184,7 +346,7 @@
             // lblApplicationStatus
             // 
             this.lblApplicationStatus.AutoSize = true;
-            this.lblApplicationStatus.Location = new System.Drawing.Point(640, 113);
+            this.lblApplicationStatus.Location = new System.Drawing.Point(706, 113);
             this.lblApplicationStatus.Name = "lblApplicationStatus";
             this.lblApplicationStatus.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationStatus.TabIndex = 12;
@@ -193,7 +355,7 @@
             // lblApplicationType
             // 
             this.lblApplicationType.AutoSize = true;
-            this.lblApplicationType.Location = new System.Drawing.Point(640, 75);
+            this.lblApplicationType.Location = new System.Drawing.Point(706, 75);
             this.lblApplicationType.Name = "lblApplicationType";
             this.lblApplicationType.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationType.TabIndex = 11;
@@ -202,7 +364,7 @@
             // lblApplicantPersonId
             // 
             this.lblApplicantPersonId.AutoSize = true;
-            this.lblApplicantPersonId.Location = new System.Drawing.Point(189, 113);
+            this.lblApplicantPersonId.Location = new System.Drawing.Point(240, 113);
             this.lblApplicantPersonId.Name = "lblApplicantPersonId";
             this.lblApplicantPersonId.Size = new System.Drawing.Size(45, 25);
             this.lblApplicantPersonId.TabIndex = 9;
@@ -288,43 +450,35 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Application Id:";
             // 
-            // lblPassedTests
-            // 
-            this.lblPassedTests.AutoSize = true;
-            this.lblPassedTests.Location = new System.Drawing.Point(189, 223);
-            this.lblPassedTests.Name = "lblPassedTests";
-            this.lblPassedTests.Size = new System.Drawing.Size(45, 25);
-            this.lblPassedTests.TabIndex = 23;
-            this.lblPassedTests.Text = "???";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 223);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(151, 25);
-            this.label10.TabIndex = 22;
-            this.label10.Text = "Passed Tests:";
-            // 
             // ctrlApplicationInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbApplicationBasicInfo);
+            this.Controls.Add(this.gbApplicationInfo);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ctrlApplicationInfo";
             this.Size = new System.Drawing.Size(986, 301);
-            this.gbApplicationBasicInfo.ResumeLayout(false);
-            this.gbApplicationBasicInfo.PerformLayout();
+            this.gbApplicationInfo.ResumeLayout(false);
+            this.gbApplicationInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbApplicationBasicInfo;
+        private System.Windows.Forms.GroupBox gbApplicationInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
@@ -348,5 +502,16 @@
         private System.Windows.Forms.LinkLabel lblShowLicenseInfo;
         private System.Windows.Forms.Label lblPassedTests;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.PictureBox pictureBox14;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

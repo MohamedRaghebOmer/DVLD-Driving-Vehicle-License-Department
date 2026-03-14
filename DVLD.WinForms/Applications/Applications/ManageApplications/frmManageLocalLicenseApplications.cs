@@ -7,15 +7,14 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
-using DVLD.WinForms.Applications.ManageApplications;
 
 namespace DVLD.WinForms.Applications.ManageApplications
 {
-    public partial class frmManageLocalDrivingLicenseApplications : Form
+    public partial class frmManageLocalLicenseApplications : Form
     {
         private int _selectedRowIndex = -1;
 
-        public frmManageLocalDrivingLicenseApplications()
+        public frmManageLocalLicenseApplications()
         {
             InitializeComponent();
         }

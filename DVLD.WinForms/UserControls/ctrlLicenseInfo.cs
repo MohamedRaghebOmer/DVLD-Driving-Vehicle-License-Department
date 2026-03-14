@@ -3,7 +3,9 @@ using DVLD.Core.DTOs.Entities;
 using DVLD.Core.DTOs.Enums;
 using DVLD.WinForms.Applications.ManageApplications;
 using DVLD.WinForms.People;
+using DVLD.WinForms.Properties;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms.UserControls
@@ -41,7 +43,13 @@ namespace DVLD.WinForms.UserControls
 
             set
             {
-                if (value <= 0 || value == _licenseId)
+                if (value <= 0)
+                {
+                    SetDefaults();
+                    return;
+                }
+
+                if (value == _licenseId)
                     return;
 
                 this._licenseId = value;
@@ -89,6 +97,33 @@ namespace DVLD.WinForms.UserControls
                 _loadType = LoadType.UsingApplicationId;
                 LoadLicenseInfo();
             }
+        }
+
+        private void SetDefaults()
+        {
+            _licenseId = -1;
+            _applicationId = -1;
+            _localApplicationId = -1;
+            _personId = -1;
+            _nationalNo = string.Empty;
+
+            lblClass.Text = "???";
+            lblDriverName.Text = "???";
+            lblLicenseId.Text = "???";
+            lblNationalNo.Text = "???";
+            lblGender.Text = "???";
+            lblIssueDate.Text = "???";
+            lblNotes.Text = "???";
+            lblIsActive.Text = "???";
+            lblDateOfBirth.Text = "???";
+            lblDriverId.Text = "???";
+            lblExpirationDate.Text = "???";
+            lblIsDetained.Text = "???";
+            lblIssueReason.Text = "???";
+            lblShowLicensesHistory.Enabled = false;
+
+            pbDriverImage.Image?.Dispose();
+            pbDriverImage.Image = Resources.ManWithQuestionMark72;
         }
 
         private void lblShowLicensesHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -156,10 +191,12 @@ namespace DVLD.WinForms.UserControls
 
             if (license == null || person == null)
             {
+                SetDefaults();
                 this.Enabled = false;
                 return;
             }
 
+            lblShowLicensesHistory.Enabled = true;
             _personId = person.PersonID;
             lblClass.Text = LicenseClassService.GetLicenseClassName(license.LicenseClass);
             lblDriverName.Text = $"{person.FirstName} {person.SecondName} " +
@@ -178,12 +215,14 @@ namespace DVLD.WinForms.UserControls
                 DetainedLicenseService.IsDetained(license.LicenseID) ?
                 "Yes" : "No";
 
-            if (!string.IsNullOrWhiteSpace(person.ImagePath))
-            {
-                pbDriverImage.Image?.Dispose();
+            string path = PersonService.GetImagePathByFileName(person.ImagePath);
 
-                pbDriverImage.Image =
-                Image.FromFile(PersonService.GetImagePathByFileName(person.ImagePath));
+            if (File.Exists(path))
+            {
+                using (var img = Image.FromFile(path))
+                {
+                    pbDriverImage.Image = new Bitmap(img);
+                }
             }
         }
     }

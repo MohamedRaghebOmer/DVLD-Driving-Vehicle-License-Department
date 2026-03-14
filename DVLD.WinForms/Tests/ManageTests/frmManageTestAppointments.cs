@@ -18,7 +18,7 @@ namespace DVLD.WinForms.Tests
             ctrlManageTestAppointment1.OnUpdate += AppointmentUpdated;
 
             if (mode == ctrlManageTestAppointment.Mode.View)
-                btnCancel.Location = new System.Drawing.Point(538, 508);
+                btnCancel.Location = new System.Drawing.Point(732, 502);
         }
 
         private void AppointmentAdded(int obj)

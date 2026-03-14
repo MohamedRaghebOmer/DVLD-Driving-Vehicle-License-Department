@@ -44,7 +44,7 @@ namespace DVLD.WinForms.NavigateForms
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (ctrlPersonDetailsWithFilter1.PersonID <= 0 
+            if (ctrlPersonDetailsWithFilter1.PersonID <= 0
                 && string.IsNullOrEmpty(ctrlPersonDetailsWithFilter1.NationalNo))
             {
                 MessageBox.Show("Please select a person", "Error",
@@ -78,7 +78,7 @@ namespace DVLD.WinForms.NavigateForms
             else
             {
                 int personId = ctrlPersonDetailsWithFilter1.PersonID;
-                
+
                 if (IsUsingNationalNo())
                     personId = PersonService.GetIdByNationalNo(ctrlPersonDetailsWithFilter1.NationalNo);
 

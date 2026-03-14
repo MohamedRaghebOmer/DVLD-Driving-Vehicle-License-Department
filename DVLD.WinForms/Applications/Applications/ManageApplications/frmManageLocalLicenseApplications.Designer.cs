@@ -1,6 +1,6 @@
 ﻿namespace DVLD.WinForms.Applications.ManageApplications
 {
-    partial class frmManageLocalDrivingLicenseApplications
+    partial class frmManageLocalLicenseApplications
     {
         /// <summary>
         /// Required designer variable.

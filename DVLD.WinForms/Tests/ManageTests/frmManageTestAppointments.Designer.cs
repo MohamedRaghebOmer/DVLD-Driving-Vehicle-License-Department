@@ -36,7 +36,7 @@
             // 
             this.btnCancel.Image = global::DVLD.WinForms.Properties.Resources.Close32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(206, 494);
+            this.btnCancel.Location = new System.Drawing.Point(287, 480);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(138, 51);
             this.btnCancel.TabIndex = 14;
@@ -49,17 +49,17 @@
             // ctrlManageTestAppointment1
             // 
             this.ctrlManageTestAppointment1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlManageTestAppointment1.Location = new System.Drawing.Point(13, 14);
+            this.ctrlManageTestAppointment1.Location = new System.Drawing.Point(0, 0);
             this.ctrlManageTestAppointment1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlManageTestAppointment1.Name = "ctrlManageTestAppointment1";
-            this.ctrlManageTestAppointment1.Size = new System.Drawing.Size(696, 545);
+            this.ctrlManageTestAppointment1.Size = new System.Drawing.Size(924, 545);
             this.ctrlManageTestAppointment1.TabIndex = 0;
             // 
             // frmManageTestAppointments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 565);
+            this.ClientSize = new System.Drawing.Size(882, 565);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.ctrlManageTestAppointment1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

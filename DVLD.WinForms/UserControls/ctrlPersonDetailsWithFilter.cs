@@ -77,7 +77,7 @@ namespace DVLD.WinForms.UserControls
             {
                 ctrlPersonDetails1.PersonID = id;
                 txtFilterValue.Text = id.ToString();
-            }; 
+            };
             frm.ShowDialog();
         }
     }

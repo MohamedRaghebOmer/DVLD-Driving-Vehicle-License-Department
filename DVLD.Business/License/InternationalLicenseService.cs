@@ -1,6 +1,5 @@
 ﻿using DVLD.Business.EntityValidators;
 using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data;
 using System;
@@ -10,27 +9,18 @@ namespace DVLD.Business
 {
     public static class InternationalLicenseService
     {
-        public static InternationalLicense Add(InternationalLicense internationalLicense)
+        public static int IssueByLocalClass3License(int localClass3LicenseId)
         {
-            InternationalLicenseValidator.AddNewValidator(internationalLicense);
+            InternationalLicenseValidator.ValidateForAdd(localClass3LicenseId);
 
             try
             {
-                // Check if the driver has active and expired International License
-                if (InternationalLicenseRepository.ExistsForDriver(internationalLicense.DriverID, true, false))
-                    InternationalLicenseRepository.DeactivateByDriverId(internationalLicense.DriverID);
-
-                int newInternationalLicenseId = InternationalLicenseRepository.Add(internationalLicense);
-                bool isApplicationCompleted = ApplicationRepository.UpdateAppStatusByAppId(internationalLicense.ApplicationID, ApplicationStatus.Completed);
-
-                if (newInternationalLicenseId != -1 && isApplicationCompleted)
-                    return InternationalLicenseRepository.GetById(newInternationalLicenseId);
-                return null;
+                return InternationalLicenseRepository.Add(localClass3LicenseId);
             }
-            catch (Exception ex)
+            catch
             {
                 AppLogger.LogError("BLL: Error while trying to add new International License.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+                throw;
             }
         }
 
@@ -47,6 +37,22 @@ namespace DVLD.Business
             }
         }
 
+        public static InternationalLicense GetByLocalLicenseId(int localLicenseId)
+        {
+            if (localLicenseId <= 0)
+                return null;
+
+            try
+            {
+                return InternationalLicenseRepository.GetByLocalLicenseId(localLicenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while trying to get International License with local license Id {localLicenseId}.");
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static DataTable GetLicenseHistoryByPersonId(int personId)
         {
             if (personId <= 0)
@@ -54,7 +60,7 @@ namespace DVLD.Business
 
             try
             {
-                return InternationalLicenseRepository.GetLicenseHistory(personId);
+                return InternationalLicenseRepository.GetLicenseHistoryByPersonId(personId);
             }
             catch (Exception ex)
             {
@@ -108,28 +114,15 @@ namespace DVLD.Business
             }
         }
 
-        public static bool InActivate(int internationalLicenseId)
+        public static bool ExistsByLocalLicenseId(int localLicenseId, bool checkIsActive = false)
         {
             try
             {
-                return InternationalLicenseRepository.DeactivateById(internationalLicenseId);
+                return InternationalLicenseRepository.ExistsByLocalLicenseId(localLicenseId, checkIsActive);
             }
             catch (Exception ex)
             {
-                AppLogger.LogError($"BLL: Error while deactivate International License with Id = {internationalLicenseId}.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
-            }
-        }
-
-        public static bool Activate(int internationalLicenseId)
-        {
-            try
-            {
-                return InternationalLicenseRepository.Activate(internationalLicenseId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while activate International License with Id = {internationalLicenseId}.");
+                AppLogger.LogError($"BLL: Error while checking existence of International License by local license Id {localLicenseId}.");
                 throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }

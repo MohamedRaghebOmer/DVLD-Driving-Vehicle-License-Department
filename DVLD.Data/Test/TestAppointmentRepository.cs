@@ -112,7 +112,7 @@ namespace DVLD.Data
         public static int GetIdByLocalAppId(int localDrivingLicenseApplicationId)
         {
             string query = @"SELECT TestAppointmentID FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId;";
-            
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))
@@ -134,7 +134,7 @@ namespace DVLD.Data
         {
             string query = @"SELECT * FROM TestAppointments
                             WHERE LocalDrivingLicenseApplicationID = @localDrivingLicenseApplicationId";
-        
+
             try
             {
                 using (var connection = new SqlConnection(DataSettings.connectionString))

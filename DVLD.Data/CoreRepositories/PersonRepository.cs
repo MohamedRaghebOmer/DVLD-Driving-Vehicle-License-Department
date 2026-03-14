@@ -180,6 +180,34 @@ namespace DVLD.Data
             }
         }
 
+        public static int GetIdByDriverId(int driverId)
+        {
+            string query = @"SELECT PersonID 
+                            FROM Drivers 
+                            WHERE Drivers.DriverID = @driverId;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@driverId", driverId);
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                        return id;
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while reading from Drivers." + ex);
+                throw;
+            }
+        }
+
+
         public static Person GetByDriverId(int driverId)
         {
             string query = @"SELECT * FROM People
@@ -365,7 +393,7 @@ namespace DVLD.Data
                 {
                     command.Parameters.AddWithValue("@ApplicationID", appId);
                     connection.Open();
-                    
+
                     object result = command.ExecuteScalar();
 
                     if (result != null)
