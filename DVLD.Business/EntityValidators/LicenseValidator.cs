@@ -58,5 +58,20 @@ namespace DVLD.Business.EntityValidators
 
             return license;
         }
+
+        public static void ValidateForRenew(int licenseId)
+        {
+            // Check if the license is not exists
+            if (!LicenseRepository.Exists(licenseId))
+                throw new BusinessException("License does not exist.");
+
+            // Check if the license is not active
+            if (!LicenseRepository.IsActive(licenseId))
+                throw new BusinessException("Cannot renew license. License is not active.");
+
+            // Check if the license is not expired
+            if (!LicenseRepository.IsExpired(licenseId))
+                throw new BusinessException("License is not expired.");
+        }
     }
 }

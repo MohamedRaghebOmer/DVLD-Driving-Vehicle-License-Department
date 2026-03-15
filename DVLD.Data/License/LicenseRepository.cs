@@ -77,6 +77,140 @@ namespace DVLD.Data
             }
         }
 
+        public static int Renew(int licenseId)
+        {
+            string query = @"SET NOCOUNT ON;
+                            SET XACT_ABORT ON;
+
+                            DECLARE
+                                @DriverID INT,
+                                @ApplicantPersonID INT,
+                                @OldLicenseClassID INT,
+                                @OldNotes NVARCHAR(4000),
+                                @OldExpiration DATETIME,
+                                @AppFees SMALLMONEY,
+                                @DefaultValidityLength TINYINT,
+                                @ClassFees SMALLMONEY,
+                                @NewApplicationID INT,
+                                @NewLocalDrivingLicenseApplicationID INT,
+                                @NewLicenseID INT,
+                                @IssueDate DATETIME;
+
+                            BEGIN TRY
+                                BEGIN TRAN;
+
+                                SELECT 
+                                    @DriverID = l.DriverID,
+                                    @ApplicantPersonID = d.PersonID,
+                                    @OldLicenseClassID = l.LicenseClass,
+                                    @OldNotes = l.Notes,
+                                    @OldExpiration = l.ExpirationDate
+                                FROM Licenses l
+                                INNER JOIN Drivers d ON l.DriverID = d.DriverID
+                                WHERE l.LicenseID = @LicenseID;
+
+                                IF @DriverID IS NULL
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL;
+                                    RETURN;
+                                END
+
+                                IF NOT EXISTS (SELECT 1 FROM Licenses WHERE LicenseID = @LicenseID AND IsActive = 1)
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL;
+                                    RETURN;
+                                END
+
+                                IF EXISTS (SELECT 1 FROM DetainedLicenses WHERE LicenseID = @LicenseID AND IsReleased = 0)
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL;
+                                    RETURN;
+                                END
+
+                                IF @OldExpiration IS NULL OR @OldExpiration >= GETDATE()
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL;
+                                    RETURN;
+                                END
+
+                                SELECT @AppFees = ApplicationFees
+                                FROM ApplicationTypes
+                                WHERE ApplicationTypeID = 2;
+
+                                IF @AppFees IS NULL SET @AppFees = 0;
+
+                                SELECT 
+                                    @DefaultValidityLength = DefaultValidityLength,
+                                    @ClassFees = ClassFees
+                                FROM LicenseClasses
+                                WHERE LicenseClassID = @OldLicenseClassID;
+
+                                IF @DefaultValidityLength IS NULL SET @DefaultValidityLength = 0;
+                                IF @ClassFees IS NULL SET @ClassFees = 0;
+
+                                INSERT INTO Applications
+                                    (ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID)
+                                VALUES
+                                    (@ApplicantPersonID, GETDATE(), 2, 3, GETDATE(), @AppFees, @CreatedByUserID);
+
+                                SET @NewApplicationID = SCOPE_IDENTITY();
+
+                                INSERT INTO LocalDrivingLicenseApplications
+                                    (ApplicationID, LicenseClassID)
+                                VALUES
+                                    (@NewApplicationID, @OldLicenseClassID);
+
+                                SET @NewLocalDrivingLicenseApplicationID = SCOPE_IDENTITY();
+
+                                UPDATE Licenses
+                                SET IsActive = 0
+                                WHERE LicenseID = @LicenseID;
+
+                                SET @IssueDate = GETDATE();
+
+                                INSERT INTO Licenses
+                                    (ApplicationID, DriverID, LicenseClass, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, IssueReason, CreatedByUserID)
+                                VALUES
+                                    (@NewApplicationID, @DriverID, @OldLicenseClassID, @IssueDate, DATEADD(year, @DefaultValidityLength, @IssueDate), @OldNotes, @ClassFees, 1, 2, @CreatedByUserID);
+
+                                SET @NewLicenseID = SCOPE_IDENTITY();
+
+                                COMMIT TRAN;
+
+                                SELECT @NewLicenseID;
+                            END TRY
+                            BEGIN CATCH
+                                IF XACT_STATE() <> 0
+                                    ROLLBACK TRAN;
+                                SELECT NULL;
+                            END CATCH;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LicenseID", licenseId);
+                    com.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
+                    con.Open();
+                    object result = com.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int newLicenseId))
+                        return newLicenseId;
+                    else
+                        return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while renewing license with id = " + licenseId + ".", ex);
+                throw;
+            }
+        }
+
         public static DataTable GetAll()
         {
             string query = "SELECT * FROM Licenses;";

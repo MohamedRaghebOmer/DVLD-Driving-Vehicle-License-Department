@@ -235,9 +235,9 @@
             this.lblPassedTests.AutoSize = true;
             this.lblPassedTests.Location = new System.Drawing.Point(240, 223);
             this.lblPassedTests.Name = "lblPassedTests";
-            this.lblPassedTests.Size = new System.Drawing.Size(45, 25);
+            this.lblPassedTests.Size = new System.Drawing.Size(40, 25);
             this.lblPassedTests.TabIndex = 23;
-            this.lblPassedTests.Text = "???";
+            this.lblPassedTests.Text = "0/3";
             // 
             // label10
             // 

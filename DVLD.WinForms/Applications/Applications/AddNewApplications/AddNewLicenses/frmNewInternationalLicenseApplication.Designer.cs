@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnIssue = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.ctrlInternationalLicenseApplication1 = new DVLD.WinForms.UserControls.ctrlInternationalLicenseApplication();
+            this.ctrlInternationalLicenseApplication1 = new DVLD.WinForms.UserControls.ctrlInternationalLicenseAndApplicationInfo();
             this.SuspendLayout();
             // 
             // label1
@@ -111,6 +111,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnIssue;
         private System.Windows.Forms.Button btnClose;
-        private UserControls.ctrlInternationalLicenseApplication ctrlInternationalLicenseApplication1;
+        private UserControls.ctrlInternationalLicenseAndApplicationInfo ctrlInternationalLicenseApplication1;
     }
 }

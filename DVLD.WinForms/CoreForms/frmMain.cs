@@ -1,4 +1,5 @@
 ﻿using DVLD.Core.Logging;
+using DVLD.WinForms.Applications.Applications.AddNewApplications.OtherApplications;
 using DVLD.WinForms.Applications.ManageApplications;
 using DVLD.WinForms.Applications.ManageApplications.AddNewApplications;
 using DVLD.WinForms.Applications.ManageApplications.ManageApplications;
@@ -99,6 +100,12 @@ namespace DVLD.WinForms
         private void internaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmManageInternationalLicenseApplications();
+            frm.ShowDialog();
+        }
+
+        private void renewDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmRenewLicenseApplication();
             frm.ShowDialog();
         }
     }
