@@ -16,6 +16,25 @@ namespace DVLD.WinForms.UserControls
         public ctrlApplicationInfo()
         {
             InitializeComponent();
+            SetDefaults();
+        }
+
+        private void SetDefaults()
+        {
+            lblLocalAppId.Text = "???";
+            lblApplicationId.Text = "???";
+            lblApplicantPersonId.Text = "???";
+            lblApplicationDate.Text = "???";
+            lblPassedTests.Text = "???";
+            lblLicenseClass.Text = "???";
+            lblApplicationType.Text = "???";
+            lblApplicationStatus.Text = "???";
+            lblLastStatusDate.Text = "???";
+            lblCreatedByUserId.Text = "???";
+            lblShowLicenseInfo.Enabled = false;
+            application = null;
+            _Id = -1;
+            _loadType = LoadType.UsingApplicationId;
         }
 
         public int ApplicationId
@@ -30,6 +49,8 @@ namespace DVLD.WinForms.UserControls
 
             set
             {
+                SetDefaults();
+
                 if (value <= 0 || value == _Id)
                     return;
 
@@ -51,6 +72,8 @@ namespace DVLD.WinForms.UserControls
 
             set
             {
+                SetDefaults();
+
                 if (value <= 0 || value == _Id)
                     return;
 
@@ -82,9 +105,7 @@ namespace DVLD.WinForms.UserControls
             var localApp = LocalDrivingLicenseApplicationService.
                 GetByApplicationId(application.ApplicationID);
 
-            if (application.ApplicationStatus != ApplicationStatus.Completed)
-                lblShowLicenseInfo.Enabled = false;
-
+            lblShowLicenseInfo.Enabled = application.ApplicationStatus == ApplicationStatus.Completed;
             lblPassedTests.Text = TestService.GetNumOfPassedTests(localApp.LocalDrivingLicenseApplicationID).ToString() + "/3";
             lblLocalAppId.Text = localApp.LocalDrivingLicenseApplicationID.ToString();
             lblLicenseClass.Text = LicenseClassService.GetLicenseClassName(localApp.LicenseClassID);

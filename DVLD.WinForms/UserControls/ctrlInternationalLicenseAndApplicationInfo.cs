@@ -6,7 +6,7 @@ using License = DVLD.Core.DTOs.Entities.License;
 
 namespace DVLD.WinForms.UserControls
 {
-    public partial class ctrlInternationalLicenseApplication : UserControl
+    public partial class ctrlInternationalLicenseAndApplicationInfo : UserControl
     {
         public event Action<License> OnLicenseSelected;
 
@@ -14,7 +14,7 @@ namespace DVLD.WinForms.UserControls
 
         public License LocalLicense { get => _license; }
 
-        public ctrlInternationalLicenseApplication()
+        public ctrlInternationalLicenseAndApplicationInfo()
         {
             InitializeComponent();
         }

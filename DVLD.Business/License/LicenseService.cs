@@ -79,6 +79,21 @@ namespace DVLD.Business
             }
         }
 
+        public static int Renew(int licenseId)
+        {
+            LicenseValidator.ValidateForRenew(licenseId);
+
+            try
+            {
+                return LicenseRepository.Renew(licenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error adding renew a license.");
+                throw new Exception("An error occurred while adding the license. Please try again later.", ex);
+            }
+        }
+
         public static DataTable GetAll()
         {
             try
