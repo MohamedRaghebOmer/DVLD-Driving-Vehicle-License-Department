@@ -108,5 +108,11 @@ namespace DVLD.WinForms
             var frm = new frmRenewLicenseApplication();
             frm.ShowDialog();
         }
+
+        private void replacemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmReplacementLostDamagedLicense();
+            frm.ShowDialog();
+        }
     }
 }

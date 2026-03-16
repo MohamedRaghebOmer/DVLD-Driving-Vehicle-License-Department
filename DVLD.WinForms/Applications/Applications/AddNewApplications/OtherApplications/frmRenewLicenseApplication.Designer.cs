@@ -82,18 +82,18 @@
             this.ctrlLicenseAndApplicationInfo1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ctrlLicenseAndApplicationInfo1.Name = "ctrlLicenseAndApplicationInfo1";
             this.ctrlLicenseAndApplicationInfo1.Size = new System.Drawing.Size(1089, 752);
-            this.ctrlLicenseAndApplicationInfo1.TabIndex = 0;
+            this.ctrlLicenseAndApplicationInfo1.TabIndex = 17;
             this.ctrlLicenseAndApplicationInfo1.OnLicenseSelected += new System.Action<DVLD.Core.DTOs.Entities.License>(this.ctrlLicenseAndApplicationInfo1_OnLicenseSelected);
             // 
             // frmRenewLicenseApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1093, 804);
+            this.ClientSize = new System.Drawing.Size(1112, 804);
             this.Controls.Add(this.ctrlLicenseAndApplicationInfo1);
-            this.Controls.Add(this.lblShowNewLicenseInfo);
-            this.Controls.Add(this.btnRenew);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnRenew);
+            this.Controls.Add(this.lblShowNewLicenseInfo);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

@@ -131,6 +131,22 @@ namespace DVLD.Business
 
         }
 
+        public static Application GetByLicenseId(int licenseId)
+        {
+            if (licenseId <= 0)
+                return null;
+
+            try
+            {
+                return ApplicationRepository.GetByLicenseId(licenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError($"BLL: Error while retrieving application by license id = {licenseId}.", ex);
+                throw new Exception("We encountered a technical issue. Please try again later.", ex);
+            }
+        }
+
         public static bool Exists(int applicationId)
         {
             try

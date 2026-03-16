@@ -168,6 +168,49 @@ namespace DVLD.Data
             }
         }
 
+        public static Application GetByLicenseId(int licenseId)
+        {
+            string query = @"SELECT * FROM Applications A
+                            INNER JOIN Licenses L
+                                ON L.ApplicationID = A.ApplicationID
+                            WHERE L.LicenseID = @LicenseID;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LicenseID", licenseId);
+                    con.Open();
+
+                    using (var reader = com.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Application
+                            (
+                                applicationId: Convert.ToInt32(reader["ApplicationID"]),
+                                applicantPersonId: Convert.ToInt32(reader["ApplicantPersonID"]),
+                                applicationDate: Convert.ToDateTime(reader["ApplicationDate"]),
+                                applicationTypeId: (ApplicationType)Convert.ToInt32(reader["ApplicationTypeID"]),
+                                applicationStatus: (ApplicationStatus)Convert.ToInt32(reader["ApplicationStatus"]),
+                                lastStatusDate: Convert.ToDateTime(reader["LastStatusDate"]),
+                                paidFees: Convert.ToDecimal(reader["PaidFees"]),
+                                createdByUserId: Convert.ToInt32(reader["CreatedByUserID"])
+                            );
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while retrieving application from Applications table by license id.", ex);
+                throw;
+            }
+        }
+
         public static bool Exists(int applicationId)
         {
             string query = @"SELECT 1 FROM Applications WHERE ApplicationID = @id;";

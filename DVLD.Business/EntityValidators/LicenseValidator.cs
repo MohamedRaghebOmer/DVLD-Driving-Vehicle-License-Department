@@ -2,6 +2,7 @@
 using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Data;
+using System;
 
 namespace DVLD.Business.EntityValidators
 {
@@ -72,6 +73,23 @@ namespace DVLD.Business.EntityValidators
             // Check if the license is not expired
             if (!LicenseRepository.IsExpired(licenseId))
                 throw new BusinessException("License is not expired.");
+        }
+
+        public static void ValidateForReplace(int licenseId)
+        {
+            License license = null;
+
+            if (licenseId <= 0 || (license = LicenseRepository.GetById(licenseId)) == null)
+                throw new BusinessException("License does not exist.");
+
+            if (license.IsActive == false)
+                throw new BusinessException("License must be active to renew it.");
+
+            if (license.ExpirationDate < DateTime.Now)
+                throw new BusinessException("License is expired.");
+
+            if (DetainedLicenseRepository.IsDetained(licenseId))
+                throw new BusinessException("License is detained.");
         }
     }
 }

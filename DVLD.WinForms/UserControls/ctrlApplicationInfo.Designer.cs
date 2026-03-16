@@ -173,7 +173,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = global::DVLD.WinForms.Properties.Resources.Users64;
-            this.pictureBox9.Location = new System.Drawing.Point(664, 185);
+            this.pictureBox9.Location = new System.Drawing.Point(614, 181);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(31, 30);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -183,7 +183,7 @@
             // pictureBox8
             // 
             this.pictureBox8.Image = global::DVLD.WinForms.Properties.Resources.LastDate512;
-            this.pictureBox8.Location = new System.Drawing.Point(664, 146);
+            this.pictureBox8.Location = new System.Drawing.Point(614, 142);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(31, 30);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -193,7 +193,7 @@
             // pictureBox7
             // 
             this.pictureBox7.Image = global::DVLD.WinForms.Properties.Resources.Loading512;
-            this.pictureBox7.Location = new System.Drawing.Point(664, 108);
+            this.pictureBox7.Location = new System.Drawing.Point(614, 104);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(31, 30);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -203,7 +203,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = global::DVLD.WinForms.Properties.Resources.Category512;
-            this.pictureBox6.Location = new System.Drawing.Point(664, 70);
+            this.pictureBox6.Location = new System.Drawing.Point(614, 66);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(31, 30);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -213,7 +213,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::DVLD.WinForms.Properties.Resources.DecisionTree512;
-            this.pictureBox5.Location = new System.Drawing.Point(664, 33);
+            this.pictureBox5.Location = new System.Drawing.Point(614, 29);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(31, 30);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -272,7 +272,7 @@
             // lblLicenseClass
             // 
             this.lblLicenseClass.AutoSize = true;
-            this.lblLicenseClass.Location = new System.Drawing.Point(706, 37);
+            this.lblLicenseClass.Location = new System.Drawing.Point(656, 33);
             this.lblLicenseClass.Name = "lblLicenseClass";
             this.lblLicenseClass.Size = new System.Drawing.Size(45, 25);
             this.lblLicenseClass.TabIndex = 20;
@@ -282,7 +282,7 @@
             // 
             this.lable1.AutoSize = true;
             this.lable1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lable1.Location = new System.Drawing.Point(472, 37);
+            this.lable1.Location = new System.Drawing.Point(422, 33);
             this.lable1.Name = "lable1";
             this.lable1.Size = new System.Drawing.Size(155, 25);
             this.lable1.TabIndex = 19;
@@ -328,7 +328,7 @@
             // lblCreatedByUserId
             // 
             this.lblCreatedByUserId.AutoSize = true;
-            this.lblCreatedByUserId.Location = new System.Drawing.Point(706, 189);
+            this.lblCreatedByUserId.Location = new System.Drawing.Point(656, 185);
             this.lblCreatedByUserId.Name = "lblCreatedByUserId";
             this.lblCreatedByUserId.Size = new System.Drawing.Size(45, 25);
             this.lblCreatedByUserId.TabIndex = 14;
@@ -337,7 +337,7 @@
             // lblLastStatusDate
             // 
             this.lblLastStatusDate.AutoSize = true;
-            this.lblLastStatusDate.Location = new System.Drawing.Point(706, 151);
+            this.lblLastStatusDate.Location = new System.Drawing.Point(656, 147);
             this.lblLastStatusDate.Name = "lblLastStatusDate";
             this.lblLastStatusDate.Size = new System.Drawing.Size(45, 25);
             this.lblLastStatusDate.TabIndex = 13;
@@ -346,7 +346,7 @@
             // lblApplicationStatus
             // 
             this.lblApplicationStatus.AutoSize = true;
-            this.lblApplicationStatus.Location = new System.Drawing.Point(706, 113);
+            this.lblApplicationStatus.Location = new System.Drawing.Point(656, 109);
             this.lblApplicationStatus.Name = "lblApplicationStatus";
             this.lblApplicationStatus.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationStatus.TabIndex = 12;
@@ -355,7 +355,7 @@
             // lblApplicationType
             // 
             this.lblApplicationType.AutoSize = true;
-            this.lblApplicationType.Location = new System.Drawing.Point(706, 75);
+            this.lblApplicationType.Location = new System.Drawing.Point(656, 71);
             this.lblApplicationType.Name = "lblApplicationType";
             this.lblApplicationType.Size = new System.Drawing.Size(45, 25);
             this.lblApplicationType.TabIndex = 11;
@@ -394,7 +394,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(472, 75);
+            this.label7.Location = new System.Drawing.Point(422, 71);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(181, 25);
             this.label7.TabIndex = 6;
@@ -404,7 +404,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(472, 113);
+            this.label6.Location = new System.Drawing.Point(422, 109);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(194, 25);
             this.label6.TabIndex = 5;
@@ -414,7 +414,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(472, 151);
+            this.label5.Location = new System.Drawing.Point(422, 147);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(179, 25);
             this.label5.TabIndex = 4;
@@ -434,7 +434,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(472, 189);
+            this.label3.Location = new System.Drawing.Point(422, 185);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(202, 25);
             this.label3.TabIndex = 2;
