@@ -56,6 +56,12 @@
     <Compile Include="Applications\Applications\AddNewApplications\OtherApplications\frmRenewLicenseApplication.Designer.cs">
       <DependentUpon>frmRenewLicenseApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\Applications\AddNewApplications\OtherApplications\frmReplacementLostDamegedLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Applications\Applications\AddNewApplications\OtherApplications\frmReplacementLostDamegedLicense.Designer.cs">
+      <DependentUpon>frmReplacementLostDamegedLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Applications\ApplicationTypes\frmManageApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +208,12 @@
     <Compile Include="UserControls\ctrlApplicationInfo.Designer.cs">
       <DependentUpon>ctrlApplicationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ctrlFindLicense.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ctrlFindLicense.Designer.cs">
+      <DependentUpon>ctrlFindLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ctrlInternationalLicenseApplicationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -232,6 +244,12 @@
     <Compile Include="UserControls\ctrlLicenseInfo.Designer.cs">
       <DependentUpon>ctrlLicenseInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ctrlLicenseReplacementInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ctrlLicenseReplacementInfo.Designer.cs">
+      <DependentUpon>ctrlLicenseReplacementInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ctrlPersonDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -249,6 +267,12 @@
     </Compile>
     <Compile Include="UserControls\ctrlManageTestAppointment.Designer.cs">
       <DependentUpon>ctrlManageTestAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ctrlReplaceDamagedLicenseApplicationInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ctrlReplaceDamagedLicenseApplicationInfo.Designer.cs">
+      <DependentUpon>ctrlReplaceDamagedLicenseApplicationInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ctrlUserInfo.cs">
       <SubType>UserControl</SubType>
@@ -282,6 +306,9 @@
     </Compile>
     <EmbeddedResource Include="Applications\Applications\AddNewApplications\OtherApplications\frmRenewLicenseApplication.resx">
       <DependentUpon>frmRenewLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\Applications\AddNewApplications\OtherApplications\frmReplacementLostDamegedLicense.resx">
+      <DependentUpon>frmReplacementLostDamegedLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ApplicationTypes\frmManageApplicationTypes.resx">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
@@ -363,6 +390,9 @@
       <DependentUpon>ctrlApplicationInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ctrlFindLicense.resx">
+      <DependentUpon>ctrlFindLicense.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlInternationalLicenseAndApplicationInfo.resx">
       <DependentUpon>ctrlInternationalLicenseAndApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -378,6 +408,9 @@
     <EmbeddedResource Include="UserControls\ctrlLicenseInfo.resx">
       <DependentUpon>ctrlLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ctrlLicenseReplacementInfo.resx">
+      <DependentUpon>ctrlLicenseReplacementInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlPersonDetails.resx">
       <DependentUpon>ctrlPersonDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -386,6 +419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlManageTestAppointment.resx">
       <DependentUpon>ctrlManageTestAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ctrlReplaceDamagedLicenseApplicationInfo.resx">
+      <DependentUpon>ctrlReplaceDamagedLicenseApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ctrlUserInfo.resx">
       <DependentUpon>ctrlUserInfo.cs</DependentUpon>

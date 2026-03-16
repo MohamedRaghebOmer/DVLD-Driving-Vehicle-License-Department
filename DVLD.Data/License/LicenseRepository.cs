@@ -1,10 +1,10 @@
-﻿using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
+﻿using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Logging;
 using DVLD.Data.Settings;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using License = DVLD.Core.DTOs.Entities.License;
 
 namespace DVLD.Data
 {
@@ -209,6 +209,250 @@ namespace DVLD.Data
                 AppLogger.LogError("DAL: Error while renewing license with id = " + licenseId + ".", ex);
                 throw;
             }
+        }
+
+        public static int Replace(int licenseId, bool isLost)
+        {
+            string query = @"SET NOCOUNT ON;
+                            SET XACT_ABORT ON;
+
+                            DECLARE
+                                @NewApplicationID INT = NULL,
+                                @NewLicenseID INT = NULL,
+                                @DriverID INT = NULL,
+                                @PersonID INT = NULL,
+                                @LicenseClass INT = NULL,
+                                @OldNotes NVARCHAR(MAX) = NULL,
+                                @OldExpirationDate DATETIME = NULL,
+                                @OldIsActive BIT = 0,
+                                @AppTypeID INT = NULL,
+                                @AppPaidFees SMALLMONEY = 0,
+                                @ClassDefaultValidity TINYINT = NULL,
+                                @ClassFees SMALLMONEY = 0,
+                                @NewIssueDate DATETIME = NULL,
+                                @NewExpirationDate DATETIME = NULL,
+                                @IssueReason TINYINT = NULL;
+
+                            BEGIN TRY
+                                BEGIN TRAN;
+
+                                -- 1) احصل بيانات الرخصة القديمة
+                                SELECT 
+                                    @DriverID = DriverID,
+                                    @LicenseClass = LicenseClass,
+                                    @OldNotes = Notes,
+                                    @OldExpirationDate = ExpirationDate,
+                                    @OldIsActive = IsActive
+                                FROM Licenses
+                                WHERE LicenseID = @LicenseID;
+
+                                -- لو مفيش رخصة بالحجم ده ارجع NULL
+                                IF @DriverID IS NULL
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL AS NewLicenseID;
+                                    RETURN;
+                                END
+
+                                -- 2) تأكد الرخصة فعّالة ومش منتهية
+                                IF @OldIsActive = 0 OR @OldExpirationDate <= GETDATE()
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL AS NewLicenseID;
+                                    RETURN;
+                                END
+
+                                -- 3) تأكد مش محجوزة (detained) بدون إفراج
+                                IF EXISTS (
+                                    SELECT 1 FROM DetainedLicenses
+                                    WHERE LicenseID = @LicenseID
+                                      AND IsReleased = 0
+                                )
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL AS NewLicenseID;
+                                    RETURN;
+                                END
+
+                                -- 4) احصل PersonID من جدول Drivers
+                                SELECT @PersonID = PersonID
+                                FROM Drivers
+                                WHERE DriverID = @DriverID;
+
+                                IF @PersonID IS NULL
+                                BEGIN
+                                    ROLLBACK TRAN;
+                                    SELECT NULL AS NewLicenseID;
+                                    RETURN;
+                                END
+
+                                -- حدد ApplicationType و IssueReason بناءً على @IsLost
+                                SET @AppTypeID = CASE WHEN @IsLost = 1 THEN 3 ELSE 4 END;
+                                SET @IssueReason = CASE WHEN @IsLost = 1 THEN 3 ELSE 4 END;
+
+                                -- احصل المبلغ المطلوب من ApplicationTypes
+                                SELECT @AppPaidFees = ISNULL(ApplicationFees, 0)
+                                FROM ApplicationTypes
+                                WHERE ApplicationTypeID = @AppTypeID;
+
+                                -- 5) ادخل Application جديد
+                                INSERT INTO Applications
+                                    (ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID)
+                                VALUES
+                                    (@PersonID, GETDATE(), @AppTypeID, 3, GETDATE(), @AppPaidFees, @CreatedByUserID);
+
+                                SET @NewApplicationID = SCOPE_IDENTITY();
+
+                                -- 6) ادخل LocalDrivingLicenseApplications مرتبط بالـ Application الجديد
+                                INSERT INTO LocalDrivingLicenseApplications (ApplicationID, LicenseClassID)
+                                VALUES (@NewApplicationID, @LicenseClass);
+
+                                -- 7) عطل الرخصة القديمة (بعد ما اتعمل الـ Application)
+                                UPDATE Licenses
+                                SET IsActive = 0
+                                WHERE LicenseID = @LicenseID;
+
+                                -- 8) احصل صلاحية الفئة وFees من LicenseClasses
+                                SELECT 
+                                    @ClassDefaultValidity = DefaultValidityLength,
+                                    @ClassFees = ISNULL(ClassFees, 0)
+                                FROM LicenseClasses
+                                WHERE LicenseClassID = @LicenseClass;
+
+                                IF @ClassDefaultValidity IS NULL
+                                    SET @ClassDefaultValidity = 1; -- افتراضي سنة واحدة لو مش معرف
+
+                                -- 9) انشئ الرخصة الجديدة
+                                SET @NewIssueDate = GETDATE();
+                                SET @NewExpirationDate = DATEADD(year, @ClassDefaultValidity, @NewIssueDate);
+
+                                INSERT INTO Licenses
+                                    (ApplicationID, DriverID, LicenseClass, IssueDate, ExpirationDate, Notes, PaidFees, IsActive, IssueReason, CreatedByUserID)
+                                VALUES
+                                    (@NewApplicationID, @DriverID, @LicenseClass, @NewIssueDate, @NewExpirationDate, @OldNotes, @ClassFees, 1, @IssueReason, @CreatedByUserID);
+
+                                SET @NewLicenseID = SCOPE_IDENTITY();
+
+                                COMMIT TRAN;
+
+                                -- RETURN: عمود أول هو NewLicenseID عشان ExecuteScalar يرجع ID، وباقي للتفاصيل
+                                SELECT
+                                    @NewLicenseID AS NewLicenseID
+
+                            END TRY
+                            BEGIN CATCH
+                                IF XACT_STATE() <> 0
+                                    ROLLBACK TRAN;
+
+                                -- لو في خطأ رجع NULL (الدالة في C# هترجع -1)
+                                SELECT NULL AS NewLicenseID;
+                            END CATCH;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LicenseID", licenseId);
+                    com.Parameters.AddWithValue("@IsLost", isLost);
+                    com.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int newLicenseId))
+                        return newLicenseId;
+                    else
+                        return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while replacing license with id = " + licenseId + ".", ex);
+                throw;
+            }
+        }
+
+        public static int GetOldLicenseIdAfterReplacement(int replaceTypeApplicationId)
+        {
+            string query = @"WITH NewLicense AS (
+                                SELECT TOP (1) L.*
+                                FROM Licenses L
+                                JOIN Applications A ON L.ApplicationID = A.ApplicationID
+                                WHERE L.ApplicationID = @ApplicationID
+                                    AND A.ApplicationTypeID IN (3,4)
+                                    AND L.IssueReason IN (3,4)
+                                    AND L.IsActive = 1
+                                ORDER BY L.IssueDate DESC
+                            )
+                            SELECT TOP (1) old.LicenseID
+                            FROM Licenses old
+                            CROSS JOIN NewLicense n
+                            WHERE old.DriverID = n.DriverID
+                                AND old.LicenseClass = n.LicenseClass
+                                AND old.IsActive = 0
+                                AND old.LicenseID <> n.LicenseID
+                            ORDER BY old.IssueDate DESC;";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@ApplicationID", replaceTypeApplicationId);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                    {
+                        return id;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while Get New License Id After Replacement", ex);
+                throw;
+            }
+        }
+
+        public static int GetNewLicenseIdAfterReplacement(int replaceTypeApplicationId)
+        {
+            string query = @"SELECT L.LicenseID
+                            FROM Licenses L
+                            WHERE L.ApplicationID = @ApplicationID";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@ApplicationID", replaceTypeApplicationId);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                    {
+                        return id;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while Get New License Id After Replacement", ex);
+                throw;
+            }
+
         }
 
         public static DataTable GetAll()
@@ -685,7 +929,7 @@ namespace DVLD.Data
             }
         }
 
-        public static bool ExistsForApplication(int applicationId)
+        public static bool ExistsByApplication(int applicationId)
         {
             string query = @"SELECT 1 FROM Licenses WHERE ApplicationID = @applicationId;";
             try

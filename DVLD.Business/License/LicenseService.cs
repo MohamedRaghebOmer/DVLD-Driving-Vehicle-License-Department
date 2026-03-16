@@ -11,51 +11,6 @@ namespace DVLD.Business
 {
     public static class LicenseService
     {
-        private static IssueReason DetermineIssueReason(ApplicationType applicationType)
-        {
-            switch (applicationType)
-            {
-                case ApplicationType.NewLocalDrivingLicenseService:
-                    return IssueReason.FirstTime;
-                case ApplicationType.RenewDrivingLicenseService:
-                    return IssueReason.Renew;
-                case ApplicationType.ReplacementForLostDrivingLicense:
-                    return IssueReason.ReplacementLost;
-                case ApplicationType.ReplacementForDamagedDrivingLicense:
-                    return IssueReason.ReplacementDamaged;
-                default:
-                    throw new ValidationException("Invalid application type for issuing a license.");
-            }
-        }
-
-        private static int GetDriverId(int personId)
-        {
-            // If the person is already a driver, return the driver id,
-            // else add a new driver and return the new driver id
-
-            int driverId = -1;
-            driverId = DriverRepository.GetDriverIdByPersonId(personId);
-
-            if (driverId == -1)
-                return driverId;
-
-            Driver driver = new Driver();
-            driver.PersonId = personId;
-
-            return DriverRepository.Add(driver);
-        }
-
-        private static int GetAndDeactivatePreviousLicense(int driverId, LicenseClass licenseClass)
-        {
-            int previousLicenseId = LicenseRepository.GetLicenseIdByDriverId(driverId, licenseClass);
-
-            if (previousLicenseId == -1) // If there is no previous license, return -1
-                return -1;
-
-            LicenseRepository.DeactivateLicense(previousLicenseId);
-            return previousLicenseId;
-        }
-
         public static int Issue(int localDrivingLicenseApplicationId, string notes)
         {
             // Validate and return a trusted license to issue
@@ -92,6 +47,88 @@ namespace DVLD.Business
                 AppLogger.LogError("BLL: Error adding renew a license.");
                 throw new Exception("An error occurred while adding the license. Please try again later.", ex);
             }
+        }
+
+        public static int Replace(int licenseId, bool isLost)
+        {
+            LicenseValidator.ValidateForReplace(licenseId);
+
+            try
+            {
+                return LicenseRepository.Replace(licenseId, isLost);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while replacing license with id " + licenseId + ".");
+                throw new Exception("Error replacing the license.", ex);
+            }
+        }
+
+        public static int GetOldLicenseIdAfterReplacement(int replaceTypeApplicationId)
+        {
+            Application application = null;
+
+            if (replaceTypeApplicationId <= 0 ||
+                (application = ApplicationRepository.GetById(replaceTypeApplicationId)) == null)
+            {
+                throw new BusinessException("Replace Application does not exist.");
+            }
+
+            if (application.ApplicationTypeID != ApplicationType.ReplacementForLostDrivingLicense
+                && application.ApplicationTypeID != ApplicationType.ReplacementForDamagedDrivingLicense)
+            {
+                throw new BusinessException("Application Type is not replace for license.");
+            }
+
+            // Replacement application status is always completed because it done automatically 
+            if (application.ApplicationStatus != ApplicationStatus.Completed)
+            {
+                throw new BusinessException("License with given application id does not exist.");
+            }
+
+            try
+            {
+                return LicenseRepository.GetOldLicenseIdAfterReplacement(replaceTypeApplicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while trying to get new license id after replacement.");
+                throw new Exception("An error occurred while adding the license. Please try again later.", ex);
+            }
+        }
+
+        public static int GetNewLicenseIdAfterReplacement(int replaceTypeApplicationId)
+        {
+            Application application = null;
+
+            if (replaceTypeApplicationId <= 0 ||
+                (application = ApplicationRepository.GetById(replaceTypeApplicationId)) == null)
+            {
+                throw new BusinessException("Replace Application does not exist.");
+            }
+
+            if (application.ApplicationTypeID != ApplicationType.ReplacementForDamagedDrivingLicense
+                && application.ApplicationTypeID != ApplicationType.ReplacementForLostDrivingLicense)
+            {
+                throw new BusinessException("Application Type is not replace for license.");
+            }
+
+            // Replacement application status is always completed because it done automatically 
+            if (application.ApplicationStatus != ApplicationStatus.Completed)
+            {
+                throw new BusinessException("License with given application id does not exist.");
+            }
+
+            try
+            {
+                return LicenseRepository.GetNewLicenseIdAfterReplacement(replaceTypeApplicationId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while trying to get new license id after replacement.");
+                throw new Exception("An error occurred while adding the license. Please try again later.", ex);
+            }
+
         }
 
         public static DataTable GetAll()

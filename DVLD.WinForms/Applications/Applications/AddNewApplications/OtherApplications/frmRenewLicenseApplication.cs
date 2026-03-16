@@ -15,39 +15,6 @@ namespace DVLD.WinForms.Applications.Applications.AddNewApplications.OtherApplic
             InitializeComponent();
         }
 
-        private void ctrlLicenseAndApplicationInfo1_OnLicenseSelected(License obj)
-        {
-            if (obj == null)
-            {
-                MessageBox.Show("License does not exist.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (obj.ExpirationDate > DateTime.Now)
-            {
-                MessageBox.Show("License is not expired.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (!LicenseService.IsActive(ctrlLicenseAndApplicationInfo1.License.LicenseID))
-            {
-                MessageBox.Show("License is not active.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (DetainedLicenseService.IsDetained(ctrlLicenseAndApplicationInfo1.License.LicenseID))
-            {
-                MessageBox.Show("License is detained.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            btnRenew.Enabled = true;
-        }
-
         private void btnRenew_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you want to renew the license?", "Confirm", MessageBoxButtons.YesNo,
@@ -88,6 +55,40 @@ namespace DVLD.WinForms.Applications.Applications.AddNewApplications.OtherApplic
 
             var frm = new frmLicenseInfo(_newLicenseId, frmLicenseInfo.LoadType.UsingLicenseId);
             frm.ShowDialog();
+        }
+
+        private void ctrlLicenseAndApplicationInfo1_OnLicenseSelected(License obj)
+        {
+            if (obj == null)
+            {
+                MessageBox.Show("License does not exist.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (obj.ExpirationDate > DateTime.Now)
+            {
+                MessageBox.Show("License is not expired.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!LicenseService.IsActive(ctrlLicenseAndApplicationInfo1.License.LicenseID))
+            {
+                MessageBox.Show("License is not active.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (DetainedLicenseService.IsDetained(ctrlLicenseAndApplicationInfo1.License.LicenseID))
+            {
+                MessageBox.Show("License is detained.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            btnRenew.Enabled = true;
+
         }
     }
 }
