@@ -273,6 +273,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Detain32 {
+            get {
+                object obj = ResourceManager.GetObject("Detain32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Detain512 {
             get {
                 object obj = ResourceManager.GetObject("Detain512", resourceCulture);
@@ -516,6 +526,16 @@ namespace DVLD.WinForms.Properties {
         internal static System.Drawing.Bitmap MaleSign512 {
             get {
                 object obj = ResourceManager.GetObject("MaleSign512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ManageDetain32 {
+            get {
+                object obj = ResourceManager.GetObject("ManageDetain32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

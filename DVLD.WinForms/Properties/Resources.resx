@@ -265,6 +265,9 @@
   <data name="Preson32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\Preson32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RenewEnergy32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\RenewEnergy32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Title512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Title512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -316,6 +319,9 @@
   <data name="Calendar512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Calendar512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Shapes32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\Shapes32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Retake32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\Retake32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -343,8 +349,8 @@
   <data name="Card64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\64px\Card64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="International32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\32px\International32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ManageDetain32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\ManageDetain32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LocationPin512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\LocationPin512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -358,8 +364,8 @@
   <data name="SendEmail512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\SendEmail512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Shapes32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\32px\Shapes32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BluePhone512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\512px\BluePhone512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Road512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\Road512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -382,8 +388,8 @@
   <data name="OrangeEmail512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\OrangeEmail512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BluePhone512" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\512px\BluePhone512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="International32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\International32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DateAndRocket512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\512px\DateAndRocket512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -403,7 +409,7 @@
   <data name="SingOut32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\32px\SingOut32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RenewEnergy32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\32px\RenewEnergy32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Detain32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\32px\Detain32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

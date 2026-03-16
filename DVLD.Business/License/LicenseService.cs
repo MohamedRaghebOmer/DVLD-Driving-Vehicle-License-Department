@@ -64,6 +64,21 @@ namespace DVLD.Business
             }
         }
 
+        public static int Detain(int licenseId)
+        {
+            LicenseValidator.ValidateForDetain(licenseId);
+
+            try
+            {
+                return LicenseRepository.Detain(licenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while detaining license with id " + licenseId + ".");
+                throw new Exception("Error detaining the license.", ex);
+            }
+        }
+
         public static int GetOldLicenseIdAfterReplacement(int replaceTypeApplicationId)
         {
             Application application = null;

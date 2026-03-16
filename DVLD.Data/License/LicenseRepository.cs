@@ -373,6 +373,52 @@ namespace DVLD.Data
             }
         }
 
+        public static int Detain(int licenseId)
+        {
+            string query = @"INSERT INTO [dbo].[DetainedLicenses]
+                            ([LicenseID]
+                            ,[DetainDate]
+                            ,[FineFees]
+                            ,[CreatedByUserID]
+                            ,[IsReleased]
+                            ,[ReleaseDate]
+                            ,[ReleasedByUserID]
+                            ,[ReleaseApplicationID])
+                        VALUES
+                            (@LicenseID,
+                            GETDATE(),
+                            150,
+                            @CreatedByUserID,
+                            0,
+                            GETDATE(),
+                            NULL,
+                            NULL);
+                        SELECT SCOPE_IDENTITY();";
+
+            try
+            {
+                using (var con = new SqlConnection(DataSettings.connectionString))
+                using (var com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@LicenseID", licenseId);
+                    com.Parameters.AddWithValue("@CreatedByUserID", LoggedInUserInfo.UserId);
+                    con.Open();
+
+                    object result = com.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int detainId))
+                        return detainId;
+                    else
+                        return -1;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLogger.LogError("DAL: Error while inserting into DetainedLicenses.", ex);
+                throw;
+            }
+        }
+
         public static int GetOldLicenseIdAfterReplacement(int replaceTypeApplicationId)
         {
             string query = @"WITH NewLicense AS (
