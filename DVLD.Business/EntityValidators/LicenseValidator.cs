@@ -8,7 +8,7 @@ namespace DVLD.Business.EntityValidators
 {
     internal static class LicenseValidator
     {
-        public static License AddNewValidator(int localAppId)
+        public static License ValidateForIssue(int localAppId)
         {
             if (localAppId <= 0)
                 throw new ValidationException($"Local Driving License Application with Id = {localAppId} does not exist.");

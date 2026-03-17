@@ -49,9 +49,6 @@ namespace DVLD.WinForms.UserControls
                     return;
                 }
 
-                if (value == _licenseId)
-                    return;
-
                 this._licenseId = value;
                 _loadType = LoadType.UsingLicenseId;
                 LoadLicenseInfo();

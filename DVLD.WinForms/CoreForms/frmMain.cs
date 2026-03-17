@@ -5,6 +5,7 @@ using DVLD.WinForms.Applications.ManageApplications.AddNewApplications;
 using DVLD.WinForms.Applications.ManageApplications.ManageApplications;
 using DVLD.WinForms.Applications.TestTypes;
 using DVLD.WinForms.CoreForms;
+using DVLD.WinForms.Licenses.Detain;
 using DVLD.WinForms.NavigateForms;
 using DVLD.WinForms.Users;
 using System;
@@ -112,6 +113,36 @@ namespace DVLD.WinForms
         private void replacemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmReplacementLostDamagedLicense();
+            frm.ShowDialog();
+        }
+
+        private void manageDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageDetainedLicenses();
+            frm.ShowDialog();
+        }
+
+        private void detainToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmDetainLicense();
+            frm.ShowDialog();
+        }
+
+        private void releaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void realToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void retakeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageLocalLicenseApplications();
             frm.ShowDialog();
         }
     }

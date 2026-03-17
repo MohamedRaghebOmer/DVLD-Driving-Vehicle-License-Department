@@ -628,35 +628,6 @@ namespace DVLD.Data
             }
         }
 
-        public static int GetLicenseIdByDriverId(int driverId, LicenseClass licenseClass, bool getActiveOnly = true)
-        {
-            string query = "SELECT LicenseID FROM Licenses WHERE DriverID = @DriverID AND LicenseClass = @LicenseClass";
-
-            if (getActiveOnly)
-                query += " AND IsActive = 1;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@DriverID", driverId);
-                    command.Parameters.AddWithValue("@LicenseClass", (int)licenseClass);
-                    connection.Open();
-
-                    object result = command.ExecuteScalar();
-                    if (result != null && int.TryParse(result.ToString(), out int licenseId))
-                        return licenseId;
-                    return -1;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while fetching license for DriverID {driverId} and LicenseClass {licenseClass}.", ex);
-                throw;
-            }
-        }
-
         public static DataTable GetLicenseHistoryByDriverId(int driverId)
         {
             string query = @"SELECT  l.LicenseID,
@@ -925,26 +896,6 @@ namespace DVLD.Data
             catch (Exception ex)
             {
                 AppLogger.LogError($"DAL: Error while license with driver id = {driverId}.", ex);
-                throw;
-            }
-        }
-
-        public static bool ExistsByApplication(int applicationId)
-        {
-            string query = @"SELECT 1 FROM Licenses WHERE ApplicationID = @applicationId;";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(DataSettings.connectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@applicationId", applicationId);
-                    connection.Open();
-                    return command.ExecuteScalar() != null;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"DAL: Error while checking if license for application ID {applicationId} exists.", ex);
                 throw;
             }
         }

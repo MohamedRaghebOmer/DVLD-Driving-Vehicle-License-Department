@@ -11,6 +11,7 @@ namespace DVLD.WinForms.UserControls
         public event Action<License> OnLicenseSelected;
         public event Action OnLicenseNullSelected;
         private License _license = null;
+        private bool _alreadyHaveLicense = false;
 
         public License License { get => _license; }
 
@@ -19,19 +20,50 @@ namespace DVLD.WinForms.UserControls
             InitializeComponent();
         }
 
+        public void Initialize(License license)
+        {
+            _alreadyHaveLicense = true;
+            txtLicenseId.Text = license.LicenseID.ToString();
+
+            if (license.LicenseID > 0)
+                this._license = license;
+
+            btnFind_Click(null, null);
+        }
+
+        public void Initialize(int licenseId)
+        {
+            _alreadyHaveLicense = true;
+
+            txtLicenseId.Text = licenseId.ToString();
+            this._license = LicenseService.GetById(licenseId);
+
+            btnFind_Click(null, null);
+        }
+
+        public override void Refresh()
+        {
+            ctrlLicenseInfo1.LicenseId = GetLicenseId();
+        }
+
         private void btnFind_Click(object sender, EventArgs e)
         {
-            GetLicense();
+            if (!_alreadyHaveLicense)
+                GetLicense();
 
             if (_license == null)
             {
                 ctrlLicenseInfo1.LicenseId = -1;
-                OnLicenseNullSelected?.Invoke();
+
+                if (!_alreadyHaveLicense)
+                    OnLicenseNullSelected?.Invoke();
             }
             else
             {
                 ctrlLicenseInfo1.LicenseId = _license.LicenseID;
-                OnLicenseSelected?.Invoke(_license);
+
+                if (!_alreadyHaveLicense)
+                    OnLicenseSelected?.Invoke(_license);
             }
         }
 
@@ -39,11 +71,13 @@ namespace DVLD.WinForms.UserControls
         {
             int licenseId = GetLicenseId();
 
-            if (licenseId <= 0 || (_license = LicenseService.GetById(licenseId)) == null)
+            if (licenseId > 0)
+            {
+                _license = LicenseService.GetById(licenseId);
+            }
+            else
             {
                 _license = null;
-                MessageBox.Show("License does not exist.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

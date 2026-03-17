@@ -138,6 +138,7 @@ namespace DVLD.Data
                 throw;
             }
         }
+
         public static DataTable GetAll()
         {
             string query = @"SELECT * FROM InternationalLicenses;";

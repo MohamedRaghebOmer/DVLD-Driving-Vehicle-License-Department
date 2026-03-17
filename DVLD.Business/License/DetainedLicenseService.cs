@@ -9,18 +9,32 @@ namespace DVLD.Business
 {
     public static class DetainedLicenseService
     {
-        public static DetainedLicense Add(int licenseId, decimal fineFees)
+        public static int Detain(int licenseId)
         {
-            DetainedLicenseValidator.DetainNewLicenseValidator(licenseId, fineFees);
+            DetainedLicenseValidator.ValidateForDetain(licenseId);
 
             try
             {
-                int detainedLicenseId = DetainedLicenseRepository.Add(licenseId, fineFees);
-                return DetainedLicenseRepository.GetByLicenseId(detainedLicenseId);
+                return DetainedLicenseRepository.Detain(licenseId);
             }
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while detaining license with ID " + licenseId + ".");
+                throw new Exception("We encountered a technical issue, please try again later.", ex);
+            }
+        }
+
+        public static int Release(int licenseId)
+        {
+            DetainedLicenseValidator.ValidateForRelease(licenseId);
+
+            try
+            {
+                return DetainedLicenseRepository.Release(licenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while releasing license with ID " + licenseId + ".");
                 throw new Exception("We encountered a technical issue, please try again later.", ex);
             }
         }
@@ -41,32 +55,21 @@ namespace DVLD.Business
             }
         }
 
-        public static DataTable GetAll()
+        public static DataTable GetAllWithDetails()
         {
             try
             {
-                return DetainedLicenseRepository.GetAll();
+                DataTable dataTable = DetainedLicenseRepository.GetAllWithDetails();
+
+                if (dataTable.Rows.Count > 0)
+                    return dataTable;
+                else
+                    return null;
             }
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while getting all detained licenses.");
                 throw new Exception("We encountered a technical issue, please try again later.", ex);
-            }
-        }
-
-        public static bool Exists(int detainId)
-        {
-            if (detainId <= 0)
-                return false;
-
-            try
-            {
-                return DetainedLicenseRepository.Exists(detainId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while checking existence of detain by id.");
-                throw new Exception("We encountered a technical issue. Please try again later.", ex);
             }
         }
 
@@ -82,38 +85,6 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError("BLL: Error while checking if license with ID " + licenseId + " is detained.");
-                throw new Exception("We encountered a technical issue, please try again later.", ex);
-            }
-        }
-
-        public static DataTable GetLicenseRecords(int licenseId, bool isReleasedOnly = false)
-        {
-            if (licenseId <= 0)
-                return null;
-
-            try
-            {
-                return DetainedLicenseRepository.GetLicenseRecords(licenseId, isReleasedOnly);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while getting all license records for license with ID " + licenseId + ".");
-                throw new Exception("We encountered a technical issue, please try again later.", ex);
-            }
-        }
-
-        public static bool Release(int licenseId, int applicationId)
-        {
-            DetainedLicenseValidator.ReleaseDetainedLicenseValidator
-                (licenseId, ApplicationRepository.GetById(applicationId));
-
-            try
-            {
-                return DetainedLicenseRepository.Release(licenseId, applicationId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while releasing license with ID " + licenseId + ".");
                 throw new Exception("We encountered a technical issue, please try again later.", ex);
             }
         }
