@@ -119,9 +119,9 @@ namespace DVLD.Data
                                 Convert.ToDecimal(reader["FineFees"]),
                                 Convert.ToInt32(reader["CreatedByUserID"]),
                                 Convert.ToBoolean(reader["IsReleased"]),
-                                reader["ReleaseDate"] != null ? (DateTime?)Convert.ToDateTime(reader["ReleaseDate"]) : null,
-                                reader["ReleasedByUserID"] != null ? (int?)Convert.ToInt32(reader["ReleasedByUserID"]) : null,
-                                reader["ReleaseApplicationID"] != null ? (int?)Convert.ToInt32(reader["ReleaseApplicationID"]) : null
+                                reader["ReleaseDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["ReleaseDate"]) : null,
+                                reader["ReleasedByUserID"] != DBNull.Value ? (int?)Convert.ToInt32(reader["ReleasedByUserID"]) : null,
+                                reader["ReleaseApplicationID"] != DBNull.Value ? (int?)Convert.ToInt32(reader["ReleaseApplicationID"]) : null
                             );
                         }
                     }

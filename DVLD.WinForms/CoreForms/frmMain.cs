@@ -9,7 +9,6 @@ using DVLD.WinForms.Licenses.Detain;
 using DVLD.WinForms.NavigateForms;
 using DVLD.WinForms.Users;
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace DVLD.WinForms
@@ -130,6 +129,12 @@ namespace DVLD.WinForms
         }
 
         private void releaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void realToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmReleaseDetainedLicense();
             frm.ShowDialog();

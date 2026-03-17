@@ -79,6 +79,21 @@ namespace DVLD.Business
             }
         }
 
+        public static int Release(int licenseId)
+        {
+            LicenseValidator.ValidateForRelease(licenseId);
+
+            try
+            {
+                return LicenseRepository.Release(licenseId);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.LogError("BLL: Error while releasing license with id " + licenseId + ".");
+                throw new Exception("Error detaining the license.", ex);
+            }
+        }
+
         public static int GetOldLicenseIdAfterReplacement(int replaceTypeApplicationId)
         {
             Application application = null;

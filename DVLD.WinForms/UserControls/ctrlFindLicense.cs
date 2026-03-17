@@ -11,6 +11,7 @@ namespace DVLD.WinForms.UserControls
         public event Action<License> OnLicenseSelected;
         public event Action OnLicenseNullSelected;
         private License _license = null;
+        private bool _alreadyHaveLicense = false;
 
         public License License { get => _license; }
 
@@ -19,9 +20,31 @@ namespace DVLD.WinForms.UserControls
             InitializeComponent();
         }
 
+        public void Initialize(License license)
+        {
+            _alreadyHaveLicense = true;
+            txtLicenseId.Text = license.LicenseID.ToString();
+
+            if (license.LicenseID > 0)
+                this._license = license;
+
+            btnFind_Click(null, null);
+        }
+
+        public void Initialize(int licenseId)
+        {
+            _alreadyHaveLicense = true;
+
+            txtLicenseId.Text = licenseId.ToString();
+            this._license = LicenseService.GetById(licenseId);
+
+            btnFind_Click(null, null);
+        }
+
         private void btnFind_Click(object sender, EventArgs e)
         {
-            GetLicense();
+            if (!_alreadyHaveLicense)
+                GetLicense();
 
             if (_license == null)
             {
@@ -39,11 +62,13 @@ namespace DVLD.WinForms.UserControls
         {
             int licenseId = GetLicenseId();
 
-            if (licenseId <= 0 || (_license = LicenseService.GetById(licenseId)) == null)
+            if (licenseId > 0)
+            {
+                _license = LicenseService.GetById(licenseId);
+            }
+            else
             {
                 _license = null;
-                MessageBox.Show("License does not exist.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

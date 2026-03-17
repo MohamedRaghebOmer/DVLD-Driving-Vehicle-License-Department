@@ -169,6 +169,7 @@
             this.realToolStripMenuItem.Name = "realToolStripMenuItem";
             this.realToolStripMenuItem.Size = new System.Drawing.Size(444, 38);
             this.realToolStripMenuItem.Text = "Release Detained Driving License";
+            this.realToolStripMenuItem.Click += new System.EventHandler(this.realToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
