@@ -1,48 +1,44 @@
 ﻿using DVLD.Core.DTOs.Entities;
-using DVLD.Core.DTOs.Enums;
 using DVLD.Core.Exceptions;
 using DVLD.Data;
+using System;
 
 namespace DVLD.Business.EntityValidators
 {
-    internal class DetainedLicenseValidator
+    internal static class DetainedLicenseValidator
     {
-        public static void DetainNewLicenseValidator(int licenseId, decimal fineFees)
+        public static void ValidateForDetain(int licenseId)
         {
-            if (fineFees <= 0)
-                throw new BusinessException("Fine fees must be greater than 0.");
+            License license = null;
 
-            if (licenseId <= 0 || !LicenseRepository.Exists(licenseId))
-                throw new BusinessException("Associated license does not exist.");
+            if (licenseId <= 0 || (license = LicenseRepository.GetById(licenseId)) == null)
+                throw new BusinessException("License does not exist.");
+
+            if (license.ExpirationDate <= DateTime.Now)
+                throw new BusinessException("License is expired.");
+
+            if (!license.IsActive)
+                throw new BusinessException("License is not active.");
 
             if (DetainedLicenseRepository.IsDetained(licenseId))
                 throw new BusinessException("License is already detained.");
         }
 
-        public static void ReleaseDetainedLicenseValidator(int licenseID, Application application)
+        public static void ValidateForRelease(int licenseId)
         {
-            if (application == null || application.ApplicationID <= 0)
-                throw new BusinessException("Associated application does not exist.");
+            License license = null;
 
-            if (licenseID <= 0 || !LicenseRepository.Exists(licenseID))
-                throw new BusinessException("Associated license does not exist.");
+            if (licenseId <= 0 || (license = LicenseRepository.GetById(licenseId)) == null)
+                throw new BusinessException("License does not exist.");
 
-            if (LicenseRepository.GetPersonIdByLicenseId(licenseID) != application.ApplicantPersonID)
-                throw new BusinessException("Associated license does not belong to the applicant.");
+            if (!license.IsActive)
+                throw new BusinessException("License is not active");
 
-            if (application.ApplicationTypeID != ApplicationType.ReleaseDetainedDrivingLicense ||
-                application.ApplicationStatus != ApplicationStatus.New)
-                throw new BusinessException("Invalid application.");
+            if (license.ExpirationDate <= DateTime.Now)
+                throw new BusinessException("License is expired.");
 
-            decimal applicationTypeFees = ApplicationTypeRepository.GetFees(ApplicationType.ReleaseDetainedDrivingLicense);
-            if (application.PaidFees < applicationTypeFees)
-                throw new BusinessException($"Paid application fees are less than required. Required fees = {applicationTypeFees}.");
-
-            if (!DetainedLicenseRepository.IsDetained(licenseID))
-                throw new BusinessException("License is not detained.");
-
-            if (LicenseRepository.IsExpired(licenseID))
-                throw new BusinessException("Cannot release an expired license.");
+            if (!DetainedLicenseService.IsDetained(licenseId))
+                throw new BusinessException("License is not detained");
         }
     }
 }

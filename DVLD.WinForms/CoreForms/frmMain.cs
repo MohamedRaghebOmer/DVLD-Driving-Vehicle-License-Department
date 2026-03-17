@@ -139,5 +139,11 @@ namespace DVLD.WinForms
             var frm = new frmReleaseDetainedLicense();
             frm.ShowDialog();
         }
+
+        private void retakeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageLocalLicenseApplications();
+            frm.ShowDialog();
+        }
     }
 }

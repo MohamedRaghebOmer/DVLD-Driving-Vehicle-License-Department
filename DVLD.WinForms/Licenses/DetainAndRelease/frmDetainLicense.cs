@@ -52,6 +52,8 @@ namespace DVLD.WinForms.Licenses.Detain
 
         private void ctrlFindLicense1_OnLicenseNullSelected()
         {
+            MessageBox.Show("Selected License does not exist.", "Error",
+            MessageBoxButtons.OK, MessageBoxIcon.Error);
             lblLicenseId.Text = "???";
             lblDetainId.Text = "???";
             btnDetain.Enabled = false;
@@ -71,12 +73,13 @@ namespace DVLD.WinForms.Licenses.Detain
             {
                 try
                 {
-                    int detainId = LicenseService.Detain(ctrlFindLicense1.License.LicenseID);
+                    int detainId = DetainedLicenseService.Detain(ctrlFindLicense1.License.LicenseID);
 
                     if (detainId > 0)
                     {
                         MessageBox.Show($"License detained successfully. Detain Id is {detainId}.",
                         "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ctrlFindLicense1.Refresh();
                         btnDetain.Enabled = false;
                         lblDetainId.Text = detainId.ToString();
                     }

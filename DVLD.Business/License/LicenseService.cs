@@ -14,7 +14,7 @@ namespace DVLD.Business
         public static int Issue(int localDrivingLicenseApplicationId, string notes)
         {
             // Validate and return a trusted license to issue
-            License license = LicenseValidator.AddNewValidator(localDrivingLicenseApplicationId);
+            License license = LicenseValidator.ValidateForIssue(localDrivingLicenseApplicationId);
             license.Notes = notes;
 
             try
@@ -61,36 +61,6 @@ namespace DVLD.Business
             {
                 AppLogger.LogError("BLL: Error while replacing license with id " + licenseId + ".");
                 throw new Exception("Error replacing the license.", ex);
-            }
-        }
-
-        public static int Detain(int licenseId)
-        {
-            LicenseValidator.ValidateForDetain(licenseId);
-
-            try
-            {
-                return LicenseRepository.Detain(licenseId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while detaining license with id " + licenseId + ".");
-                throw new Exception("Error detaining the license.", ex);
-            }
-        }
-
-        public static int Release(int licenseId)
-        {
-            LicenseValidator.ValidateForRelease(licenseId);
-
-            try
-            {
-                return LicenseRepository.Release(licenseId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while releasing license with id " + licenseId + ".");
-                throw new Exception("Error detaining the license.", ex);
             }
         }
 
@@ -161,20 +131,6 @@ namespace DVLD.Business
 
         }
 
-        public static DataTable GetAll()
-        {
-            try
-            {
-                return LicenseRepository.GetAll();
-
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError("BLL: Error while getting all licenses.", ex);
-                throw new Exception("We encountered a technical issue, please try again later.");
-            }
-        }
-
         public static License GetById(int licenseId)
         {
             try
@@ -184,22 +140,6 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while getting license with ID {licenseId}.", ex);
-                throw new Exception("We encountered a technical issue, please try again later.");
-            }
-        }
-
-        public static DataTable GetDriverLicenses(int driverId)
-        {
-            if (driverId <= 0)
-                throw new ValidationException("Invalid Driver ID. It must be a positive integer.");
-
-            try
-            {
-                return LicenseRepository.GetDriverLicenses(driverId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while getting licenses for DriverID {driverId}.", ex);
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
         }
@@ -301,36 +241,6 @@ namespace DVLD.Business
 
         }
 
-        public static bool DeactivateLicense(int licenseId)
-        {
-            if (licenseId <= 0)
-                throw new ValidationException("Invalid License ID. It must be a positive integer.");
-            try
-            {
-                return LicenseRepository.DeactivateLicense(licenseId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while deactivating license with ID {licenseId}.", ex);
-                throw new Exception("We encountered a technical issue, please try again later.");
-            }
-        }
-
-        public static bool ReactivateLicense(int licenseId)
-        {
-            if (licenseId <= 0)
-                throw new ValidationException("Invalid License ID. It must be a positive integer.");
-            try
-            {
-                return LicenseRepository.ReactivateLicense(licenseId);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while reactivating license with ID {licenseId}.", ex);
-                throw new Exception("We encountered a technical issue, please try again later.");
-            }
-        }
-
         public static bool IsActive(int licenseId)
         {
             if (licenseId <= 0)
@@ -343,22 +253,6 @@ namespace DVLD.Business
             catch (Exception ex)
             {
                 AppLogger.LogError($"BLL: Error while checking if license with ID {licenseId} is active.", ex);
-                throw new Exception("We encountered a technical issue, please try again later.");
-            }
-        }
-
-        public static bool UpdateNotes(int licenseId, string newNotes)
-        {
-            if (licenseId <= 0)
-                return false; // Invalid license ID, cannot update notes
-
-            try
-            {
-                return LicenseRepository.UpdateNotes(licenseId, newNotes);
-            }
-            catch (Exception ex)
-            {
-                AppLogger.LogError($"BLL: Error while updating notes for license with ID {licenseId}.", ex);
                 throw new Exception("We encountered a technical issue, please try again later.");
             }
         }

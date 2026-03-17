@@ -102,15 +102,16 @@ namespace DVLD.WinForms.Licenses.Detain
             {
                 try
                 {
-                    int releaseAppId = LicenseService.Release(ctrlFindLicense1.License.LicenseID);
+                    int releaseAppId = DetainedLicenseService.Release(ctrlFindLicense1.License.LicenseID);
 
                     if (releaseAppId > 0)
                     {
                         MessageBox.Show($"License released successfully.",
                         "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        label13.Text = releaseAppId.ToString();
+                        lblReleaseApplicationId.Text = releaseAppId.ToString();
                         btnRelease.Enabled = false;
+                        ctrlFindLicense1.Refresh();
                     }
                     else
                     {

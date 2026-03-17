@@ -364,6 +364,10 @@
     <EmbeddedResource Include="Licenses\DetainAndRelease\frmDetainLicense.resx">
       <DependentUpon>frmDetainLicense.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\DetainAndRelease\frmManageDetainedLicenses.resx">
+      <DependentUpon>frmManageDetainedLicenses.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Licenses\DetainAndRelease\frmReleaseDetainedLicense.resx">
       <DependentUpon>frmReleaseDetainedLicense.cs</DependentUpon>
     </EmbeddedResource>

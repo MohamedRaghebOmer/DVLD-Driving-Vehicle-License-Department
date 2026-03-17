@@ -41,6 +41,11 @@ namespace DVLD.WinForms.UserControls
             btnFind_Click(null, null);
         }
 
+        public override void Refresh()
+        {
+            ctrlLicenseInfo1.LicenseId = GetLicenseId();
+        }
+
         private void btnFind_Click(object sender, EventArgs e)
         {
             if (!_alreadyHaveLicense)
@@ -49,12 +54,16 @@ namespace DVLD.WinForms.UserControls
             if (_license == null)
             {
                 ctrlLicenseInfo1.LicenseId = -1;
-                OnLicenseNullSelected?.Invoke();
+
+                if (!_alreadyHaveLicense)
+                    OnLicenseNullSelected?.Invoke();
             }
             else
             {
                 ctrlLicenseInfo1.LicenseId = _license.LicenseID;
-                OnLicenseSelected?.Invoke(_license);
+
+                if (!_alreadyHaveLicense)
+                    OnLicenseSelected?.Invoke(_license);
             }
         }
 
