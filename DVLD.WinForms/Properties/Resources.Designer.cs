@@ -213,6 +213,16 @@ namespace DVLD.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DashboardBackroud {
+            get {
+                object obj = ResourceManager.GetObject("DashboardBackroud", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DateAndRocket512 {
             get {
                 object obj = ResourceManager.GetObject("DateAndRocket512", resourceCulture);
