@@ -18,5 +18,10 @@ namespace DVLD.WinForms.People
             if (!string.IsNullOrEmpty(nationalNo))
                 ctrlPersonDetails1.NationalNo = nationalNo;
         }
+
+        private void btnCancel_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

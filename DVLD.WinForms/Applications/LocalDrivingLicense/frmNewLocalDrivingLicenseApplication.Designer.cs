@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonalInfo = new System.Windows.Forms.TabPage();
-            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
             this.btnNext = new System.Windows.Forms.Button();
             this.tpApplicationInfo = new System.Windows.Forms.TabPage();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -52,6 +51,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.ctrlPersonDetailsWithFilter1 = new DVLD.WinForms.UserControls.ctrlPersonDetailsWithFilter();
             this.tabControl1.SuspendLayout();
             this.tpPersonalInfo.SuspendLayout();
             this.tpApplicationInfo.SuspendLayout();
@@ -95,18 +95,6 @@
             this.tpPersonalInfo.TabIndex = 0;
             this.tpPersonalInfo.Text = "Personal Info";
             this.tpPersonalInfo.UseVisualStyleBackColor = true;
-            // 
-            // ctrlPersonDetailsWithFilter1
-            // 
-            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = true;
-            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
-            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
-            this.ctrlPersonDetailsWithFilter1.NationalNo = "";
-            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
-            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
-            this.ctrlPersonDetailsWithFilter1.TabIndex = 3;
             // 
             // btnNext
             // 
@@ -317,7 +305,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(138, 51);
             this.btnCancel.TabIndex = 6;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Close";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -333,6 +321,18 @@
             this.label6.Size = new System.Drawing.Size(571, 38);
             this.label6.TabIndex = 10;
             this.label6.Text = "New Local Driving License Application";
+            // 
+            // ctrlPersonDetailsWithFilter1
+            // 
+            this.ctrlPersonDetailsWithFilter1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ctrlPersonDetailsWithFilter1.GroupBoxFilterVisible = true;
+            this.ctrlPersonDetailsWithFilter1.Location = new System.Drawing.Point(0, 0);
+            this.ctrlPersonDetailsWithFilter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ctrlPersonDetailsWithFilter1.Name = "ctrlPersonDetailsWithFilter1";
+            this.ctrlPersonDetailsWithFilter1.NationalNo = "";
+            this.ctrlPersonDetailsWithFilter1.PersonID = -1;
+            this.ctrlPersonDetailsWithFilter1.Size = new System.Drawing.Size(927, 428);
+            this.ctrlPersonDetailsWithFilter1.TabIndex = 3;
             // 
             // frmNewLocalDrivingLicenseApplication
             // 

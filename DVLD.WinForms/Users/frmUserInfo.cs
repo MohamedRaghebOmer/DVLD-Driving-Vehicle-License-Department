@@ -9,5 +9,10 @@ namespace DVLD.WinForms.Users
             InitializeComponent();
             ctrlUserInfo1.UserId = userId;
         }
+
+        private void btnClose_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

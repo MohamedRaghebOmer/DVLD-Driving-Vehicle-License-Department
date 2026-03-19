@@ -54,9 +54,15 @@ namespace DVLD.WinForms.UserControls
                 int.TryParse(txtFilterValue.Text, out int id))
             {
                 if (!PersonService.Exists(id))
+                {
                     ctrlPersonDetails1.PersonID = -1;
+                    MessageBox.Show("Person does not exist.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 else
+                {
                     ctrlPersonDetails1.PersonID = id;
+                }
             }
             else if (!string.IsNullOrEmpty(txtFilterValue.Text)) // National No
             {
