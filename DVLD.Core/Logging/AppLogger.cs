@@ -10,18 +10,27 @@ namespace DVLD.Core.Logging
 
         public static void LogError(string message, Exception ex = null)
         {
-            using (var writer = new StreamWriter(logFilePath, true))
+            try
             {
-                writer.WriteLine($"{DateTime.Now} | ERROR | {message}");
-
-                if (ex != null)
+                if (!Directory.Exists(logFilePath))
                 {
-                    writer.WriteLine($"Exception: {ex.GetType().Name}: {ex.Message}");
-                    writer.WriteLine($"StackTrace: {ex.StackTrace}");
-                    if (ex.InnerException != null)
-                        writer.WriteLine($"InnerException: {ex.InnerException.Message}");
+                    File.Create(logFilePath);
+                }
+
+                using (var writer = new StreamWriter(logFilePath, true))
+                {
+                    writer.WriteLine($"{DateTime.Now} | ERROR | {message}");
+
+                    if (ex != null)
+                    {
+                        writer.WriteLine($"Exception: {ex.GetType().Name}: {ex.Message}");
+                        writer.WriteLine($"StackTrace: {ex.StackTrace}");
+                        if (ex.InnerException != null)
+                            writer.WriteLine($"InnerException: {ex.InnerException.Message}");
+                    }
                 }
             }
+            catch { } // Silent catch, Logger must NOT crach the program
         }
     }
 }

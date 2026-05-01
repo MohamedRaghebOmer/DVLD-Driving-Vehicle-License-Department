@@ -184,7 +184,7 @@
             // 
             this.lblCountry.AutoSize = true;
             this.lblCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCountry.Location = new System.Drawing.Point(591, 231);
+            this.lblCountry.Location = new System.Drawing.Point(576, 231);
             this.lblCountry.Name = "lblCountry";
             this.lblCountry.Size = new System.Drawing.Size(45, 25);
             this.lblCountry.TabIndex = 95;
@@ -192,11 +192,11 @@
             // 
             // lblPhone
             // 
-            this.lblPhone.AutoSize = true;
             this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(591, 182);
+            this.lblPhone.Location = new System.Drawing.Point(576, 182);
+            this.lblPhone.MaximumSize = new System.Drawing.Size(145, 200);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(45, 25);
+            this.lblPhone.Size = new System.Drawing.Size(127, 25);
             this.lblPhone.TabIndex = 94;
             this.lblPhone.Text = "???";
             // 
@@ -204,7 +204,7 @@
             // 
             this.lblDateOfBirth.AutoSize = true;
             this.lblDateOfBirth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDateOfBirth.Location = new System.Drawing.Point(591, 134);
+            this.lblDateOfBirth.Location = new System.Drawing.Point(576, 134);
             this.lblDateOfBirth.Name = "lblDateOfBirth";
             this.lblDateOfBirth.Size = new System.Drawing.Size(45, 25);
             this.lblDateOfBirth.TabIndex = 93;
@@ -222,11 +222,10 @@
             // 
             // lblEmail
             // 
-            this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.Location = new System.Drawing.Point(221, 234);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(45, 25);
+            this.lblEmail.Size = new System.Drawing.Size(186, 25);
             this.lblEmail.TabIndex = 91;
             this.lblEmail.Text = "???";
             // 
@@ -253,7 +252,7 @@
             // pbCountry
             // 
             this.pbCountry.Image = global::DVLD.WinForms.Properties.Resources.Earth512;
-            this.pbCountry.Location = new System.Drawing.Point(557, 228);
+            this.pbCountry.Location = new System.Drawing.Point(542, 228);
             this.pbCountry.Name = "pbCountry";
             this.pbCountry.Size = new System.Drawing.Size(28, 28);
             this.pbCountry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -263,7 +262,7 @@
             // pbPhone
             // 
             this.pbPhone.Image = global::DVLD.WinForms.Properties.Resources.BluePhone512;
-            this.pbPhone.Location = new System.Drawing.Point(557, 179);
+            this.pbPhone.Location = new System.Drawing.Point(542, 179);
             this.pbPhone.Name = "pbPhone";
             this.pbPhone.Size = new System.Drawing.Size(28, 28);
             this.pbPhone.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -273,7 +272,7 @@
             // pbDateOfBirth
             // 
             this.pbDateOfBirth.Image = global::DVLD.WinForms.Properties.Resources.Calendar512;
-            this.pbDateOfBirth.Location = new System.Drawing.Point(557, 131);
+            this.pbDateOfBirth.Location = new System.Drawing.Point(542, 131);
             this.pbDateOfBirth.Name = "pbDateOfBirth";
             this.pbDateOfBirth.Size = new System.Drawing.Size(28, 28);
             this.pbDateOfBirth.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -314,7 +313,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(428, 182);
+            this.label11.Location = new System.Drawing.Point(413, 182);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(81, 25);
             this.label11.TabIndex = 82;
@@ -324,7 +323,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(428, 231);
+            this.label10.Location = new System.Drawing.Point(413, 231);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(95, 25);
             this.label10.TabIndex = 81;
@@ -334,7 +333,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(428, 134);
+            this.label9.Location = new System.Drawing.Point(413, 134);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(143, 25);
             this.label9.TabIndex = 80;

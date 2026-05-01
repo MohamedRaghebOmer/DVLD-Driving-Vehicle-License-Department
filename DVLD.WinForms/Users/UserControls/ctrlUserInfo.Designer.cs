@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.gbLoginInfo = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbName = new System.Windows.Forms.PictureBox();
+            this.pbNationalNo = new System.Windows.Forms.PictureBox();
             this.lblEditloginInfo = new System.Windows.Forms.LinkLabel();
             this.lblIsActive = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -37,13 +40,10 @@
             this.lblUserId = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ctrlPersonDetails1 = new DVLD.WinForms.UserControls.ctrlPersonDetails();
-            this.pbNationalNo = new System.Windows.Forms.PictureBox();
-            this.pbName = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbLoginInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).BeginInit();
             this.SuspendLayout();
             // 
             // gbLoginInfo
@@ -67,6 +67,36 @@
             this.gbLoginInfo.TabIndex = 0;
             this.gbLoginInfo.TabStop = false;
             this.gbLoginInfo.Text = "Login Information";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.information32;
+            this.pictureBox1.Location = new System.Drawing.Point(784, 52);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 99;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pbName
+            // 
+            this.pbName.Image = global::DVLD.WinForms.Properties.Resources.NameCard512;
+            this.pbName.Location = new System.Drawing.Point(460, 52);
+            this.pbName.Name = "pbName";
+            this.pbName.Size = new System.Drawing.Size(28, 28);
+            this.pbName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbName.TabIndex = 98;
+            this.pbName.TabStop = false;
+            // 
+            // pbNationalNo
+            // 
+            this.pbNationalNo.Image = global::DVLD.WinForms.Properties.Resources.GrayCard512;
+            this.pbNationalNo.Location = new System.Drawing.Point(172, 52);
+            this.pbNationalNo.Name = "pbNationalNo";
+            this.pbNationalNo.Size = new System.Drawing.Size(28, 28);
+            this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbNationalNo.TabIndex = 77;
+            this.pbNationalNo.TabStop = false;
             // 
             // lblEditloginInfo
             // 
@@ -122,7 +152,7 @@
             // lblUserId
             // 
             this.lblUserId.AutoSize = true;
-            this.lblUserId.Location = new System.Drawing.Point(183, 55);
+            this.lblUserId.Location = new System.Drawing.Point(200, 55);
             this.lblUserId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserId.Name = "lblUserId";
             this.lblUserId.Size = new System.Drawing.Size(45, 25);
@@ -151,36 +181,6 @@
             this.ctrlPersonDetails1.Size = new System.Drawing.Size(914, 323);
             this.ctrlPersonDetails1.TabIndex = 1;
             // 
-            // pbNationalNo
-            // 
-            this.pbNationalNo.Image = global::DVLD.WinForms.Properties.Resources.GrayCard512;
-            this.pbNationalNo.Location = new System.Drawing.Point(172, 52);
-            this.pbNationalNo.Name = "pbNationalNo";
-            this.pbNationalNo.Size = new System.Drawing.Size(28, 28);
-            this.pbNationalNo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbNationalNo.TabIndex = 77;
-            this.pbNationalNo.TabStop = false;
-            // 
-            // pbName
-            // 
-            this.pbName.Image = global::DVLD.WinForms.Properties.Resources.NameCard512;
-            this.pbName.Location = new System.Drawing.Point(460, 52);
-            this.pbName.Name = "pbName";
-            this.pbName.Size = new System.Drawing.Size(28, 28);
-            this.pbName.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbName.TabIndex = 98;
-            this.pbName.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::DVLD.WinForms.Properties.Resources.information32;
-            this.pictureBox1.Location = new System.Drawing.Point(784, 52);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 99;
-            this.pictureBox1.TabStop = false;
-            // 
             // ctrlUserInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -193,9 +193,9 @@
             this.Size = new System.Drawing.Size(921, 438);
             this.gbLoginInfo.ResumeLayout(false);
             this.gbLoginInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNationalNo)).EndInit();
             this.ResumeLayout(false);
 
         }

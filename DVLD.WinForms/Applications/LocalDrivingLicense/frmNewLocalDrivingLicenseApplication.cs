@@ -107,6 +107,9 @@ namespace DVLD.WinForms.NavigateForms
                     {
                         lblApplicationId.Text = newApplicationID.ToString();
                         btnSave.Enabled = false;
+
+                        MessageBox.Show("Application has been added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         OnApplicationAdded?.Invoke(newApplicationID);
                     }
                 }
