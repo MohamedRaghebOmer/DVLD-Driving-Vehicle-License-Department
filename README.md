@@ -42,8 +42,8 @@
 
 **Watch the complete system walkthrough demonstrating all core features**
 
-<a href="https://youtu.be/9oLnLDZ63cs?si=E5AmxEMNU_48F4s1">
-  <img src="https://img.youtube.com/vi/9oLnLDZ63cs/0.jpg" width="70%" alt="DVLD Demo Video"/>
+<a href="https://youtu.be/3lIlErl78XY">
+  <img src="Assets\main-dashboard.png" width="70%" alt="DVLD Demo Video"/>
 </a>
 
 *Click the thumbnail above to watch on YouTube*
